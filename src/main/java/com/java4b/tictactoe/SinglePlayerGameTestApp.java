@@ -7,12 +7,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class TTTPrototyping extends Application {
+public class SinglePlayerGameTestApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(TTTPrototyping.class.getResource("vs-computer-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SinglePlayerGameTestApp.class.getResource("single-player-game-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Interactions for Versus Computer");
+        stage.setTitle("Single Player Game");
         stage.setScene(scene);
         stage.show();
     }
