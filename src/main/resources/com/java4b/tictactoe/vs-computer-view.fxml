@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
@@ -11,7 +10,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.VsComputerController">
    <children>
@@ -46,55 +44,28 @@
          </children>
       </VBox>
       <GridPane gridLinesVisible="true" layoutX="203.0" layoutY="110.0" prefHeight="180.0" prefWidth="180.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <Button fx:id="button0" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button0">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
-            <Button fx:id="button1" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button1" GridPane.columnIndex="1">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
-            <Button fx:id="button2" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button2" GridPane.columnIndex="2">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
-            <Button fx:id="button3" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button3" GridPane.rowIndex="1">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
-            <Button fx:id="button4" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button4" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
-            <Button fx:id="button5" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button5" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
-            <Button fx:id="button6" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button6" GridPane.rowIndex="2">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
-            <Button fx:id="button7" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button7" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
-            <Button fx:id="button8" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#onSquareClicked" prefHeight="60.0" prefWidth="60.0" text="button8" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <font>
-                  <Font size="12.0" />
-               </font></Button>
+            <ImageView fx:id="square0" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="square1" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fx:id="square2" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+            <ImageView fx:id="square3" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+            <ImageView fx:id="square4" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ImageView fx:id="square5" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ImageView fx:id="square6" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+            <ImageView fx:id="square7" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ImageView fx:id="square8" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Label fx:id="playersTurnLabel" layoutX="203.0" layoutY="83.0" text="current player's turn" />
+      <Label fx:id="activePlayerLabel" layoutX="203.0" layoutY="83.0" text="current player's turn" />
    </children>
 </AnchorPane>
