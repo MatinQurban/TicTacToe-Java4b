@@ -11,7 +11,7 @@ import java.lang.Boolean;
 
 public class VsComputerController {
     @FXML
-    Label activePlayerLabel;
+    private Label activePlayerLabel;
 
     @FXML
     private ImageView square0, square1, square2, square3, square4, square5, square6, square7, square8;
