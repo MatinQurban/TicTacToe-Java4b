@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class TicTacToeApp extends Application {
+public class TicTacToeApplication extends Application {
     private static Scene scene;
 
     static void setRoot(String fxml) throws IOException {
@@ -16,14 +16,14 @@ public class TicTacToeApp extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(TicTacToeApp.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(TicTacToeApplication.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = loadFXML("tictactoe.fxml");
-        scene = new Scene(root, 320, 240);
+        Parent root = loadFXML("tictactoe");
+        scene = new Scene(root);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

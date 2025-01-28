@@ -15,6 +15,6 @@ public class HelloController {
     }
     @FXML
     private void switchToGameBoard() throws IOException {
-        TicTacToeApp.setRoot("GAME_BOARD_FXML_FILE");
+        TicTacToeApplication.setRoot("GAME_BOARD_FXML_FILE");
     }
 }
