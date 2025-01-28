@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.lang.Boolean;
 
-public class VsComputerController {
+public class SinglePlayerGameController {
     @FXML
     private Label activePlayerLabel;
 
@@ -22,14 +22,14 @@ public class VsComputerController {
     private Player activePlayer;
     private Map<ImageView, Boolean> isFilledMap;        // keeps track of which squares have been played
 
-    // The initialize() method is automatically called after the @FXML tagged attributes have been initialized
+    // The initialize() method is automatically called after the @FXML fields have been injected
     @FXML
     public void initialize() {
         player1 = new Player("Player1", Player.Avatar.ANCHOR);
         player2 = new Player("Computer", Player.Avatar.FLOTATION);
 
         activePlayer = player1;
-        activePlayerLabel.setText(activePlayer.getName() + "'s turn");
+        setActivePlayerLabel();
 
         isFilledMap = new HashMap<>(9) {{
             put(square0, Boolean.FALSE);
@@ -65,6 +65,10 @@ public class VsComputerController {
         else
             activePlayer = player1;
 
+        setActivePlayerLabel();
+    }
+
+    private void setActivePlayerLabel() {
         activePlayerLabel.setText(activePlayer.getName() + "'s turn");
     }
 }
