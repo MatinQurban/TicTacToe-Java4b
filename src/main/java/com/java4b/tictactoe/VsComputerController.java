@@ -17,9 +17,9 @@ public class VsComputerController {
     private ImageView square0, square1, square2, square3, square4, square5, square6, square7, square8;
 
     // Game state attributes; maybe make a separate GameState class later
-    Player player1;
-    Player player2;
-    Player activePlayer;
+    private Player player1;
+    private Player player2;
+    private Player activePlayer;
     private Map<ImageView, Boolean> isFilledMap;        // keeps track of which squares have been played
 
     // The initialize() method is automatically called after the @FXML tagged attributes have been initialized
