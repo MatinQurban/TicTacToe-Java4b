@@ -1,0 +1,27 @@
+.border-pane {
+    -fx-background-image: url("OceanBackgroundTemp.jpg");
+    -fx-background-size: cover; /* Adjust as needed */
+    -fx-background-repeat: no-repeat; /* Adjust as needed */
+
+    /*-fx-background-color: linear-gradient(to bottom, #4facfe, #00f2fe);*/
+}
+
+.vbox {
+    -fx-background-color: #2f4f4f;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+.button {
+    /*-fx-background-color: #3498db; !* Default color *!*/
+    -fx-text-fill: black; /* Text color */
+    -fx-font-size: 26px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px; /* Rounded corners */
+    -fx-border-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9; /* Hover color */
+    -fx-cursor: hand; /* Change cursor to hand */
+}
