@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="border-pane" stylesheets="@MainMenuStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs4b.tictactoecs4b.MainMenuController">
+<BorderPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="border-pane" stylesheets="@MainMenuStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="TOP_CENTER" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="buttonSinglePlayer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSinglePlayerScene" prefWidth="400.0" text="Single Player" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="400.0" text="Single Player" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Calibri" size="26.0" />
                </font>

@@ -22,7 +22,7 @@ public class TicTacToeApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = loadFXML("tictactoe");
+        Parent root = loadFXML("MainMenu");
         scene = new Scene(root);
         stage.setTitle("Hello!");
         stage.setScene(scene);
