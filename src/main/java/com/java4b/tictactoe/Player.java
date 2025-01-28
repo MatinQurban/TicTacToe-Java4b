@@ -1,4 +1,4 @@
-package com.cs4b.tttprototyping;
+package com.java4b.tictactoe;
 
 import javafx.scene.image.Image;
 
