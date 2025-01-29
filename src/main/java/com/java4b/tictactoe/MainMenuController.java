@@ -29,8 +29,8 @@ public class MainMenuController {
     }
 
     @FXML
-    protected void SwitchToSinglePlayer() throws IOException {
-        Parent root = loadFXML("single-player-game-view");
+    protected void SwitchToGame(String fxml) throws IOException {
+        Parent root = loadFXML(fxml);
         Scene singleplayerScene = new Scene(root);
         Stage stage = (Stage) singlePlayer.getScene().getWindow();
         stage.setScene(singleplayerScene);
@@ -43,13 +43,13 @@ public class MainMenuController {
 
         switch(menuID){
             case "SP":
-                SwitchToSinglePlayer();
+                SwitchToGame("single-player-game-view");
                 break;
             case "LM":
-                //SwitchToLocalMult();
+                //SwitchToGame("local-multiplayer-game-view");
                 break;
             case "OM":
-                //SwitchToOnlineMult();
+                //SwitchToGame("online-multiplayer-game-view");
                 break;
         }
 
