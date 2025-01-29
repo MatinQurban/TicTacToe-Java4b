@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +27,9 @@ public class SinglePlayerGameController {
     // The initialize() method is automatically called after the @FXML fields have been injected
     @FXML
     public void initialize() {
+//        square0.fitHeightProperty().bind(((StackPane)square0.getParent()).heightProperty());
+//        square0.fitWidthProperty().bind(((StackPane)square0.getParent()).widthProperty());
+
         player1 = new Player("Player1", Player.Avatar.ANCHOR);
         player2 = new Player("Computer", Player.Avatar.FLOTATION);
 
