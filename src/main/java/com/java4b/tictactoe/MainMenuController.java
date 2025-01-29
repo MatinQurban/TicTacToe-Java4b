@@ -1,5 +1,6 @@
 package com.java4b.tictactoe;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,16 +32,19 @@ public class MainMenuController {
     @FXML
     protected void SwitchToGame(String fxml, Stage stage) throws IOException {
         Parent root = loadFXML(fxml);
-        Scene gameSceen = new Scene(root);
-        stage.setScene(gameSceen);
+        Scene gameScene = new Scene(root);
+        stage.setScene(gameScene);
     }
 
     @FXML
-    protected void SwitchMenu(MouseEvent event) throws IOException {
+    protected void SwitchMenu(ActionEvent event) throws IOException {
+
+        Stage stage = (Stage) singlePlayer.getScene().getWindow(); // Can maybe make this a global var?
+
         // Get the source of which menu button was clicked
         String menuID = ((Button) event.getSource()).getId();
-        Stage stage = (Stage) singlePlayer.getScene().getWindow();
 
+        // Based on which menu button was clicked, switch to that corresponding fxml file
         switch(menuID){
             case "SP":
                 SwitchToGame("single-player-game-view", stage);
@@ -53,5 +57,9 @@ public class MainMenuController {
                 break;
         }
 
+
+        // Current have it so every game mode has different fxml file, however the different game
+        // screens will look nearly identical. Only difference is 'vs Computer' or 'vs Player_name'
+        // and title. Will keep as seperate for now.
     }
 }
