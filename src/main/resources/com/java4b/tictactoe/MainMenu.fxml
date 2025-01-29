@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="border-pane" stylesheets="@MainMenuStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="488.0" prefWidth="600.0" styleClass="border-pane" stylesheets="@MainMenuStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.MainMenuController">
    <center>
       <VBox alignment="TOP_CENTER" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="400.0" text="Single Player" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button fx:id="singlePlayer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#SwitchToSinglePlayer" prefWidth="400.0" text="Single Player" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Calibri" size="26.0" />
                </font>
@@ -40,16 +40,16 @@
       </VBox>
    </center>
    <top>
-      <HBox alignment="CENTER" prefHeight="330.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="152.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="143.0" prefWidth="675.0" text="TIC TAC TOE" textAlignment="CENTER" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="132.0" prefWidth="600.0" text="TIC TAC TOE" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Colonna MT" size="95.0" />
                </font>
             </Label>
          </children>
          <padding>
-            <Insets top="40.0" />
+            <Insets top="20.0" />
          </padding>
       </HBox>
    </top>

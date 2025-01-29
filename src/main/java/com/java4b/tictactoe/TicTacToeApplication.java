@@ -24,7 +24,7 @@ public class TicTacToeApplication extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = loadFXML("MainMenu");
         scene = new Scene(root);
-        stage.setTitle("Hello!");
+        stage.setTitle("Tic Tac Toe");
         stage.setScene(scene);
         stage.show();
     }
