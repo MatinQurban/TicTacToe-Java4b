@@ -11,7 +11,10 @@ import java.lang.Boolean;
 
 public class SinglePlayerGameController {
     @FXML
-    private Label activePlayerLabel;
+    private Label name1Label, name2Label, activePlayerLabel;
+
+    @FXML
+    private ImageView avatar1ImageView, avatar2ImageView;
 
     @FXML
     private ImageView square0, square1, square2, square3, square4, square5, square6, square7, square8;
@@ -22,11 +25,18 @@ public class SinglePlayerGameController {
     private Player activePlayer;
     private Map<ImageView, Boolean> isFilledMap;        // keeps track of which squares have been played
 
-    // The initialize() method is automatically called after the @FXML fields have been injected
+    // The initialize() method is automatically called after the @FXML fields have been injected. This is where we
+    // set up the initial game state.
     @FXML
     public void initialize() {
-        player1 = new Player("Player1", Player.Avatar.ANCHOR);
+        player1 = new Player("Player 1", Player.Avatar.ANCHOR);
         player2 = new Player("Computer", Player.Avatar.FLOTATION);
+
+        name1Label.setText(player1.getName() + ":");
+        name2Label.setText(player2.getName() + ":");
+
+        avatar1ImageView.setImage(player1.getAvatarImage());
+        avatar2ImageView.setImage(player2.getAvatarImage());
 
         activePlayer = player1;
         setActivePlayerLabel();

@@ -1,0 +1,20 @@
+.grid-pane {
+    -fx-background-image: url("board.png");
+    -fx-background-size: cover; /* Adjust as needed */
+    -fx-background-repeat: no-repeat; /* Adjust as needed */
+
+    -fx-scale-shape: true;
+}
+
+.button {
+    -fx-background-size: 50%;
+    -fx-background-color: #2f4f4f;
+    -fx-background-image: url("board.png");
+}
+
+.stack-pane {
+    -fx-background-image: url("flotation.png");
+    -fx-background-size: 80%; /* Adjust as needed */
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat; /* Adjust as needed */
+}
