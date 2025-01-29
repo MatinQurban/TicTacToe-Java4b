@@ -29,27 +29,27 @@ public class MainMenuController {
     }
 
     @FXML
-    protected void SwitchToGame(String fxml) throws IOException {
+    protected void SwitchToGame(String fxml, Stage stage) throws IOException {
         Parent root = loadFXML(fxml);
-        Scene singleplayerScene = new Scene(root);
-        Stage stage = (Stage) singlePlayer.getScene().getWindow();
-        stage.setScene(singleplayerScene);
+        Scene gameSceen = new Scene(root);
+        stage.setScene(gameSceen);
     }
 
     @FXML
     protected void SwitchMenu(MouseEvent event) throws IOException {
         // Get the source of which menu button was clicked
         String menuID = ((Button) event.getSource()).getId();
+        Stage stage = (Stage) singlePlayer.getScene().getWindow();
 
         switch(menuID){
             case "SP":
-                SwitchToGame("single-player-game-view");
+                SwitchToGame("single-player-game-view", stage);
                 break;
             case "LM":
-                //SwitchToGame("local-multiplayer-game-view");
+                //SwitchToGame("local-multiplayer-game-view", stage);
                 break;
             case "OM":
-                //SwitchToGame("online-multiplayer-game-view");
+                //SwitchToGame("online-multiplayer-game-view", stage);
                 break;
         }
 
