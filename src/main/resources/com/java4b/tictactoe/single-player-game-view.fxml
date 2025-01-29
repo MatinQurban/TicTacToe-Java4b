@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
@@ -9,23 +10,32 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@single-player-game-view.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.SinglePlayerGameController">
    <children>
-      <VBox layoutX="42.0" layoutY="110.0" prefHeight="200.0" prefWidth="100.0">
+      <VBox layoutX="41.0" layoutY="124.0" prefHeight="200.0" prefWidth="100.0">
          <children>
             <HBox prefHeight="25.0" prefWidth="100.0">
                <children>
-                  <Label text="Player Avatars" />
+                  <Label text="Player Avatars">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                </children>
             </HBox>
-            <Separator prefWidth="200.0" />
+            <Separator prefWidth="200.0">
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding></Separator>
             <HBox prefHeight="34.0" prefWidth="100.0">
                <children>
-                  <Label text="Player 1:" />
-                  <ImageView fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                  <Label fx:id="name1Label" text="Player 1:" />
+                  <ImageView fx:id="avatar1ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="22.0" />
+                     </HBox.margin>
                      <image>
                         <Image url="@anchor.png" />
                      </image>
@@ -34,8 +44,11 @@
             </HBox>
             <HBox prefHeight="34.0" prefWidth="100.0">
                <children>
-                  <Label text="Computer" />
-                  <ImageView fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                  <Label fx:id="name2Label" text="Computer:" />
+                  <ImageView fx:id="avatar2ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
                      <image>
                         <Image url="@flotation.png" />
                      </image>
@@ -44,7 +57,7 @@
             </HBox>
          </children>
       </VBox>
-      <GridPane layoutX="211.0" layoutY="110.0" prefHeight="180.0" prefWidth="180.0" styleClass="grid-pane">
+      <GridPane layoutX="210.0" layoutY="110.0" prefHeight="180.0" prefWidth="180.0" styleClass="grid-pane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -56,19 +69,25 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="square1" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-            <ImageView fx:id="square2" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-            <ImageView fx:id="square3" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-            <ImageView fx:id="square4" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ImageView fx:id="square5" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <ImageView fx:id="square6" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-            <ImageView fx:id="square7" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ImageView fx:id="square8" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="stack-pane" />
+            <ImageView fx:id="square1" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <ImageView fx:id="square2" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <ImageView fx:id="square3" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ImageView fx:id="square4" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ImageView fx:id="square5" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ImageView fx:id="square6" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <ImageView fx:id="square7" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <ImageView fx:id="square8" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <ImageView fx:id="square0" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
-      <Label fx:id="activePlayerLabel" layoutX="246.0" layoutY="322.0" text="current player's turn" />
-      <AnchorPane layoutX="201.0" prefHeight="72.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <ImageView fx:id="square0" fitHeight="60.0" fitWidth="60.0" layoutX="129.0" layoutY="220.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="activePlayerLabel" layoutX="246.0" layoutY="324.0" text="current player's turn" />
+      <AnchorPane layoutX="201.0" prefHeight="72.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" layoutX="270.0" layoutY="28.0" text="Single Player Game" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

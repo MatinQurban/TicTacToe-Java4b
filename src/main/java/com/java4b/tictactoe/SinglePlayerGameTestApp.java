@@ -12,7 +12,7 @@ public class SinglePlayerGameTestApp extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SinglePlayerGameTestApp.class.getResource("single-player-game-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Single Player Game");
+        stage.setTitle("TIC TAC TOE");
         stage.setScene(scene);
         stage.show();
     }
