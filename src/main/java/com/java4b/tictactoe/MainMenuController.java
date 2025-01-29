@@ -57,9 +57,9 @@ public class MainMenuController {
                 break;
         }
 
-        
+
         // Current have it so every game mode has different fxml file, however the different game
-        // screens will look identical. Only difference is 'vs Computer' or 'vs Player_name'
+        // screens will look nearly identical. Only difference is 'vs Computer' or 'vs Player_name'
         // and title. Will keep as seperate for now.
     }
 }
