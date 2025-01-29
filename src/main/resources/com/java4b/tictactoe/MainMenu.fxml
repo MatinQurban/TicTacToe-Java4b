@@ -12,17 +12,17 @@
    <center>
       <VBox alignment="TOP_CENTER" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="singlePlayer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#SwitchToSinglePlayer" prefWidth="400.0" text="Single Player" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button id="SP" fx:id="singlePlayer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#SwitchToSinglePlayer" prefWidth="400.0" text="Single Player" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Calibri" size="26.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="400.0" text="Local Multiplayer" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button id="LM" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="400.0" text="Local Multiplayer" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Calibri" size="26.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="400.0" text="Online Multiplayer" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button id="OM" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="400.0" text="Online Multiplayer" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Calibri" size="26.0" />
                </font>
