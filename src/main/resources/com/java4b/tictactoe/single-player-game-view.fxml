@@ -80,7 +80,7 @@
             <ImageView fx:id="square0" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
-      <Label fx:id="activePlayerLabel" layoutX="246.0" layoutY="324.0" text="current player's turn" />
+      <Label fx:id="activePlayerLabel" alignment="CENTER" layoutX="246.0" layoutY="324.0" text="current player's turn" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" />
       <AnchorPane layoutX="201.0" prefHeight="72.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" layoutX="270.0" layoutY="28.0" text="Single Player Game" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
