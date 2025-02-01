@@ -16,12 +16,6 @@ public class CoinFlipController {
     private Cylinder coinShape;
 
     @FXML
-    private Label xLabel;
-
-    @FXML
-    private Label oLabel;
-
-    @FXML
     private ImageView anchorImage;
 
     @FXML
@@ -37,52 +31,30 @@ public class CoinFlipController {
 
     @FXML
     protected void onFlipButtonClick() {
-        Point3D rotationPoint = new Point3D(1, 0.0, 0.1);
+        Point3D rotationPoint = new Point3D(1, 0.0, 0.0);
         int totalTime = 3600;
-        int numRotations = 4;
-        int timePerRotation = totalTime / numRotations;
+        int numHalfRotations = 9;
+        int timePerRotation = totalTime / numHalfRotations;
         int fromAngle = 30;
-        int toAngle = fromAngle + 360;
+        int toAngle = fromAngle + 180;
         int lowPos = 0;
         int highPos = -300;
 
         RotateTransition cylinderRotate = rotateTransition(coinShape, timePerRotation, rotationPoint,
-                fromAngle, toAngle, numRotations);
+                fromAngle, toAngle, numHalfRotations);
 
         SequentialTransition cylinderTranslate = upDownTransition(coinShape, totalTime, lowPos, highPos);
         ParallelTransition totalCylinderTransition = new ParallelTransition(coinShape, cylinderRotate, cylinderTranslate);
 
-        ParallelTransition xLabelTransition = xLabelTransition(anchorImage, totalTime, numRotations, rotationPoint,
+        ParallelTransition xLabelTransition = xLabelTransition(anchorImage, totalTime, numHalfRotations, rotationPoint,
                 fromAngle, toAngle, lowPos, highPos, 1.0, 0.0);
 
-        ParallelTransition oLabelTransition = labelTransition(flotationImage, totalTime, numRotations,
+        ParallelTransition oLabelTransition = oLabelTransition(flotationImage, totalTime, numHalfRotations,
                 rotationPoint, fromAngle, toAngle, lowPos, highPos, 0.0, 1.0);
 
         totalCylinderTransition.play();
         xLabelTransition.play();
         oLabelTransition.play();
-
-//        totalLabelTransition.play();
-//        oTotalLabelTransition.play();
-//        coinRotate.play();
-
-    }
-
-    private ParallelTransition labelTransition(Node node, int duration, int numCycles,
-                                               Point3D rotationPoint, int fromAngle, int toAngle,
-                                               int lowPos, int highPos,
-                                               double fromOpacity, double toOpacity) {
-
-        int timePerRotation = duration / numCycles;
-        RotateTransition labelRotate = rotateTransition(node, timePerRotation, rotationPoint,
-                (fromAngle + 90), (toAngle + 90), numCycles);
-
-        SequentialTransition labelTranslate = upDownTransition(node, duration, lowPos, highPos);
-        SequentialTransition labelFade = fadeTransition(node, timePerRotation, fromAngle, fromOpacity, toOpacity, numCycles);
-
-        return new ParallelTransition(node, labelRotate, labelTranslate, labelFade);
-//
-//        return new ParallelTransition(node, labelRotate, labelTranslate);
     }
 
     private ParallelTransition xLabelTransition(Node node, int duration, int numCycles,
@@ -91,13 +63,46 @@ public class CoinFlipController {
                                                double fromOpacity, double toOpacity) {
 
         int timePerRotation = duration / numCycles;
-        RotateTransition labelRotate = rotateTransition(node, timePerRotation, rotationPoint,
+        SequentialTransition labelRotate = rotateImageTransition(node, timePerRotation, rotationPoint,
                 (fromAngle + 270), (toAngle + 270), numCycles);
 
         SequentialTransition labelTranslate = upDownTransition(node, duration, lowPos, highPos);
         SequentialTransition labelFade = fadeTransition(node, timePerRotation, fromAngle, fromOpacity, toOpacity, numCycles);
 
         return new ParallelTransition(node, labelRotate, labelTranslate, labelFade);
+    }
+
+    private ParallelTransition oLabelTransition(Node node, int duration, int numCycles,
+                                                Point3D rotationPoint, int fromAngle, int toAngle,
+                                                int lowPos, int highPos,
+                                                double fromOpacity, double toOpacity) {
+
+        int timePerRotation = duration / numCycles;
+        SequentialTransition labelRotate = rotateImageTransition(node, timePerRotation, rotationPoint,
+                (fromAngle + 270), (toAngle + 270), numCycles);
+
+        SequentialTransition labelTranslate = upDownTransition(node, duration, lowPos, highPos);
+        SequentialTransition labelFade = fadeTransition(node, timePerRotation, fromAngle, fromOpacity, toOpacity, numCycles);
+
+        return new ParallelTransition(node, labelRotate, labelTranslate, labelFade);
+    }
+
+    private SequentialTransition rotateImageTransition(Node node, int duration, Point3D rotationPoint,
+                                              int fromAngle, int toAngle, int numCycles) {
+        node.setRotationAxis(rotationPoint);
+        SequentialTransition totalRotation = new SequentialTransition(node);
+
+        for (int i = 0; i < numCycles; ++i) {
+            RotateTransition rotation = new RotateTransition(Duration.millis(duration), node);
+            rotation.setFromAngle(fromAngle + (i % 2) * 180);
+            rotation.setToAngle(toAngle + (i % 2) * 180);
+            System.out.println(node.getRotate());
+            rotation.setInterpolator(Interpolator.LINEAR);
+
+            totalRotation.getChildren().add(rotation);
+        }
+
+        return totalRotation;
     }
 
     private RotateTransition rotateTransition(Node node, int duration, Point3D rotationPoint,
@@ -118,13 +123,11 @@ public class CoinFlipController {
         upTranslation.setFromY(lowPos);
         upTranslation.setToY(highPos);
         upTranslation.setInterpolator(Interpolator.EASE_OUT);
-//        upTranslation.setInterpolator(Interpolator.LINEAR);
 
         TranslateTransition downTranslation = new TranslateTransition(Duration.millis(duration / 2.0), node);
         downTranslation.setFromY(highPos);
         downTranslation.setToY(lowPos);
         downTranslation.setInterpolator(Interpolator.EASE_IN);
-//        downTranslation.setInterpolator(Interpolator.LINEAR);
 
         return new SequentialTransition(node, upTranslation, downTranslation);
     }
@@ -132,29 +135,32 @@ public class CoinFlipController {
     private SequentialTransition fadeTransition(Node node, int duration, int angleOffset,
                                                 double fromOpacity, double toOpacity, int numCycles) {
 
-        int originalFadeDuration = (duration / 2) - (int)((duration / 2.0) * (angleOffset / 180.0));
-//        originalFadeDuration = duration / 2;
-        FadeTransition originalFade = new FadeTransition(Duration.millis(originalFadeDuration), node);
-        originalFade.setFromValue(fromOpacity);
-        originalFade.setToValue(toOpacity);
-        originalFade.setInterpolator(Interpolator.DISCRETE);
+        SequentialTransition totalFade = new SequentialTransition(node);
 
-        int reverseFadeDuration = (duration / 2) + (int)((duration / 2.0) * (angleOffset / 180.0));
-        reverseFadeDuration = duration / 2;
-        FadeTransition reverseFade = new FadeTransition(Duration.millis(reverseFadeDuration), node);
-        reverseFade.setFromValue(toOpacity);
-        reverseFade.setToValue(fromOpacity);
-        reverseFade.setInterpolator(Interpolator.DISCRETE);
+        int durationOffset = (int)(duration * angleOffset / 180.0);
+        int duration1 = duration - durationOffset;
+        int duration2 = durationOffset;
+        double opacity1 = fromOpacity;
+        double opacity2 = toOpacity;
 
-        int thirdFadeDuration = (int)((duration / 2.0) * (angleOffset / 180.0));
-        FadeTransition thirdFade = new FadeTransition(Duration.millis(thirdFadeDuration), node);
-        thirdFade.setFromValue(fromOpacity);
-        thirdFade.setToValue(fromOpacity);
-        thirdFade.setInterpolator(Interpolator.DISCRETE);
+        for (int i = 0; i < numCycles; ++i) {
+            FadeTransition fade1 = new FadeTransition(Duration.millis(duration1), node);
+            fade1.setFromValue(opacity1);
+            fade1.setToValue(opacity1);
+            fade1.setInterpolator(Interpolator.DISCRETE);
 
-        SequentialTransition fadeTransition = new SequentialTransition(node, originalFade, reverseFade, thirdFade);
-        fadeTransition.setCycleCount(numCycles);
+            FadeTransition fade2 = new FadeTransition(Duration.millis(duration2), node);
+            fade2.setFromValue(opacity2);
+            fade2.setToValue(opacity2);
+            fade2.setInterpolator(Interpolator.DISCRETE);
 
-        return fadeTransition;
+            totalFade.getChildren().add(fade1);
+            totalFade.getChildren().add(fade2);
+
+            opacity1 = (opacity1 == 1.0 ? 0 : 1.0);
+            opacity2 = (opacity2 == 1.0 ? 0 : 1.0);
+        }
+
+        return totalFade;
     }
 }
