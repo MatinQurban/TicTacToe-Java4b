@@ -17,9 +17,9 @@
     </padding>
    <StackPane prefHeight="150.0" prefWidth="200.0">
       <children>
-         <Cylinder fx:id="coinShape" height="8.0" radius="40.0" rotate="90.0">
+         <Cylinder fx:id="coinShape" height="8.0" radius="40.0">
             <rotationAxis>
-               <Point3D x="1.0" />
+               <Point3D />
             </rotationAxis>
          </Cylinder>
          <Label rotate="270.0" text="1st" fx:id="xLabel">
@@ -42,11 +42,17 @@
             <image>
                <Image url="@anchor.png" />
             </image>
+            <rotationAxis>
+               <Point3D />
+            </rotationAxis>
          </ImageView>
          <ImageView fx:id="flotationImage" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@flotation.png" />
+               <Image url="@life_saver.png" />
             </image>
+            <rotationAxis>
+               <Point3D />
+            </rotationAxis>
          </ImageView>
       </children>
       <padding>

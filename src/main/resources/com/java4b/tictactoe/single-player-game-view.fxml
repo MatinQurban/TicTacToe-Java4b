@@ -50,7 +50,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                      <image>
-                        <Image url="@flotation.png" />
+                        <Image url="@life_saver.png" />
                      </image>
                   </ImageView>
                </children>

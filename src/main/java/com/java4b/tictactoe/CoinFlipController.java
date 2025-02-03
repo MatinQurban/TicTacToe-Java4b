@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Cylinder;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
@@ -27,13 +28,24 @@ public class CoinFlipController {
         material.setDiffuseColor(Color.GOLDENROD);
         material.setSpecularColor(Color.PALEGOLDENROD);
         coinShape.setMaterial(material);
+
+        int startingAngle = 30;
+        Point3D rotationAxis = new Point3D(1.0, 0.0, 0.0);
+
+        coinShape.setRotationAxis(rotationAxis);
+        coinShape.setRotate(startingAngle);
+        anchorImage.setRotationAxis(rotationAxis);
+        anchorImage.setRotate(270 + startingAngle);
+        flotationImage.setRotationAxis(rotationAxis);
+        flotationImage.setRotate(270 + startingAngle);
+        flotationImage.setOpacity(0.0);
     }
 
     @FXML
     protected void onFlipButtonClick() {
         Point3D rotationPoint = new Point3D(1, 0.0, 0.0);
         int totalTime = 3600;
-        int numHalfRotations = 9;
+        int numHalfRotations = 6;
         int timePerRotation = totalTime / numHalfRotations;
         int fromAngle = 30;
         int toAngle = fromAngle + 180;
