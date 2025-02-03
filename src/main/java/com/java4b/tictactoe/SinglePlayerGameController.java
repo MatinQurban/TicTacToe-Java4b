@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SinglePlayerGameController extends GameController{
+public class SinglePlayerGameController{
 
     @FXML
     private Label activePlayerLabel;
