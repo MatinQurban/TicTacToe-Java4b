@@ -14,7 +14,7 @@ public class SinglePlayerGameController {
     private Label activePlayerLabel;
 
     @FXML
-    private ImageView square0, square1, square2, square3, square4, square5, square6, square7, square8;
+    private ImageView cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8;
 
     GameState gameState;
     ArrayList<ImageView> cells;
@@ -24,8 +24,8 @@ public class SinglePlayerGameController {
     public void initialize() {
 
         gameState = new GameState("Player 1", Avatar.ANCHOR, "Computer", Avatar.LIFE_SAVER);
-        cells = new ArrayList<>(Arrays.asList(square0, square1, square2, square3,
-                square4, square5, square6, square7, square8));
+        cells = new ArrayList<>(Arrays.asList(cell0, cell1, cell2, cell3,
+                cell4, cell5, cell6, cell7, cell8));
 
         setActivePlayerLabel();
     }
@@ -33,13 +33,13 @@ public class SinglePlayerGameController {
     @FXML
     protected void onSquareClicked(MouseEvent event) {
         // Get the object that the event was triggered on. In this case, it's the ImageView square that was clicked on.
-        ImageView selectedSquare = (ImageView)event.getSource();
-        int indexOfSelected = cells.indexOf(selectedSquare);
+        ImageView selectedCell = (ImageView)event.getSource();
+        int indexOfSelected = cells.indexOf(selectedCell);
 
         // Check to see if that square has already been filled. If not, insert the active player's avatar icon into
         // the square, change the map entry to show it is now filled, and change the active player for the next turn.
         if (gameState.isCellEmpty(indexOfSelected)) {
-            selectedSquare.setImage(toImage(gameState.getActivePlayer().getAvatar()));
+            selectedCell.setImage(toImage(gameState.getActivePlayer().getAvatar()));
             gameState.playCell(indexOfSelected);
 
             gameState.toggleActivePlayer();

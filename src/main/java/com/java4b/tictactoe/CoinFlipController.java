@@ -45,7 +45,7 @@ public class CoinFlipController {
     protected void onFlipButtonClick() {
         Point3D rotationPoint = new Point3D(1, 0.0, 0.0);
         int totalTime = 3600;
-        int numHalfRotations = 6;
+        int numHalfRotations = 9;
         int timePerRotation = totalTime / numHalfRotations;
         int fromAngle = 30;
         int toAngle = fromAngle + 180;

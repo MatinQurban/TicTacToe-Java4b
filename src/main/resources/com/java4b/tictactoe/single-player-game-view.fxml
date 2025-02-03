@@ -69,15 +69,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="square1" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <ImageView fx:id="square2" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <ImageView fx:id="square3" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <ImageView fx:id="square4" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <ImageView fx:id="square5" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <ImageView fx:id="square6" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <ImageView fx:id="square7" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <ImageView fx:id="square8" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <ImageView fx:id="square0" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell1" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell2" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell3" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell4" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell5" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell6" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell7" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell8" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <ImageView fx:id="cell0" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
       <Label fx:id="activePlayerLabel" alignment="CENTER" layoutX="246.0" layoutY="324.0" text="current player's turn" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" />
