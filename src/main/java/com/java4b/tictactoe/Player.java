@@ -3,30 +3,20 @@ package com.java4b.tictactoe;
 import javafx.scene.image.Image;
 
 public class Player {
-    public enum Avatar {
-        ANCHOR, FLOTATION
-    };
-
-    public String toString(Avatar avatar) {
-        return switch (avatar) {
-            case ANCHOR -> "anchor.png";
-            case FLOTATION -> "flotation.png";
-        };
-    }
 
     private String name;
-    private Image avatarImage;
+    private Avatar avatar;
 
     public Player(String name, Avatar avatar) {
         this.name = name;
-        this.avatarImage = new Image(getClass().getResource(toString(avatar)).toString());
+        this.avatar = avatar;
     }
 
     public String getName() {
         return name;
     }
 
-    public Image getAvatarImage() {
-        return avatarImage;
+    public Avatar getAvatar() {
+        return avatar;
     }
 }

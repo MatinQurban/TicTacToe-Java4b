@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Cylinder?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="529.0" prefWidth="281.0" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.CoinFlipController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <StackPane prefHeight="150.0" prefWidth="200.0">
+      <children>
+         <Cylinder fx:id="coinShape" height="8.0" radius="40.0">
+            <rotationAxis>
+               <Point3D />
+            </rotationAxis>
+         </Cylinder>
+         <Label rotate="270.0" text="1st" fx:id="xLabel">
+            <font>
+               <Font name="Iosevka NFM Bold" size="24.0" />
+            </font>
+            <rotationAxis>
+               <Point3D x="1.0" />
+            </rotationAxis>
+         </Label>
+         <Label fx:id="oLabel" rotate="90.0" text="2nd">
+            <font>
+               <Font name="Monospaced Bold" size="24.0" />
+            </font>
+            <rotationAxis>
+               <Point3D x="1.0" />
+            </rotationAxis>
+         </Label>
+         <ImageView fx:id="anchorImage" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@anchor.png" />
+            </image>
+            <rotationAxis>
+               <Point3D />
+            </rotationAxis>
+         </ImageView>
+         <ImageView fx:id="flotationImage" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@life_saver.png" />
+            </image>
+            <rotationAxis>
+               <Point3D />
+            </rotationAxis>
+         </ImageView>
+      </children>
+      <padding>
+         <Insets top="400.0" />
+      </padding>
+   </StackPane>
+   <Button fx:id="flipButton" mnemonicParsing="false" onAction="#onFlipButtonClick" text="Flip">
+      <VBox.margin>
+         <Insets />
+      </VBox.margin>
+   </Button>
+</VBox>

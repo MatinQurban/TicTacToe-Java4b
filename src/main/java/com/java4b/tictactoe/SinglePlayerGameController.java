@@ -2,12 +2,12 @@ package com.java4b.tictactoe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.lang.Boolean;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SinglePlayerGameController extends GameController{
 
@@ -15,62 +15,53 @@ public class SinglePlayerGameController extends GameController{
     private Label activePlayerLabel;
 
     @FXML
-    private ImageView square0, square1, square2, square3, square4, square5, square6, square7, square8;
+    private ImageView cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8;
 
-    // Game state attributes; maybe make a separate GameState class later
-    private Player player1;
-    private Player player2;
-    private Player activePlayer;
-    private Map<ImageView, Boolean> isFilledMap;        // keeps track of which squares have been played
+    GameState gameState;
+    ArrayList<ImageView> cells;
 
-    // The initialize() method is automatically called after the @FXML fields have been injected. This is where we
-    // set up the initial game state.
+    // The initialize() method is automatically called after the @FXML fields have been injected
     @FXML
     public void initialize() {
-        player1 = new Player("Player 1", Player.Avatar.ANCHOR);
-        player2 = new Player("Computer", Player.Avatar.FLOTATION);
 
-        activePlayer = player1;
+        gameState = new GameState("Player 1", Avatar.ANCHOR, "Computer", Avatar.LIFE_SAVER);
+        cells = new ArrayList<>(Arrays.asList(cell0, cell1, cell2, cell3,
+                cell4, cell5, cell6, cell7, cell8));
+
         setActivePlayerLabel();
-
-        isFilledMap = new HashMap<>(9) {{
-            put(square0, Boolean.FALSE);
-            put(square1, Boolean.FALSE);
-            put(square2, Boolean.FALSE);
-            put(square3, Boolean.FALSE);
-            put(square4, Boolean.FALSE);
-            put(square5, Boolean.FALSE);
-            put(square6, Boolean.FALSE);
-            put(square7, Boolean.FALSE);
-            put(square8, Boolean.FALSE);
-        }};
     }
 
     @FXML
     protected void onSquareClicked(MouseEvent event) {
         // Get the object that the event was triggered on. In this case, it's the ImageView square that was clicked on.
-        ImageView selectedSquare = (ImageView)event.getSource();
+        ImageView selectedCell = (ImageView)event.getSource();
+        int indexOfSelected = cells.indexOf(selectedCell);
 
         // Check to see if that square has already been filled. If not, insert the active player's avatar icon into
         // the square, change the map entry to show it is now filled, and change the active player for the next turn.
-        if (!isFilledMap.get(selectedSquare)) {
-            selectedSquare.setImage(activePlayer.getAvatarImage());
-            isFilledMap.put(selectedSquare, Boolean.TRUE);
+        if (gameState.isCellEmpty(indexOfSelected)) {
+            selectedCell.setImage(toImage(gameState.getActivePlayer().getAvatar()));
+            gameState.playCell(indexOfSelected);
 
-            togglePlayer();
+            gameState.toggleActivePlayer();
+            setActivePlayerLabel();
         }
     }
 
-    private void togglePlayer() {
-        if (activePlayer == player1)
-            activePlayer = player2;
-        else
-            activePlayer = player1;
+    private Image toImage(Avatar avatar) {
+        String fileName = switch (avatar) {
+            case Avatar.ANCHOR -> "anchor.png";
+            case Avatar.LIFE_SAVER -> "life_saver.png";
+            case Avatar.NONE -> null;
+        };
 
-        setActivePlayerLabel();
+        if (fileName != null)
+            return new Image(getClass().getResource(fileName).toString());
+        else
+            return null;
     }
 
     private void setActivePlayerLabel() {
-        activePlayerLabel.setText(activePlayer.getName() + "'s turn");
+        activePlayerLabel.setText(gameState.getActivePlayer().getName() + "'s turn");
     }
 }
