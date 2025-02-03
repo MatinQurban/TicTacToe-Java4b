@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.lang.Boolean;
 
-public class SinglePlayerGameController {
+public class SinglePlayerGameController extends GameController{
+
     @FXML
     private Label activePlayerLabel;
 

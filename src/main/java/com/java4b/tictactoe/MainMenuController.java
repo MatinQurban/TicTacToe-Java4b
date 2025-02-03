@@ -30,14 +30,14 @@ public class MainMenuController {
     }
 
     @FXML
-    protected void SwitchToGame(String fxml, Stage stage) throws IOException {
+    protected void switchToGame(String fxml, Stage stage) throws IOException {
         Parent root = loadFXML(fxml);
         Scene gameScene = new Scene(root);
         stage.setScene(gameScene);
     }
 
     @FXML
-    protected void SwitchMenu(ActionEvent event) throws IOException {
+    protected void switchMenu(ActionEvent event) throws IOException {
 
         Stage stage = (Stage) singlePlayer.getScene().getWindow(); // Can maybe make this a global var?
 
@@ -47,7 +47,7 @@ public class MainMenuController {
         // Based on which menu button was clicked, switch to that corresponding fxml file
         switch(menuID){
             case "SP":
-                SwitchToGame("single-player-game-view", stage);
+                switchToGame("single-player-game-view", stage);
                 break;
             case "LM":
                 //SwitchToGame("local-multiplayer-game-view", stage);
