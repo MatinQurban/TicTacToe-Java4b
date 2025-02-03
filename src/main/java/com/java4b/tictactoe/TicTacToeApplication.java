@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class TicTacToeApplication extends Application {
     private static Scene scene;
+    public static Stage ticTacToeStage;
 
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
