@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainMenuController extends GameController{
+public class MainMenuController{
 
     @FXML
     private Button singlePlayer;
@@ -23,10 +23,9 @@ public class MainMenuController extends GameController{
     @FXML
     private Button multiPlayerOnline;
 
-
     @FXML
     protected void switchToGame(String fxml, Stage stage) throws IOException {
-        Parent root = loadFXML(fxml);
+        Parent root = TicTacToeApplication.loadFXML(fxml);
         Scene gameScene = new Scene(root);
         stage.setScene(gameScene);
     }
