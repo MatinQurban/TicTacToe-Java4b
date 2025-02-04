@@ -23,12 +23,6 @@ public class MainMenuController{
     @FXML
     private Button multiPlayerOnline;
 
-    @FXML
-    protected void switchToGame(String fxml, Stage stage) throws IOException {
-        Parent root = TicTacToeApplication.loadFXML(fxml);
-        Scene gameScene = new Scene(root);
-        stage.setScene(gameScene);
-    }
 
     @FXML
     protected void switchMenu(ActionEvent event) throws IOException {
@@ -41,19 +35,14 @@ public class MainMenuController{
         // Based on which menu button was clicked, switch to that corresponding fxml file
         switch(menuID){
             case "SP":
-                switchToGame("single-player-game-view", stage);
+                TicTacToeApplication.switchScene("single-player-game-view", stage);
                 break;
             case "LM":
-                //SwitchToGame("local-multiplayer-game-view", stage);
+                //TicTacToeApplication.switchScene("local-multiplayer-game-view", stage);
                 break;
             case "OM":
-                //SwitchToGame("online-multiplayer-game-view", stage);
+                //TicTacToeApplication.switchScene("online-multiplayer-game-view", stage);
                 break;
         }
-
-
-        // Current have it so every game mode has different fxml file, however the different game
-        // screens will look nearly identical. Only difference is 'vs Computer' or 'vs Player_name'
-        // and title. Will keep as seperate for now.
     }
 }
