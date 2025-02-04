@@ -71,51 +71,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <StackPane fx:id="pane0" prefHeight="150.0" prefWidth="200.0" styleClass="cell">
-               <children>
-                  <ImageView fx:id="cell0" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1">
-               <children>
-                  <ImageView fx:id="cell1" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2">
-               <children>
-                  <ImageView fx:id="cell2" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.rowIndex="1">
-               <children>
-                  <ImageView fx:id="cell3" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <ImageView fx:id="cell4" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <children>
-                  <ImageView fx:id="cell5" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.rowIndex="2">
-               <children>
-                  <ImageView fx:id="cell6" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <ImageView fx:id="cell7" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <children>
-                  <ImageView fx:id="cell8" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
+            <StackPane fx:id="cell0" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" />
+            <StackPane fx:id="cell1" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1" />
+            <StackPane fx:id="cell2" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2" />
+            <StackPane fx:id="cell3" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.rowIndex="1" />
+            <StackPane fx:id="cell4" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <StackPane fx:id="cell5" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <StackPane fx:id="cell6" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.rowIndex="2" />
+            <StackPane fx:id="cell7" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <StackPane fx:id="cell8" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Label fx:id="activePlayerLabel" alignment="CENTER" layoutX="246.0" layoutY="324.0" text="current player's turn" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" />
