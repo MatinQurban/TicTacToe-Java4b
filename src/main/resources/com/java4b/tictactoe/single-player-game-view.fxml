@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -58,7 +59,7 @@
             </HBox>
          </children>
       </VBox>
-      <GridPane layoutX="210.0" layoutY="110.0" prefHeight="180.0" prefWidth="180.0" styleClass="grid-pane">
+      <GridPane layoutX="210.0" layoutY="110.0" onMouseEntered="#onMouseOverBoard" onMouseExited="#onMouseExitBoard" prefHeight="180.0" prefWidth="180.0" styleClass="grid-pane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -70,15 +71,51 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="cell1" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <ImageView fx:id="cell2" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <ImageView fx:id="cell3" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <ImageView fx:id="cell4" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <ImageView fx:id="cell5" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <ImageView fx:id="cell6" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <ImageView fx:id="cell7" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <ImageView fx:id="cell8" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <ImageView fx:id="cell0" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <StackPane fx:id="pane0" prefHeight="150.0" prefWidth="200.0" styleClass="cell">
+               <children>
+                  <ImageView fx:id="cell0" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fx:id="cell1" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2">
+               <children>
+                  <ImageView fx:id="cell2" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="cell3" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="cell4" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="cell5" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fx:id="cell6" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fx:id="cell7" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fx:id="cell8" fitHeight="42.0" fitWidth="42.0" onMouseClicked="#onSquareClicked" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
          </children>
       </GridPane>
       <Label fx:id="activePlayerLabel" alignment="CENTER" layoutX="246.0" layoutY="324.0" text="current player's turn" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" />
