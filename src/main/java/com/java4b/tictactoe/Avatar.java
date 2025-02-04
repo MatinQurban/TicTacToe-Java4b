@@ -14,7 +14,6 @@ public enum Avatar {
     }
 
     public Image getImage() {
-        System.out.println("test");
         return switch (this) {
             case ANCHOR -> new Image(getClass().getResource(ANCHOR.getFileName()).toString());
             case LIFE_SAVER -> new Image(getClass().getResource(LIFE_SAVER.getFileName()).toString());
