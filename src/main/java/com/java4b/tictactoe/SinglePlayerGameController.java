@@ -1,5 +1,6 @@
 package com.java4b.tictactoe;
 
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -11,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,9 +25,6 @@ public class SinglePlayerGameController{
 
     @FXML
     private StackPane cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8;
-
-//    @FXML
-//    private ImageView cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8;
 
     GameState gameState;
     ArrayList<StackPane> cells;
@@ -50,8 +49,6 @@ public class SinglePlayerGameController{
         // Check to see if that square has already been filled. If not, insert the active player's avatar icon into
         // the square, change the map entry to show it is now filled, and change the active player for the next turn.
         if (gameState.isCellEmpty(indexOfSelected)) {
-//            selectedCell.setImage(gameState.getActivePlayer().getAvatar().getImage());
-
             BackgroundSize imageSize = new BackgroundSize(0.70, 0.70, true, true, false, false);
             selectedCell.setBackground(new Background(new BackgroundImage(gameState.getActivePlayer().getAvatar().getImage(),
                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, imageSize)));
@@ -62,6 +59,9 @@ public class SinglePlayerGameController{
             setActivePlayerLabel();
             setCursorImage();
             selectedCell.getStyleClass().clear();
+        }
+        else {
+            animateError(selectedCell);
         }
     }
 
@@ -91,5 +91,29 @@ public class SinglePlayerGameController{
 
     private void setActivePlayerLabel() {
         activePlayerLabel.setText(gameState.getActivePlayer().getName() + "'s turn");
+    }
+
+    private void animateError(StackPane cell) {
+        Image errorImage = new Image(getClass().getResource("placement_error.png").toString(),
+                cell.getWidth(), cell.getHeight(), true, false);
+
+        ImageView errorImageView = new ImageView(errorImage);
+        errorImageView.setOpacity(0.0);
+
+        // TODO: Need to remove errorImageView from the cell's children list after animation is over
+        cell.getChildren().add(errorImageView);
+
+        FadeTransition errorFade = new FadeTransition(Duration.millis(800), errorImageView);
+        errorFade.setFromValue(1.0);
+        errorFade.setToValue(0.0);
+
+        GridPane gridPane = (GridPane) cell.getParent();
+        TranslateTransition shakeBoard = new TranslateTransition(Duration.millis(50), gridPane);
+        shakeBoard.setByX(15);
+        shakeBoard.setAutoReverse(true);
+        shakeBoard.setCycleCount(10);
+
+        errorFade.play();
+        shakeBoard.play();
     }
 }
