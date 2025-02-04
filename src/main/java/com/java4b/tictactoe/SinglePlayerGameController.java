@@ -1,11 +1,14 @@
 package com.java4b.tictactoe;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -63,5 +66,11 @@ public class SinglePlayerGameController{
 
     private void setActivePlayerLabel() {
         activePlayerLabel.setText(gameState.getActivePlayer().getName() + "'s turn");
+    }
+
+    @FXML
+    protected void switchToMenu(ActionEvent event) throws IOException {
+        Stage stage = (Stage) activePlayerLabel.getScene().getWindow();
+        TicTacToeApplication.switchScene("MainMenu", stage);
     }
 }
