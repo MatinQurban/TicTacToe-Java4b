@@ -6,8 +6,8 @@
 
 .cell:hover {
     /*-fx-background-color: #69a6ce; !* Hover color *!*/
-
     -fx-background-color: #b2b2b2; /* Hover color */
+    /*-fx-background-color: #ffd966; !* Hover color *!*/
     -fx-background-radius: 10px; /* Rounded corners */
     -fx-background-insets: 7;
 }
