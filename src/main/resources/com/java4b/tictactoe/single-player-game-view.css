@@ -3,3 +3,26 @@
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
 }
+
+.cell:hover {
+    /*-fx-background-color: #69a6ce; !* Hover color *!*/
+    -fx-background-color: #b2b2b2; /* Hover color */
+    /*-fx-background-color: #ffd966; !* Hover color *!*/
+    -fx-background-radius: 10px; /* Rounded corners */
+    -fx-background-insets: 7;
+}
+
+.button {
+    /*-fx-background-color: #3498db; !* Default color *!*/
+    -fx-text-fill: black; /* Text color */
+    /*-fx-font-size: 26px;*/
+    /*-fx-padding: 10px 20px;*/
+    -fx-background-radius: 10px; /* Rounded corners */
+    -fx-border-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9; /* Hover color */
+    -fx-background-radius: 10px; /* Rounded corners */
+    -fx-cursor: hand; /* Change cursor to hand */
+}
