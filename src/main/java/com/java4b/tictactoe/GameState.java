@@ -38,6 +38,13 @@ public class GameState {
             activePlayer = player1;
     }
 
+    public boolean winOrDraw(int move) {
+        if(move < 5) return false; // impossible to have a win before 5 moves
+
+        // if move == 10 that means 9 turns have been played, return True for draw
+        return checkRowWin() || checkColWin() || checkDiagWin() || move >= 10;// no win and no draw
+    }
+
     private void randomizeWhoGoesFirst() {
         Random random = new Random();
 
@@ -45,5 +52,46 @@ public class GameState {
             activePlayer = player1;
         else
             activePlayer = player2;
+    }
+
+    private boolean checkRowWin() {
+        int[] startCheck = {1, 4, 7};
+
+        for(int start : startCheck)
+        {
+            if(board.getCell(start).equals(board.getCell(start+1))
+            && board.getCell(start).equals(board.getCell(start+2)))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean checkColWin() {
+        int[] startCheck = {1, 2, 3};
+
+        for(int start : startCheck)
+        {
+            if(board.getCell(start) == board.getCell(start+3)
+            && board.getCell(start) == board.getCell(start+6))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean checkDiagWin() {
+        // Top left to bottom right diagonal
+        if(board.getCell(1) == board.getCell(5)
+        && board.getCell(1) == board.getCell(9))
+        {
+            return true;
+        }
+        // Top right to bottom left diagonal
+        else if (board.getCell(3) == board.getCell(5)
+              && board.getCell(3) == board.getCell(7))
+        {
+            return true;
+        }
+
+        return false;
     }
 }
