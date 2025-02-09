@@ -44,34 +44,34 @@ public class SinglePlayerGameController{
     }
 
     @FXML
-    protected void onCellClicked(MouseEvent event) {
-
+    protected void onCellClicked(MouseEvent event) throws IOException {
         // Get the object that the event was triggered on. In this case, it's the StackPane cell that was clicked on.
         StackPane selectedCell = (StackPane)event.getSource();
         int indexOfSelected = cells.indexOf(selectedCell);
 
-        // Check to see if that cell has already been filled. If not, the player's move is valid and is used to update
-        // the game state and view. Otherwise, the move is invalid and an error animation plays to alert the player.
+        // Check to see if that cell has already been filled.
         if (gameState.isCellEmpty(indexOfSelected)) {
 
             // Add the avatar to the cell that was clicked on
             BackgroundSize imageSize = new BackgroundSize(0.70, 0.70, true, true, false, false);
             selectedCell.setBackground(new Background(new BackgroundImage(gameState.getActivePlayer().getAvatar().getImage(),
-                   BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, imageSize)));
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, imageSize)));
 
             // Update the game state
             gameState.playCell(indexOfSelected);
-            gameState.toggleActivePlayer();
 
-            // Change visual elements to show the player's turn has changed
-            setActivePlayerLabel();
-            setCursorAsAvatar();
+            // Check if the game ended (win or draw)
+            if (gameState.winOrDraw(getMoveCount())) {
+                declareWinner();
+            } else {
+                gameState.toggleActivePlayer();
+                setActivePlayerLabel();
+                setCursorAsAvatar();
+            }
 
-            // Remove the css styling for this cell so it's no longer highlighted when the cursor is hovering over it.
-            selectedCell.getStyleClass().clear();
-        }
-        else {
-            animateError(selectedCell);
+            selectedCell.getStyleClass().clear(); // Remove hover effect
+        } else {
+            animateError(selectedCell); // Invalid move feedback
         }
     }
 
@@ -103,6 +103,32 @@ public class SinglePlayerGameController{
 
     private void setActivePlayerLabel() {
         activePlayerLabel.setText(gameState.getActivePlayer().getName() + "'s turn");
+    }
+
+    private int getMoveCount() {
+        int count = 0;
+        for (StackPane cell : cells) {
+            if (cell.getBackground() != null) { // If a cell has an avatar, it's occupied
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private void declareWinner() throws IOException {
+        String resultMessage;
+        Stage stage = (Stage) activePlayerLabel.getScene().getWindow();
+        if (gameState.checkRowWin() || gameState.checkColWin() || gameState.checkDiagWin()) {
+            resultMessage = gameState.getActivePlayer().getAvatar() == Avatar.ANCHOR ? "Anchor wins!" : "Life-Saver wins!";
+            TicTacToeApplication.switchScene("endScreen", stage);
+        } else {
+            // No winner, check if the game is a draw
+            resultMessage = "It's a tie!";
+            TicTacToeApplication.switchScene("endScreen", stage);
+        }
+
+
+        activePlayerLabel.setText(resultMessage);
     }
 
     private void animateError(StackPane cell) {

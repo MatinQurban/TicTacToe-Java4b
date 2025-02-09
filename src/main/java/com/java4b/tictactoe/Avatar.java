@@ -20,4 +20,8 @@ public enum Avatar {
             case NONE -> null;
         };
     }
+
+    public boolean isEmpty() {
+        return this == NONE;
+    }
 }

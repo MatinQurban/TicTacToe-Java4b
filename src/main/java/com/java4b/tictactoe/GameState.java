@@ -42,7 +42,7 @@ public class GameState {
         if(move < 5) return false; // impossible to have a win before 5 moves
 
         // if move == 10 that means 9 turns have been played, return True for draw
-        return checkRowWin() || checkColWin() || checkDiagWin() || move >= 10;// no win and no draw
+        return checkRowWin() || checkColWin() || checkDiagWin() || (move == 9 && !checkRowWin() && !checkColWin() && !checkDiagWin());// no win and no draw
     }
 
     private void randomizeWhoGoesFirst() {
@@ -54,44 +54,47 @@ public class GameState {
             activePlayer = player2;
     }
 
-    private boolean checkRowWin() {
-        int[] startCheck = {1, 4, 7};
+    boolean checkRowWin() {
+        int[] startCheck = {0, 3, 6}; // Adjusted for 0-based index
 
-        for(int start : startCheck)
-        {
-            if(board.getCell(start).equals(board.getCell(start+1))
-            && board.getCell(start).equals(board.getCell(start+2)))
+        for (int start : startCheck) {
+            if (!board.getCell(start).isEmpty() &&
+                    board.getCell(start).equals(board.getCell(start + 1)) &&
+                    board.getCell(start).equals(board.getCell(start + 2))) {
                 return true;
+            }
         }
         return false;
     }
 
-    private boolean checkColWin() {
-        int[] startCheck = {1, 2, 3};
+    boolean checkColWin() {
+        int[] startCheck = {0, 1, 2}; // Adjusted for 0-based index
 
-        for(int start : startCheck)
-        {
-            if(board.getCell(start) == board.getCell(start+3)
-            && board.getCell(start) == board.getCell(start+6))
+        for (int start : startCheck) {
+            if (!board.getCell(start).isEmpty() &&
+                    board.getCell(start).equals(board.getCell(start + 3)) &&
+                    board.getCell(start).equals(board.getCell(start + 6))) {
                 return true;
+            }
         }
         return false;
     }
 
-    private boolean checkDiagWin() {
-        // Top left to bottom right diagonal
-        if(board.getCell(1) == board.getCell(5)
-        && board.getCell(1) == board.getCell(9))
-        {
+    boolean checkDiagWin() {
+        // Top-left to bottom-right diagonal
+        if (!board.getCell(0).isEmpty() &&
+                board.getCell(0).equals(board.getCell(4)) &&
+                board.getCell(0).equals(board.getCell(8))) {
             return true;
         }
-        // Top right to bottom left diagonal
-        else if (board.getCell(3) == board.getCell(5)
-              && board.getCell(3) == board.getCell(7))
-        {
+        // Top-right to bottom-left diagonal
+        if (!board.getCell(2).isEmpty() &&
+                board.getCell(2).equals(board.getCell(4)) &&
+                board.getCell(2).equals(board.getCell(6))) {
             return true;
         }
 
         return false;
     }
+
 }
