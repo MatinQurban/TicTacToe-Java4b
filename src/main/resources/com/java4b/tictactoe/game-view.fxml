@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@single-player-game-view.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.SinglePlayerGameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@game-view-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.GameController">
    <children>
       <VBox layoutX="41.0" layoutY="124.0" prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -33,7 +33,7 @@
                </padding></Separator>
             <HBox prefHeight="34.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="name1Label" text="Player 1:" />
+                  <Label fx:id="name1Label" prefHeight="23.0" prefWidth="45.0" text="Player 1:" />
                   <ImageView fx:id="avatar1ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets left="22.0" />
@@ -46,7 +46,7 @@
             </HBox>
             <HBox prefHeight="34.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="name2Label" text="Computer:" />
+                  <Label fx:id="name2Label" prefHeight="23.0" prefWidth="58.0" text="Player 2:    " />
                   <ImageView fx:id="avatar2ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -85,12 +85,12 @@
       <Label fx:id="activePlayerLabel" alignment="CENTER" layoutX="246.0" layoutY="324.0" text="current player's turn" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" />
       <AnchorPane layoutX="201.0" prefHeight="72.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" layoutX="270.0" layoutY="28.0" text="Single Player Game" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label alignment="CENTER" layoutX="270.0" layoutY="28.0" text="Local Multiplayer" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button id="RMM" layoutX="41.0" layoutY="36.0" mnemonicParsing="false" onAction="#switchToMenu" prefHeight="23.0" prefWidth="100.0" text="Main Menu" />
+            <Button id="RMM" layoutX="38.0" layoutY="23.0" mnemonicParsing="false" onAction="#switchToMenu" prefHeight="23.0" prefWidth="100.0" text="Main Menu" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

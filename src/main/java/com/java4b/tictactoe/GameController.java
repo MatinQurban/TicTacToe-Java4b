@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SinglePlayerGameController{
+public class GameController {
 
     @FXML
     private Label activePlayerLabel;
@@ -34,7 +34,7 @@ public class SinglePlayerGameController{
     @FXML
     public void initialize() {
 
-        gameState = new GameState("Player 1", Avatar.ANCHOR, "Computer", Avatar.LIFE_SAVER);
+        gameState = new GameState("Player 1", Avatar.ANCHOR, "Player 2", Avatar.LIFE_SAVER);
 
         // An ArrayList of the cells is needed to help map the indices of the cells in the view to the indices of the
         // cells in the game state's board.
