@@ -38,7 +38,7 @@ public class MainMenuController{
                 TicTacToeApplication.switchScene("single-player-game-view", stage);
                 break;
             case "LM":
-                //TicTacToeApplication.switchScene("local-multiplayer-game-view", stage);
+                TicTacToeApplication.switchScene("two-player-game-view", stage);
                 break;
             case "OM":
                 //TicTacToeApplication.switchScene("online-multiplayer-game-view", stage);
