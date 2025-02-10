@@ -46,7 +46,7 @@
             </HBox>
             <HBox prefHeight="34.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="name2Label" text="Player 2:" />
+                  <Label fx:id="name2Label" text="Player 2:    " />
                   <ImageView fx:id="avatar2ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets left="10.0" />
