@@ -3,6 +3,7 @@ package com.java4b.tictactoe;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -120,13 +121,17 @@ public class SinglePlayerGameController{
         Stage stage = (Stage) activePlayerLabel.getScene().getWindow();
         if (gameState.checkRowWin() || gameState.checkColWin() || gameState.checkDiagWin()) {
             resultMessage = gameState.getActivePlayer().getAvatar() == Avatar.ANCHOR ? "Anchor wins!" : "Life-Saver wins!";
-            TicTacToeApplication.switchScene("endScreen", stage);
+//            TicTacToeApplication.switchScene("endScreen", stage);
         } else {
             // No winner, check if the game is a draw
             resultMessage = "It's a tie!";
-            TicTacToeApplication.switchScene("endScreen", stage);
+//            TicTacToeApplication.switchScene("endScreen", stage);
         }
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("endScreen.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        EndGameController controller = loader.getController();
+        controller.displayWinnerText(resultMessage);
 
         activePlayerLabel.setText(resultMessage);
     }
