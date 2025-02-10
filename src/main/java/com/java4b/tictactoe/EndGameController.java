@@ -38,13 +38,9 @@ public class EndGameController {
     }
 
     @FXML
-    private void displayWinnerText(/* winner parameter */)
+    void displayWinnerText(String gameWinText)
     {
-        // logic should switch the text based on who won
-        winnerText.setText("Player X Won");
-
-        // case X, O, TIE
-
+        winnerText.setText(gameWinText);
     }
 
 
