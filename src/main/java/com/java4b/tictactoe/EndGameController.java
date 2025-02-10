@@ -29,7 +29,7 @@ public class EndGameController {
         // Based on which menu button was clicked, switch to that corresponding fxml file
         switch(menuID){
             case "PA":
-                TicTacToeApplication.switchScene("single-player-game-view", stage);
+                TicTacToeApplication.switchScene("two-player-game-view", stage);
                 break;
             case "RTM":
                 TicTacToeApplication.switchScene("MainMenu", stage);
