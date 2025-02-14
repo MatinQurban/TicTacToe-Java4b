@@ -10,6 +10,7 @@ public class GameState {
 
     private Player activePlayer;
 
+    private int numMoves = 0;
 
     public GameState(String name1, Avatar avatar1, String name2, Avatar avatar2) {
         player1 = new Player(name1, avatar1);
@@ -29,6 +30,7 @@ public class GameState {
 
     public void playCell(int index) {
         board.setCell(index, activePlayer.getAvatar());
+        ++numMoves;
     }
 
     public void toggleActivePlayer () {
@@ -43,6 +45,18 @@ public class GameState {
 
         // if move == 10 that means 9 turns have been played, return True for draw
         return checkRowWin() || checkColWin() || checkDiagWin() || (move == 9 && !checkRowWin() && !checkColWin() && !checkDiagWin());// no win and no draw
+    }
+
+    public boolean isATie() {
+        return (numMoves == 9 && !isAWin());
+    }
+
+    public boolean isAWin() {
+        return (numMoves >= 5 && (checkRowWin() || checkColWin() || checkDiagWin()));
+    }
+
+    public void getComputerMove() {
+
     }
 
     private void randomizeWhoGoesFirst() {
