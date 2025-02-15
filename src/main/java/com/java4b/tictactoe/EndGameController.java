@@ -17,6 +17,7 @@ public class EndGameController {
     @FXML
     private Button RTM;
 
+    private GameController caller;
 
     @FXML
     protected void switchMenu(ActionEvent event) throws IOException {
@@ -29,7 +30,13 @@ public class EndGameController {
         // Based on which menu button was clicked, switch to that corresponding fxml file
         switch(menuID){
             case "PA":
-                TicTacToeApplication.switchScene("two-player-game-view", stage);
+//                TicTacToeApplication.switchScene("two-player-game-view", stage);
+                if (caller instanceof SinglePlayerGameController) {
+                    MainMenuController.loadGame(stage, new SinglePlayerGameController());
+                } else if (caller instanceof TwoPlayerGameController) {
+                    MainMenuController.loadGame(stage, new TwoPlayerGameController());
+                }
+
                 break;
             case "RTM":
                 TicTacToeApplication.switchScene("MainMenu", stage);
@@ -43,6 +50,7 @@ public class EndGameController {
         winnerText.setText(gameWinText);
     }
 
-
-
+    public void setCaller(GameController caller) {
+        this.caller = caller;
+    }
 }
