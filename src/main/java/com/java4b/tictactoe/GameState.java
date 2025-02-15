@@ -98,10 +98,4 @@ public class GameState {
 
         return false;
     }
-
-    public void reset() {
-        board = new Board();
-
-        activePlayer = player1;
-    }
 }
