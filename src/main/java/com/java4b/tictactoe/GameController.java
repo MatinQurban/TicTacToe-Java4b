@@ -102,7 +102,7 @@ public class GameController {
         TicTacToeApplication.switchScene("MainMenu", stage);
     }
 
-    private void setCursorAsAvatar() {
+    protected void setCursorAsAvatar() {
         String fileName = gameState.getActivePlayer().getAvatar().getFileName();
         Image image = new Image(getClass().getResource(fileName).toString(), 50, 50, true, false);
         Scene scene = activePlayerLabel.getScene();
@@ -111,11 +111,11 @@ public class GameController {
         scene.setCursor(new ImageCursor(image, image.getWidth() / 2.0, image.getHeight() / 2.0));
     }
 
-    private void setActivePlayerLabel() {
+    protected void setActivePlayerLabel() {
         activePlayerLabel.setText(gameState.getActivePlayer().getName() + "'s turn");
     }
 
-    private int getMoveCount() {
+    protected int getMoveCount() {
         int count = 0;
         for (StackPane cell : cells) {
             if (cell.getBackground() != null) { // If a cell has an avatar, it's occupied
@@ -125,7 +125,7 @@ public class GameController {
         return count;
     }
 
-    private void declareWinner() throws IOException {
+    protected void declareWinner() throws IOException {
         String resultMessage;
         Stage stage = (Stage) activePlayerLabel.getScene().getWindow();
         if (gameState.checkRowWin() || gameState.checkColWin() || gameState.checkDiagWin()) {
