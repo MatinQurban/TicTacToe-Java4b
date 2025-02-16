@@ -20,9 +20,11 @@ public class GameState {
         activePlayer = player1;
     }
 
-    public Player getActivePlayer() {
-        return activePlayer;
-    }
+    public Player getActivePlayer() { return activePlayer; }
+
+    public Player getPlayer1() { return player1; }
+
+    public Player getPlayer2() { return player2; }
 
     public boolean isCellEmpty(int index) {
         return board.getCell(index) == Avatar.NONE;
@@ -110,5 +112,4 @@ public class GameState {
 
         return false;
     }
-
 }

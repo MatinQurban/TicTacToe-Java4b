@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@single-player-game-view.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.SinglePlayerGameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" stylesheets="@game-view-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="41.0" layoutY="124.0" prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -33,33 +33,35 @@
                </padding></Separator>
             <HBox prefHeight="34.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="name1Label" text="Player 1:" />
-                  <ImageView fx:id="avatar1ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets left="22.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@anchor.png" />
-                     </image>
-                  </ImageView>
+                  <AnchorPane prefHeight="34.0" prefWidth="112.0">
+                     <children>
+                        <Label fx:id="name1Label" layoutX="10.0" layoutY="7.0" text="Player1Name:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="35.0" />
+                        <ImageView fx:id="avatar1ImageView" fitHeight="23.0" fitWidth="39.0" layoutX="74.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="0.0">
+                           <image>
+                              <Image url="@question.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
                </children>
             </HBox>
             <HBox prefHeight="34.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="name2Label" text="Computer:" />
-                  <ImageView fx:id="avatar2ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@life_saver.png" />
-                     </image>
-                  </ImageView>
+                  <AnchorPane prefHeight="34.0" prefWidth="112.0">
+                     <children>
+                        <Label fx:id="name2Label" layoutX="10.0" layoutY="7.0" text="Player2Name:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="35.0" />
+                        <ImageView fx:id="avatar2ImageView" fitHeight="23.0" fitWidth="39.0" layoutX="74.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="0.0">
+                           <image>
+                              <Image url="@question.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
                </children>
             </HBox>
          </children>
       </VBox>
-      <GridPane layoutX="210.0" layoutY="110.0" onMouseEntered="#onMouseOverBoard" onMouseExited="#onMouseExitBoard" prefHeight="180.0" prefWidth="180.0" styleClass="grid-pane">
+      <GridPane layoutX="285.0" layoutY="134.0" onMouseEntered="#onMouseOverBoard" onMouseExited="#onMouseExitBoard" prefHeight="180.0" prefWidth="180.0" styleClass="grid-pane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -82,10 +84,10 @@
             <StackPane fx:id="cell8" onMouseClicked="#onCellClicked" prefHeight="150.0" prefWidth="200.0" styleClass="cell" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Label fx:id="activePlayerLabel" alignment="CENTER" layoutX="246.0" layoutY="324.0" text="current player's turn" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" />
+      <Label fx:id="activePlayerLabel" alignment="CENTER" layoutX="220.0" layoutY="366.0" text="current player's turn" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" />
       <AnchorPane layoutX="201.0" prefHeight="72.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" layoutX="270.0" layoutY="28.0" text="Single Player Game" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="gameModeLabel" alignment="CENTER" layoutX="270.0" layoutY="28.0" text="Game Mode Title" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font size="24.0" />
                </font>
