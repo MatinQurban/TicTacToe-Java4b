@@ -1,7 +1,5 @@
 package com.java4b.tictactoe;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class GameState {
@@ -24,6 +22,8 @@ public class GameState {
 
     public Player getActivePlayer() { return activePlayer; }
 
+    public void setActivePlayer(Player activePlayer) { this.activePlayer = activePlayer; }
+
     public Player getPlayer1() { return player1; }
 
     public Player getPlayer2() { return player2; }
@@ -37,25 +37,26 @@ public class GameState {
     public void playCell(int index) {
         board.setCell(index, activePlayer.getAvatar());
         ++numMoves;
+
+        if (numMoves < 9 && !isAWin()) {
+            toggleActivePlayer();
+        }
     }
 
     public void undoPlayCell(int index) {
+        if (numMoves < 9 && !isAWin()) {
+            toggleActivePlayer();
+        }
+
         board.setCell(index, Avatar.NONE);
         --numMoves;
     }
 
-    public void toggleActivePlayer () {
+    private void toggleActivePlayer () {
         if (activePlayer == player1)
             activePlayer = player2;
         else
             activePlayer = player1;
-    }
-
-    public boolean winOrDraw(int move) {
-        if(move < 5) return false; // impossible to have a win before 5 moves
-
-        // if move == 10 that means 9 turns have been played, return True for draw
-        return checkRowWin() || checkColWin() || checkDiagWin() || (move == 9 && !checkRowWin() && !checkColWin() && !checkDiagWin());// no win and no draw
     }
 
     public boolean isATie() {
@@ -68,59 +69,63 @@ public class GameState {
 
     public int getComputerMove() {
         int depth = 9 - numMoves;
-        return minimax(depth, depth, true);
+        int maxEval = -10;
+        int indexOfMax = 0;
+
+        for (int i = 0; i < 9; ++i) {
+            if (isCellEmpty(i)) {
+                playCell(i);
+
+                int eval = minimax(depth - 1, false);
+                if (eval > maxEval) {
+                    maxEval = eval;
+                    indexOfMax = i;
+                }
+
+                undoPlayCell(i);
+            }
+        }
+
+        return indexOfMax;
     }
 
-    private int minimax(int depth, int startDepth, boolean maximizingPlayer) {
-        if (isATie()) {
-            return 0;
-        }
-        else if (isAWin()) {
+    private int minimax(int depth, boolean maximizingPlayer) {
+        if (isAWin())
             return (maximizingPlayer ? (depth + 1) * -1 : (depth + 1));
-        }
+        else if (depth == 0)
+            return 0;
 
         if (maximizingPlayer) {
             int maxEval = -10;
-            int indexOfMax = 0;
 
             for (int i = 0; i < 9; ++i) {
                 if (isCellEmpty(i)) {
                     playCell(i);
-                    toggleActivePlayer();
-                    int eval = minimax(depth - 1, startDepth, false);
 
-                    if (eval > maxEval) {
-                        maxEval = eval;
-                        indexOfMax = i;
-                    }
+                    int eval = minimax(depth - 1, false);
+                    maxEval = Math.max(eval, maxEval);
 
                     undoPlayCell(i);
-                    toggleActivePlayer();
                 }
             }
 
-            return (depth == startDepth ? indexOfMax : maxEval);
-        } else {
+            return maxEval;
+        }
+        else {
             int minEval = 10;
-            int indexOfMin = 0;
 
             for (int i = 0; i < 9; ++i) {
                 if (isCellEmpty(i)) {
                     playCell(i);
-                    toggleActivePlayer();
-                    int eval = minimax(depth - 1, startDepth, true);
 
-                    if (eval < minEval) {
-                        minEval = eval;
-                        indexOfMin = i;
-                    }
+                    int eval = minimax(depth - 1, true);
+                    minEval = Math.min(eval, minEval);
 
                     undoPlayCell(i);
-                    toggleActivePlayer();
                 }
             }
 
-            return (depth == startDepth ? indexOfMin : minEval);
+            return minEval;
         }
     }
 
@@ -133,7 +138,7 @@ public class GameState {
             activePlayer = player2;
     }
 
-    boolean checkRowWin() {
+    private boolean checkRowWin() {
         int[] startCheck = {0, 3, 6}; // Adjusted for 0-based index
 
         for (int start : startCheck) {
@@ -146,7 +151,7 @@ public class GameState {
         return false;
     }
 
-    boolean checkColWin() {
+    private boolean checkColWin() {
         int[] startCheck = {0, 1, 2}; // Adjusted for 0-based index
 
         for (int start : startCheck) {
@@ -159,7 +164,7 @@ public class GameState {
         return false;
     }
 
-    boolean checkDiagWin() {
+    private boolean checkDiagWin() {
         // Top-left to bottom-right diagonal
         if (!board.getCell(0).isEmpty() &&
                 board.getCell(0).equals(board.getCell(4)) &&

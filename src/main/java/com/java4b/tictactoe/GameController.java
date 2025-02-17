@@ -2,6 +2,7 @@ package com.java4b.tictactoe;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -44,14 +47,35 @@ public class GameController {
         avatar1ImageView.setImage(gameState.getPlayer1().getAvatar().getImage());
         avatar2ImageView.setImage(gameState.getPlayer2().getAvatar().getImage());
 
-        setActivePlayerLabel();
+        Platform.runLater(() -> {
+            try {
+                showSettings();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
-    /*
-       Might switch to using this initialization function instead if we need the game state to be initialized
-       outside the game controller later on.
-     */
-//    public void initData(GameState gameState) {}
+    protected void showSettings() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("settings-view.fxml"));
+        Stage settingsStage = new Stage();
+        settingsStage.setScene(new Scene(loader.load()));
+        ((SettingsController) loader.getController()).initData(this, gameState);
+        settingsStage.initModality(Modality.APPLICATION_MODAL);
+        settingsStage.initStyle(StageStyle.UNDECORATED);
+        settingsStage.show();
+
+        Stage primaryStage = (Stage) activePlayerLabel.getScene().getWindow();
+        primaryStage.getScene().getRoot().setOpacity(0.3);
+        settingsStage.setX(primaryStage.getX() + primaryStage.getWidth() / 2.0 - settingsStage.getWidth() / 2.0);
+        settingsStage.setY(primaryStage.getY() + primaryStage.getHeight() / 2.0 - settingsStage.getHeight() / 2.0);
+    }
+
+    public void startGame(Player firstPlayer) throws IOException {
+        activePlayerLabel.getScene().getRoot().setOpacity(1.0);
+        gameState.setActivePlayer(firstPlayer);
+        setActivePlayerLabel();
+    }
 
     @FXML
     protected void onCellClicked(MouseEvent event) throws IOException {
@@ -61,28 +85,34 @@ public class GameController {
 
         // Check to see if that cell has already been filled.
         if (gameState.isCellEmpty(indexOfSelected)) {
-
-            // Add the avatar to the cell that was clicked on
-            BackgroundSize imageSize = new BackgroundSize(0.70, 0.70, true, true, false, false);
-            selectedCell.setBackground(new Background(new BackgroundImage(gameState.getActivePlayer().getAvatar().getImage(),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, imageSize)));
-
-            // Update the game state
-            gameState.playCell(indexOfSelected);
-
-            // Check if the game ended (win or draw)
-            if (gameState.winOrDraw(getMoveCount())) {
-                declareWinner();
-            } else {
-                gameState.toggleActivePlayer();
-                setActivePlayerLabel();
-                setCursorAsAvatar();
-            }
-
-            selectedCell.getStyleClass().clear(); // Remove hover effect
+            playCell(indexOfSelected);
         } else {
             animateError(selectedCell); // Invalid move feedback
         }
+    }
+
+    protected void playCell(int cellIndex) throws IOException {
+
+        // Update the view
+        StackPane cell = cells.get(cellIndex);
+        BackgroundSize imageSize = new BackgroundSize(0.70, 0.70, true, true, false, false);
+        cell.setBackground(new Background(new BackgroundImage(gameState.getActivePlayer().getAvatar().getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, imageSize)));
+
+        cell.getStyleClass().clear(); // Remove hover effect
+
+        // Update the game state
+        gameState.playCell(cellIndex);
+
+        if (gameState.isAWin() || gameState.isATie())
+            declareWinner();
+        else
+            setupNextTurn();
+    }
+
+    protected void setupNextTurn() throws IOException {
+        setActivePlayerLabel();
+        setCursorAsAvatar();
     }
 
     @FXML
@@ -115,21 +145,12 @@ public class GameController {
         activePlayerLabel.setText(gameState.getActivePlayer().getName() + "'s turn");
     }
 
-    protected int getMoveCount() {
-        int count = 0;
-        for (StackPane cell : cells) {
-            if (cell.getBackground() != null) { // If a cell has an avatar, it's occupied
-                count++;
-            }
-        }
-        return count;
-    }
-
     protected void declareWinner() throws IOException {
         String resultMessage;
         Stage stage = (Stage) activePlayerLabel.getScene().getWindow();
-        if (gameState.checkRowWin() || gameState.checkColWin() || gameState.checkDiagWin()) {
-            resultMessage = gameState.getActivePlayer().getAvatar() == Avatar.ANCHOR ? "Anchor wins!" : "Life-Saver wins!";
+        if (gameState.isAWin()) {
+//            resultMessage = gameState.getActivePlayer().getAvatar() == Avatar.ANCHOR ? "Anchor wins!" : "Life-Saver wins!";
+            resultMessage = gameState.getActivePlayer().getName() + " wins!";
         } else {
             // No winner, check if the game is a draw
             resultMessage = "It's a tie!";

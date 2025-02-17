@@ -8,15 +8,4 @@ public class TwoPlayerGameController extends GameController {
         super.initialize();
         gameModeLabel.setText("Two Player Game");
     }
-
-    /*
-       Might switch to using this initialization function instead if we need the game state to be initialized
-       outside the game controller later on.
-     */
-//    @Override
-//    public void initData(GameState gameState) {
-//        super.initData(gameState);
-//
-//        gameModeLabel.setText("Two Player Game");
-//    }
 }
