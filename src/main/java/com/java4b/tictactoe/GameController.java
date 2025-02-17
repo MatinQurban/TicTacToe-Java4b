@@ -56,19 +56,35 @@ public class GameController {
         });
     }
 
+    protected Stage getStage() {
+        return (Stage) activePlayerLabel.getScene().getWindow();
+    }
+
     protected void showSettings() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("settings-view.fxml"));
         Stage settingsStage = new Stage();
         settingsStage.setScene(new Scene(loader.load()));
         ((SettingsController) loader.getController()).initData(this, gameState);
-        settingsStage.initModality(Modality.APPLICATION_MODAL);
-        settingsStage.initStyle(StageStyle.UNDECORATED);
-        settingsStage.show();
+        setSideMenuStage(settingsStage);
+    }
 
-        Stage primaryStage = (Stage) activePlayerLabel.getScene().getWindow();
+    protected void showGameOver(String gameWinText) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("endScreen.fxml"));
+        Stage gameOverStage = new Stage();
+        gameOverStage.setScene(new Scene(loader.load()));
+        ((EndGameController) loader.getController()).initData(this, gameWinText);
+        setSideMenuStage(gameOverStage);
+    }
+
+    protected void setSideMenuStage(Stage sideMenuStage) {
+        sideMenuStage.initModality(Modality.APPLICATION_MODAL);
+        sideMenuStage.initStyle(StageStyle.UNDECORATED);
+        sideMenuStage.show();
+
+        Stage primaryStage = getStage();
         primaryStage.getScene().getRoot().setOpacity(0.3);
-        settingsStage.setX(primaryStage.getX() + primaryStage.getWidth() / 2.0 - settingsStage.getWidth() / 2.0);
-        settingsStage.setY(primaryStage.getY() + primaryStage.getHeight() / 2.0 - settingsStage.getHeight() / 2.0);
+        sideMenuStage.setX(primaryStage.getX() + 40);
+        sideMenuStage.setY(primaryStage.getY() + primaryStage.getHeight() / 2.0 - sideMenuStage.getHeight() / 2.0);
     }
 
     public void startGame(Player firstPlayer) throws IOException {
@@ -156,11 +172,8 @@ public class GameController {
             resultMessage = "It's a tie!";
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("endScreen.fxml"));
-        stage.setScene(new Scene(loader.load()));
-        EndGameController controller = loader.getController();
-        controller.setCaller(this);
-        controller.displayWinnerText(resultMessage);
+        activePlayerLabel.setText(resultMessage);
+        showGameOver(resultMessage);
     }
 
     private void animateError(StackPane cell) {

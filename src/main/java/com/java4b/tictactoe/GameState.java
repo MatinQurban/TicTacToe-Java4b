@@ -28,8 +28,6 @@ public class GameState {
 
     public Player getPlayer2() { return player2; }
 
-    public int getNumMoves() { return numMoves; }
-
     public boolean isCellEmpty(int index) {
         return board.getCell(index) == Avatar.NONE;
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.SettingsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.SettingsController">
    <children>
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="616.0" text="Settings">
          <font>
@@ -18,26 +19,30 @@
          </font>
       </Label>
       <Separator prefHeight="13.0" prefWidth="398.0" />
-      <HBox prefHeight="45.0" prefWidth="247.0">
+      <AnchorPane prefHeight="51.0" prefWidth="361.0">
          <children>
-            <AnchorPane prefHeight="45.0" prefWidth="375.0">
-               <children>
-                  <Label layoutX="34.0" layoutY="14.0" prefHeight="45.0" prefWidth="121.0" text="Select who goes first" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                  <ToggleButton fx:id="player1Toggle" layoutX="168.0" layoutY="11.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" selected="true" text="Player1Name">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="selectFirstToggle" />
-                     </toggleGroup>
-                  </ToggleButton>
-                  <ToggleButton fx:id="player2Toggle" layoutX="213.0" layoutY="11.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Player2Name" toggleGroup="$selectFirstToggle" AnchorPane.rightAnchor="10.0" />
-               </children>
-            </AnchorPane>
+            <Label layoutY="-4.0" prefHeight="45.0" prefWidth="121.0" text="Select who goes first" AnchorPane.leftAnchor="10.0" />
+         </children>
+      </AnchorPane>
+      <HBox prefHeight="26.0" prefWidth="200.0">
+         <children>
+            <ToggleButton fx:id="player1Toggle" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" selected="true" text="Player1Name">
+               <toggleGroup>
+                  <ToggleGroup fx:id="selectFirstToggle" />
+               </toggleGroup>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ToggleButton>
+            <ToggleButton fx:id="player2Toggle" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Player2Name" toggleGroup="$selectFirstToggle" />
          </children>
       </HBox>
+      <AnchorPane prefHeight="24.0" prefWidth="361.0" />
       <HBox prefHeight="277.0" prefWidth="361.0">
          <children>
-            <AnchorPane prefHeight="76.0" prefWidth="362.0">
+            <AnchorPane prefHeight="200.0" prefWidth="361.0">
                <children>
-                  <Button fx:id="startButton" layoutX="106.0" layoutY="52.0" mnemonicParsing="false" onMouseClicked="#onStartButtonClicked" prefHeight="26.0" prefWidth="151.0" text="Start Game" AnchorPane.bottomAnchor="10.0" />
+                  <Button fx:id="startButton" layoutX="36.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#onStartButtonClicked" prefHeight="26.0" prefWidth="151.0" text="Start Game" AnchorPane.bottomAnchor="14.0" />
                </children>
             </AnchorPane>
          </children>

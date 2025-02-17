@@ -19,10 +19,15 @@ public class EndGameController {
 
     private GameController caller;
 
+    public void initData(GameController caller, String gameWinText) {
+        this.caller = caller;
+        winnerText.setText(gameWinText);
+    }
+
     @FXML
     protected void switchMenu(ActionEvent event) throws IOException {
 
-        Stage stage = (Stage) winnerText.getScene().getWindow();
+        Stage callerStage = caller.getStage();
 
         // Get the source of which menu button was clicked
         String menuID = ((Button) event.getSource()).getId();
@@ -30,27 +35,18 @@ public class EndGameController {
         // Based on which menu button was clicked, switch to that corresponding fxml file
         switch(menuID){
             case "PA":
-//                TicTacToeApplication.switchScene("two-player-game-view", stage);
                 if (caller instanceof SinglePlayerGameController) {
-                    MainMenuController.loadGame(stage, new SinglePlayerGameController());
+                    MainMenuController.loadGame(callerStage, new SinglePlayerGameController());
                 } else if (caller instanceof TwoPlayerGameController) {
-                    MainMenuController.loadGame(stage, new TwoPlayerGameController());
+                    MainMenuController.loadGame(callerStage, new TwoPlayerGameController());
                 }
 
                 break;
             case "RTM":
-                TicTacToeApplication.switchScene("MainMenu", stage);
+                TicTacToeApplication.switchScene("MainMenu", callerStage);
                 break;
         }
-    }
 
-    @FXML
-    void displayWinnerText(String gameWinText)
-    {
-        winnerText.setText(gameWinText);
-    }
-
-    public void setCaller(GameController caller) {
-        this.caller = caller;
+        ((Stage) winnerText.getScene().getWindow()).close();
     }
 }
