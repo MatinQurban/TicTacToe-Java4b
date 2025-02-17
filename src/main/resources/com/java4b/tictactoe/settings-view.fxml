@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.SettingsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="179.0" stylesheets="@settings-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.SettingsController">
    <children>
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="616.0" text="Settings">
          <font>
@@ -26,7 +26,7 @@
       </AnchorPane>
       <HBox prefHeight="26.0" prefWidth="200.0">
          <children>
-            <ToggleButton fx:id="player1Toggle" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" selected="true" text="Player1Name">
+            <ToggleButton fx:id="player1Toggle" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" selected="true" text="Player1Name">
                <toggleGroup>
                   <ToggleGroup fx:id="selectFirstToggle" />
                </toggleGroup>
@@ -34,7 +34,7 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </ToggleButton>
-            <ToggleButton fx:id="player2Toggle" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Player2Name" toggleGroup="$selectFirstToggle" />
+            <ToggleButton fx:id="player2Toggle" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Player2Name" toggleGroup="$selectFirstToggle" />
          </children>
       </HBox>
       <AnchorPane prefHeight="24.0" prefWidth="361.0" />
@@ -42,7 +42,7 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="361.0">
                <children>
-                  <Button fx:id="startButton" layoutX="36.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#onStartButtonClicked" prefHeight="26.0" prefWidth="151.0" text="Start Game" AnchorPane.bottomAnchor="14.0" />
+                  <Button fx:id="startButton" layoutX="14.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#onStartButtonClicked" prefHeight="26.0" prefWidth="151.0" text="Start Game" AnchorPane.bottomAnchor="20.0" />
                </children>
             </AnchorPane>
          </children>

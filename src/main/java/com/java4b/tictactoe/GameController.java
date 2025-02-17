@@ -149,12 +149,14 @@ public class GameController {
     }
 
     protected void setCursorAsAvatar() {
-        String fileName = gameState.getActivePlayer().getAvatar().getFileName();
-        Image image = new Image(getClass().getResource(fileName).toString(), 50, 50, true, false);
-        Scene scene = activePlayerLabel.getScene();
+        if (((GridPane) cell0.getParent()).isHover()) {
+            String fileName = gameState.getActivePlayer().getAvatar().getFileName();
+            Image image = new Image(getClass().getResource(fileName).toString(), 50, 50, true, false);
+            Scene scene = activePlayerLabel.getScene();
 
-        // Change the cursor to the active player's avatar and move the cursor's "hotspot" to the center of the image
-        scene.setCursor(new ImageCursor(image, image.getWidth() / 2.0, image.getHeight() / 2.0));
+            // Change the cursor to the active player's avatar and move the cursor's "hotspot" to the center of the image
+            scene.setCursor(new ImageCursor(image, image.getWidth() / 2.0, image.getHeight() / 2.0));
+        }
     }
 
     protected void setActivePlayerLabel() {

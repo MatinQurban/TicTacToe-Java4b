@@ -1,0 +1,25 @@
+/*.root {*/
+/*    -fx-background-color: #fae8b4;*/
+/*}*/
+
+/*.toggle-button {*/
+/*    -fx-background-color: #C0C0C0;*/
+/*    -fx-border-radius: 5px;*/
+/*}*/
+
+/*.toggle-button:selected {*/
+/*    !*-fx-background-color: #059dc0;*!*/
+/*    -fx-background-color: #04d4f0;*/
+/*    -fx-text-fill: #FFFFFF;*/
+/*}*/
+
+.button {
+    -fx-background-color: #50C878;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 5px;
+}
+.button:hover {
+    -fx-background-color: #2D8F4E; /* Hover color */
+    -fx-cursor: hand; /* Change cursor to hand */
+}
