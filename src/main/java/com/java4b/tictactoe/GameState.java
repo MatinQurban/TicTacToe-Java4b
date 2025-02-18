@@ -69,25 +69,30 @@ public class GameState {
         int depth = 9 - numMoves;
         int maxEval = -10;
         int indexOfMax = 0;
+        int alpha = -10;
+        int beta = 10;
 
         for (int i = 0; i < 9; ++i) {
             if (isCellEmpty(i)) {
                 playCell(i);
 
-                int eval = minimax(depth - 1, false);
+                int eval = minimax(depth - 1, alpha, beta, false);
                 if (eval > maxEval) {
                     maxEval = eval;
                     indexOfMax = i;
                 }
 
                 undoPlayCell(i);
+                alpha = Math.max(alpha, eval);
+                if (beta <= alpha)
+                    break;
             }
         }
 
         return indexOfMax;
     }
 
-    private int minimax(int depth, boolean maximizingPlayer) {
+    private int minimax(int depth, int alpha, int beta, boolean maximizingPlayer) {
         if (isAWin())
             return (maximizingPlayer ? (depth + 1) * -1 : (depth + 1));
         else if (depth == 0)
@@ -99,11 +104,13 @@ public class GameState {
             for (int i = 0; i < 9; ++i) {
                 if (isCellEmpty(i)) {
                     playCell(i);
-
-                    int eval = minimax(depth - 1, false);
+                    int eval = minimax(depth - 1, alpha, beta, false);
                     maxEval = Math.max(eval, maxEval);
+                    alpha = Math.max(alpha, eval);
 
                     undoPlayCell(i);
+                    if (beta <= alpha)
+                        break;
                 }
             }
 
@@ -115,11 +122,13 @@ public class GameState {
             for (int i = 0; i < 9; ++i) {
                 if (isCellEmpty(i)) {
                     playCell(i);
-
-                    int eval = minimax(depth - 1, true);
+                    int eval = minimax(depth - 1, alpha, beta, true);
                     minEval = Math.min(eval, minEval);
 
                     undoPlayCell(i);
+                    beta = Math.min(beta, eval);
+                    if (beta <= alpha)
+                        break;
                 }
             }
 
