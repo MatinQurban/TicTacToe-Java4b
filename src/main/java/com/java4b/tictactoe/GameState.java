@@ -56,6 +56,61 @@ public class GameState {
             activePlayer = player2;
     }
 
+    private int computerNextMove() {
+        //this function will loop through the board and evaluate if placing an avatar
+        //at the current cell is the best move. It is the best move if it leads to a win
+        //in the fewest moves
+        int moveEval = -100000;
+        int nextMove = -1;
+
+        for (int i = 1; i <= 9; i++) {
+            if(isCellEmpty(i))
+            {
+                //call minimax
+                moveEval = minimax(i, 0, true); // check all possible outcomes for this position
+                if (moveEval >= 0) // if the move will lead to a loss, do not make the move
+                {
+                    board.setCell(i, activePlayer.getAvatar());
+                }
+            }
+        }
+    }
+
+    private int minimax(int currentPos, int depth, boolean maximizingPlayer)
+    {
+        if (checkRowWin() || checkColWin() || checkDiagWin()) {
+            return maximizingPlayer ? depth*1 : depth*-1;
+        }
+
+        if (depth == 9) {
+            return 0;
+        }
+
+        if (maximizingPlayer) {
+            int maxEval = Integer.MIN_VALUE;
+            for (int i = 1; i <= 9; i++) {
+            if (isCellEmpty(i)) {
+                board.setCell(i, activePlayer.getAvatar());
+                int eval = minimax(i, depth + 1, false);
+                board.setCell(i, Avatar.NONE);
+                maxEval = Math.max(maxEval, eval);
+            }
+            }
+            return maxEval;
+        } else {
+            int minEval = Integer.MAX_VALUE;
+            for (int i = 1; i <= 9; i++) {
+            if (isCellEmpty(i)) {
+                board.setCell(i, activePlayer.getAvatar());
+                int eval = minimax(i, depth + 1, true);
+                board.setCell(i, Avatar.NONE);
+                minEval = Math.min(minEval, eval);
+            }
+            }
+            return minEval;
+        }
+    }
+
     boolean checkRowWin() {
         int[] startCheck = {0, 3, 6}; // Adjusted for 0-based index
 
