@@ -90,7 +90,7 @@ public class GameController {
     @FXML
     protected void switchToMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage) activePlayerLabel.getScene().getWindow();
-        TicTacToeApplication.switchScene("MainMenu", stage);
+        TicTacToeApplication.switchScene("MainMenu", stage, null);
     }
 
     private void setCursorAsAvatar() {

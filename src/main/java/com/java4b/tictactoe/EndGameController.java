@@ -29,10 +29,10 @@ public class EndGameController {
         // Based on which menu button was clicked, switch to that corresponding fxml file
         switch(menuID){
             case "PA":
-                TicTacToeApplication.switchScene("game-view", stage);
+                TicTacToeApplication.switchScene("game-view", stage, null);
                 break;
             case "RTM":
-                TicTacToeApplication.switchScene("MainMenu", stage);
+                TicTacToeApplication.switchScene("MainMenu", stage, null);
                 break;
         }
     }

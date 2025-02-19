@@ -35,14 +35,14 @@ public class MainMenuController{
         // Based on which menu button was clicked, switch to that corresponding fxml file
         switch(menuID){
             case "SP":
-                TicTacToeApplication.switchScene("game-view", stage);
+                TicTacToeApplication.switchScene("game-view", stage, null);
                 break;
             case "LM":
-                TicTacToeApplication.switchScene("game-view", stage);
-                //TicTacToeApplication.switchScene("local-multiplayer-game-view", stage);
+                TicTacToeApplication.switchScene("game-view", stage, null);
+                //TicTacToeApplication.switchScene("local-multiplayer-game-view", stage, null);
                 break;
             case "OM":
-                //TicTacToeApplication.switchScene("online-multiplayer-game-view", stage);
+                //TicTacToeApplication.switchScene("online-multiplayer-game-view", stage, null);
                 break;
         }
     }
