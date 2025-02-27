@@ -9,6 +9,15 @@ public class SinglePlayerGameController extends GameController {
 
     @Override
     public void initialize() {
+//        if(easy_toggle)
+//        {
+//            ai = new EasyAI();
+//        }
+//        else
+//        {
+//            ai = new HardAI();
+//        }
+
         gameState = new GameState("Player 1", Avatar.ANCHOR, "Computer", Avatar.LIFE_SAVER);
         super.initialize();
 
