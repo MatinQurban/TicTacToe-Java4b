@@ -28,6 +28,10 @@ public class GameState {
 
     public Player getPlayer2() { return player2; }
 
+    public int getNumMoves() { return numMoves; }
+
+    public Board getBoard() { return board; } //
+
     public boolean isCellEmpty(int index) {
         return board.getCell(index) == Avatar.NONE;
     }
@@ -66,74 +70,8 @@ public class GameState {
     }
 
     public int getComputerMove() {
-        int depth = 9 - numMoves;
-        int maxEval = -10;
-        int indexOfMax = 0;
-        int alpha = -10;
-        int beta = 10;
-
-        for (int i = 0; i < 9; ++i) {
-            if (isCellEmpty(i)) {
-                playCell(i);
-
-                int eval = minimax(depth - 1, alpha, beta, false);
-                if (eval > maxEval) {
-                    maxEval = eval;
-                    indexOfMax = i;
-                }
-
-                undoPlayCell(i);
-                alpha = Math.max(alpha, eval);
-                if (beta <= alpha)
-                    break;
-            }
-        }
-
-        return indexOfMax;
-    }
-
-    private int minimax(int depth, int alpha, int beta, boolean maximizingPlayer) {
-        if (isAWin())
-            return (maximizingPlayer ? (depth + 1) * -1 : (depth + 1));
-        else if (depth == 0)
-            return 0;
-
-        if (maximizingPlayer) {
-            int maxEval = -10;
-
-            for (int i = 0; i < 9; ++i) {
-                if (isCellEmpty(i)) {
-                    playCell(i);
-                    int eval = minimax(depth - 1, alpha, beta, false);
-                    maxEval = Math.max(eval, maxEval);
-                    alpha = Math.max(alpha, eval);
-
-                    undoPlayCell(i);
-                    if (beta <= alpha)
-                        break;
-                }
-            }
-
-            return maxEval;
-        }
-        else {
-            int minEval = 10;
-
-            for (int i = 0; i < 9; ++i) {
-                if (isCellEmpty(i)) {
-                    playCell(i);
-                    int eval = minimax(depth - 1, alpha, beta, true);
-                    minEval = Math.min(eval, minEval);
-
-                    undoPlayCell(i);
-                    beta = Math.min(beta, eval);
-                    if (beta <= alpha)
-                        break;
-                }
-            }
-
-            return minEval;
-        }
+        // call ai interface move
+        return 0; // pplacehlder
     }
 
     private void randomizeWhoGoesFirst() {

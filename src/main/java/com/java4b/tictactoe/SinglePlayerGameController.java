@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 
 public class SinglePlayerGameController extends GameController {
+    private AIPlayer ai;
 
     @Override
     public void initialize() {
@@ -19,7 +20,7 @@ public class SinglePlayerGameController extends GameController {
         super.startGame(firstPlayer);
 
         if ((gameState.getActivePlayer().getName()).equals("Computer")) {
-            int computerMove = gameState.getComputerMove();
+            int computerMove = ai.getMove(gameState);
             playCell(computerMove);
         }
     }
@@ -29,7 +30,7 @@ public class SinglePlayerGameController extends GameController {
         super.setupNextTurn();
 
         if (gameState.getActivePlayer().getName().equals("Computer")) {
-            int computerMove = gameState.getComputerMove();
+            int computerMove = ai.getMove(gameState);
             playCell(computerMove);
         }
     }
