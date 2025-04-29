@@ -4,11 +4,19 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class Client extends Thread {
+    private final String SERVER_IP;
+    private final int SERVER_PORT;
 
-    public static void main(String[] args) {
-        String hostname = "localhost";
-        int port = 12345;
+    Client(String Server_IP, int Server_Port) {
+        SERVER_IP = Server_IP;
+        SERVER_PORT = Server_Port;
+        start();
+    }
+
+    public void run() {
+        String hostname = SERVER_IP;
+        int port = SERVER_PORT;
 
         try (Socket socket = new Socket(hostname, port)) {
             System.out.println("Connected to server!");
@@ -18,8 +26,9 @@ public class Client {
 
             Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Register your channel name: ");
-            String myChannel = scanner.nextLine();
+//            System.out.print("Register your channel name: ");
+//            String myChannel = scanner.nextLine();
+
 
             // Send initial registration
             output.writeObject(new Message(myChannel, "", "REGISTER"));

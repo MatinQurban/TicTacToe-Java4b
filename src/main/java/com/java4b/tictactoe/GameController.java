@@ -87,6 +87,7 @@ public class GameController {
         sideMenuStage.setY(primaryStage.getY() + primaryStage.getHeight() / 2.0 - sideMenuStage.getHeight() / 2.0);
     }
 
+    //NOTE: Sort later
     public void startGame(Player firstPlayer) throws IOException {
         activePlayerLabel.getScene().getRoot().setOpacity(1.0);
         gameState.setActivePlayer(firstPlayer);
