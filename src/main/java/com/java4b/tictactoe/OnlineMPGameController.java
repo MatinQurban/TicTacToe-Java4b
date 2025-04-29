@@ -1,6 +1,6 @@
 package com.java4b.tictactoe;
 import java.net.Socket;
-
+// This class is called from the MainMenuController when the user clicks on Online Multiplayer Option
 public class OnlineMPGameController extends GameController {
     private static final String SERVER_IP = "localhost"; // or the IP address where your Router is running
     private static final int SERVER_PORT = 12345;
