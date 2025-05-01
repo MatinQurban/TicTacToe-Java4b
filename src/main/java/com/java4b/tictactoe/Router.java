@@ -3,28 +3,47 @@ package com.java4b.tictactoe;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class Router implements Runnable{
-    private final int port;
+public class Router {
+    private static final int PORT = 11111;
+    private Map<String, List<ClientConnection>> clientsByChannel = new ConcurrentHashMap<>();
 
-    public Router(int port) {
-        this.port = port;
+    public static void main(String[] args) {
+        Router router = new Router();
+        router.start();
     }
 
-    @Override
-    public void run() {
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Server started. Waiting for clients...");
+    public void broadcast(Message message) {
+        List<ClientConnection> receivers = clientsByChannel.get(message.getChannel());
+        for (ClientConnection client : receivers) {
+            client.sendMessage(message);
+        }
+    }
+
+    public void registerClient(String channel, ClientConnection connection) {
+        clientsByChannel.putIfAbsent(channel, new ArrayList<>());
+        clientsByChannel.get(channel).add(connection);
+
+        System.out.println("New clientConnection registered for channel:  " + channel + "\n" + clientsByChannel.get(channel));
+    }
+
+    public void start() {
+        try(ServerSocket serverSocket = new ServerSocket(PORT)) {
+            System.out.println("Server started on " + PORT);
+            System.out.println("Waiting for connections...");
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected: " + clientSocket.getInetAddress());
-
-                new Thread(new ClientHandler(clientSocket)).start();
+                ClientConnection connection = new ClientConnection(clientSocket, this);
+                connection.start();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
 }

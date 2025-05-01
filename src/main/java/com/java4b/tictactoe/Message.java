@@ -1,25 +1,21 @@
 package com.java4b.tictactoe;
-import java.io.Serial;
+
 import java.io.Serializable;
 
 public class Message implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
 
-    private final String type;
-    private final String channel; // Channel to which the message is sent
-    private final String text;
-
-    // Main constructor
-    public Message(String channel, String text, String type) {
-        this.channel = channel;
-        this.text = text;
-        this.type = type;
+    // Maybe use an enum for the message type instead of strings
+    public enum Type {
+        REGISTRATION, JOIN_QUEUE
     }
 
-    // Simpler constructor that defaults type to "Message"
-    public Message(String channel, String text) {
-        this(channel, text, "Message");
+    protected String channel;
+    protected String type;
+    private static final long serialVerisionUID = 1L;
+
+    public Message(String channel, String type) {
+        this.channel = channel;
+        this.type = type;
     }
 
     public String getType() {
@@ -30,12 +26,8 @@ public class Message implements Serializable {
         return channel;
     }
 
-    public String getText() {
-        return text;
-    }
-
     @Override
     public String toString() {
-        return "To: " + channel + ": " + text;
+        return "Type: " + type + "\nTo: " + channel;
     }
 }

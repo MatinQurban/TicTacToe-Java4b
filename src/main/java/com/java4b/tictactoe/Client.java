@@ -1,72 +1,41 @@
 package com.java4b.tictactoe;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
-public abstract class Client implements Runnable {
-    private final String SERVER_IP;
-    private final int SERVER_PORT;
+// Client is an abstract class with a pure virtual method
+public abstract class Client {
+    protected static final String SERVER_IP = "localhost";
+    protected static final int SERVER_PORT = 11111;
 
-    Client(String Server_IP, int Server_Port) {
-        SERVER_IP = Server_IP;
-        SERVER_PORT = Server_Port;
-    }
+    protected Socket socket;
+    protected ObjectOutputStream out;
+    protected ObjectInputStream in;
 
-    public void run() {
-        String hostname = SERVER_IP;
-        int port = SERVER_PORT;
+    public Client() {
+        try {
+            socket = new Socket(SERVER_IP, SERVER_PORT);
+            out = new ObjectOutputStream(this.socket.getOutputStream());
+            in = new ObjectInputStream(this.socket.getInputStream());
 
-        try (Socket socket = new Socket(hostname, port)) {
-            System.out.println("Connected to server!");
-
-            ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("Register your channel name: ");
-            String myChannel = scanner.nextLine();
-
-
-            // Send initial registration
-            output.writeObject(new Message(myChannel, "", "REGISTER"));
-            output.flush();
-
-            // Separate thread to listen for incoming messages
-            // Create a function to spawn a listener and override that function for every child class
-            new Thread(() -> {
-                try {
-                    while (true) {
-                        Message message = (Message) input.readObject();
-                        System.out.println("\nMessage from " + message.getType() + ": " + message.getText());
-                    }
-                } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-
-            // Main thread sends messages
-            while (true) {
-                System.out.print("Send to channel: ");
-                String targetChannel = scanner.nextLine();
-
-                System.out.print("Enter text: ");
-                String text = scanner.nextLine();
-
-                // type could be something like "CHAT", "MOVE", whatever
-                Message message = new Message(targetChannel, text, myChannel);
-                output.writeObject(message);
-                output.flush();
-            }
-
+            new Thread(this::listenForMessages).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // We can override the listener thread in each child class
-    // This function should start a listener thread within the Client's run method
-    // Which listens for the component-specific messages and handles them accordingly
-    public abstract void listener();
+    protected void sendMessage(Message message) {
+        try {
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to send message to clientConnection");
+        }
+    }
+
+    // Pure virtual method
+    protected abstract void listenForMessages();
 }

@@ -1,21 +1,12 @@
 package com.java4b.tictactoe;
 import java.net.Socket;
 // This class is called from the MainMenuController when the user clicks on Online Multiplayer Option
-public class OnlineMPGameController extends GameController {
+public class OnlineMPGameController {
     private static final String SERVER_IP = "localhost"; // or the IP address where your Router is running
     private static final int SERVER_PORT = 12345;
 
-    @Override
-    public void initialize() {
-        //gameState = new GameState("Player 1", Avatar.ANCHOR, "Player 2", Avatar.LIFE_SAVER);
-        // game state = MESSAGE retrieveGameState --> goes to playerClient
-        super.initialize(); // TODO: functionality for one game in server architecture
-        gameModeLabel.setText("Online Player Game");
-        Client playerClient = new Client(SERVER_IP, SERVER_PORT);
-        playerClient.start();
+    PlayerClient playerclient = new PlayerClient();
 
-
-    }
 }
 
 //Runnable playerClient = () -> {

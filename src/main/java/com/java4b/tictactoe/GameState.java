@@ -136,7 +136,7 @@ public class GameState {
         }
     }
 
-    private void randomizeWhoGoesFirst() {
+    public void randomizeWhoGoesFirst() {
         Random random = new Random();
 
         if (random.nextInt(2) == 0)
