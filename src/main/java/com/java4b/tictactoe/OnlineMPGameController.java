@@ -8,8 +8,9 @@ public class OnlineMPGameController extends GameController {
     @Override
     public void initialize() {
         //gameState = new GameState("Player 1", Avatar.ANCHOR, "Player 2", Avatar.LIFE_SAVER);
+        // game state = MESSAGE retrieveGameState --> goes to playerClient
         super.initialize(); // TODO: functionality for one game in server architecture
-        gameModeLabel.setText("Two Player Game");
+        gameModeLabel.setText("Online Player Game");
         Client playerClient = new Client(SERVER_IP, SERVER_PORT);
         playerClient.start();
 
