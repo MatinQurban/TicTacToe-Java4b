@@ -4,14 +4,13 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client extends Thread {
+public abstract class Client implements Runnable {
     private final String SERVER_IP;
     private final int SERVER_PORT;
 
     Client(String Server_IP, int Server_Port) {
         SERVER_IP = Server_IP;
         SERVER_PORT = Server_Port;
-        start();
     }
 
     public void run() {
@@ -26,8 +25,8 @@ public class Client extends Thread {
 
             Scanner scanner = new Scanner(System.in);
 
-//            System.out.print("Register your channel name: ");
-//            String myChannel = scanner.nextLine();
+            System.out.print("Register your channel name: ");
+            String myChannel = scanner.nextLine();
 
 
             // Send initial registration
@@ -35,6 +34,7 @@ public class Client extends Thread {
             output.flush();
 
             // Separate thread to listen for incoming messages
+            // Create a function to spawn a listener and override that function for every child class
             new Thread(() -> {
                 try {
                     while (true) {
@@ -64,4 +64,9 @@ public class Client extends Thread {
             e.printStackTrace();
         }
     }
+
+    // We can override the listener thread in each child class
+    // This function should start a listener thread within the Client's run method
+    // Which listens for the component-specific messages and handles them accordingly
+    public abstract void listener();
 }
