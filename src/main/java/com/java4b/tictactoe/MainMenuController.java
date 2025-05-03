@@ -42,6 +42,7 @@ public class MainMenuController{
             case "OM":
                 // Call OnlineMPGameController;
                 //TicTacToeApplication.loadGame("online-multiplayer-game-view", stage);
+                new PlayerClient(stage);
                 break;
         }
     }

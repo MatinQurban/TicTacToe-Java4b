@@ -11,11 +11,11 @@ public class GameControllerClient extends Client {
     private Map<String, GameState> gameStateForChannel = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
-        new GameControllerClient();
+        new GameControllerClient("localhost", 11111);
     }
 
-    public GameControllerClient() {
-        super();
+    public GameControllerClient(String serverIP, int serverPort) {
+        super(serverIP, serverPort);
 
         sendMessage(new RegistrationMessage("/lobby"));
         sendMessage(new RegistrationMessage("/create-new-game"));

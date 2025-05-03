@@ -1,5 +1,9 @@
 package com.java4b.tictactoe;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -8,27 +12,17 @@ public class PlayerClient extends Client {
     String gameChannel;
 
     // Temporary unique identifier - might want a more robust solution later
-    String playerName;
+    String gamerTag;
     boolean isNameValid;
 
-    public static void main(String[] args) {
-        new PlayerClient();
-    }
+    JoinQueueController joinQueueController;
 
-    public PlayerClient() {
-        super();
-        playerName = getGamerTag();
-
-        sendMessage(new RegistrationMessage("/lobby"));
-        sendMessage(new JoinQueueMessage(playerName));
-    }
-
-    private String getGamerTag() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your gamer tag: ");
-        String name = scanner.nextLine();
-
-        return name;
+    public PlayerClient(Stage mainStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("join-queue-view.fxml"));
+        Stage joinQueueStage = new Stage();
+        joinQueueStage.setScene(new Scene(loader.load()));
+        joinQueueController = loader.getController();
+        joinQueueController.initData(this, mainStage);
     }
 
     @Override
@@ -40,18 +34,18 @@ public class PlayerClient extends Client {
                 switch (message.getType()) {
                     case "NAME_UNAVAILABLE":
 
-                        // If the playerName was already validated then this player is not the intended recipient
-                        if (((NameUnavailableMessage) message).getPlayerName().equals(playerName) && !isNameValid)
+                        // If the gamerTag was already validated then this player is not the intended recipient
+                        if (((NameUnavailableMessage) message).getPlayerName().equals(gamerTag) && !isNameValid)
                             processNameUnavailableMessage();
                         break;
 
                     case "SEARCHING_FOR_GAME":
-                        if (((SearchingForGameMessage) message).getPlayerName().equals(playerName))
+                        if (((SearchingForGameMessage) message).getPlayerName().equals(gamerTag))
                             processSearchingForGameMessage();
                         break;
 
                     case "GAME_FOUND":
-                        if (((GameFoundMessage) message).getPlayerName().equals(playerName))
+                        if (((GameFoundMessage) message).getPlayerName().equals(gamerTag))
                             processGameFoundMessage((GameFoundMessage) message);
                         break;
                     default:
@@ -64,13 +58,12 @@ public class PlayerClient extends Client {
     }
 
     private void processNameUnavailableMessage() {
-        System.out.println("ERROR: That name is already taken, please try a different one\n");
-        playerName = getGamerTag();
-        sendMessage(new JoinQueueMessage(playerName));
+        joinQueueController.processNameUnavailableMessage(gamerTag);
     }
 
     private void processSearchingForGameMessage() {
         isNameValid = true;
+        joinQueueController.processSearchingForGameMessage();
         System.out.println("Searching for game ...");
     }
 
@@ -79,5 +72,14 @@ public class PlayerClient extends Client {
         System.out.println("\nGame found!");
         System.out.println("\tGame Channel: " + gameChannel);
         System.out.println("\tAvatar: " + message.getAvatar());
+
+        joinQueueController.processGameFoundMessage();
+    }
+
+    public void respondToFindGameClicked(String serverIP, int serverPort, String gamerTag) {
+        connectToRouter(serverIP, serverPort);
+        this.gamerTag = gamerTag;
+        sendMessage(new RegistrationMessage("/lobby"));
+        sendMessage(new JoinQueueMessage(this.gamerTag));
     }
 }

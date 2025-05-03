@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="249.0" stylesheets="@join-queue-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.JoinQueueController">
+   <children>
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="650.0" text="Online Match">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Separator prefHeight="13.0" prefWidth="398.0" />
+      <AnchorPane prefHeight="1.0" prefWidth="249.0">
+         <children>
+            <HBox prefHeight="29.0" prefWidth="249.0">
+               <children>
+                  <Label prefHeight="29.0" prefWidth="112.0" text="Server Address:">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="serverAddressField" prefHeight="26.0" prefWidth="125.0" text="localhost">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </AnchorPane>
+      <AnchorPane prefHeight="33.0" prefWidth="249.0">
+         <children>
+            <HBox prefHeight="29.0" prefWidth="249.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label prefHeight="29.0" prefWidth="112.0" text="Port Number:">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="portNumberField" prefHeight="26.0" prefWidth="125.0" text="11111">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </AnchorPane>
+      <AnchorPane prefHeight="86.0" prefWidth="249.0">
+         <children>
+            <HBox prefHeight="86.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Label fx:id="networkErrorLabel" alignment="TOP_LEFT" prefHeight="86.0" prefWidth="244.0" styleClass="label-error-message" text="Network Error Message" wrapText="true" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="38.0" prefWidth="249.0">
+         <children>
+            <HBox prefHeight="29.0" prefWidth="249.0">
+               <children>
+                  <Label prefHeight="29.0" prefWidth="112.0" text="Your Gamer Tag:">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="gamerTagField" prefHeight="26.0" prefWidth="125.0">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </AnchorPane>
+      <AnchorPane prefHeight="31.0" prefWidth="249.0">
+         <children>
+            <HBox prefHeight="49.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Label fx:id="nameErrorLabel" alignment="TOP_LEFT" prefHeight="79.0" prefWidth="229.0" styleClass="label-error-message" text="Invalid Name Error Message" wrapText="true" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="24.0" prefWidth="361.0">
+         <children>
+            <HBox prefHeight="38.0" prefWidth="249.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <StackPane prefHeight="38.0" prefWidth="239.0">
+                     <children>
+                        <Label fx:id="searchingLabel" alignment="CENTER" prefHeight="53.0" prefWidth="229.0" styleClass="label-searching" text="SEARCHING FOR GAME . . .">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="gameFoundLabel" alignment="CENTER" prefHeight="53.0" prefWidth="229.0" styleClass="label-game-found" text="GAME FOUND!" visible="false">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin></AnchorPane>
+      <AnchorPane prefHeight="72.0" prefWidth="249.0">
+         <children>
+            <HBox prefHeight="72.0" prefWidth="249.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="mainMenuButton" mnemonicParsing="false" onMouseClicked="#onMainMenuButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-main-menu" text="Main Menu" />
+                  <Pane prefHeight="200.0" prefWidth="80.0" />
+                  <StackPane prefHeight="150.0" prefWidth="130.0">
+                     <children>
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onMouseClicked="#onFindGameButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-cancel" text="Cancel" />
+                        <Button fx:id="findGameButton" mnemonicParsing="false" onMouseClicked="#onFindGameButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-find-match" text="Find Game" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

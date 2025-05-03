@@ -11,11 +11,11 @@ public class GameMatcherClient extends Client {
     private Queue<String> playerQueue = new ConcurrentLinkedQueue<>();
 
     public static void main(String[] args) {
-        new GameMatcherClient();
+        new GameMatcherClient("localhost", 11111);
     }
 
-    public GameMatcherClient() {
-        super();
+    public GameMatcherClient(String serverIP, int serverPort) {
+        super(serverIP, serverPort);
 
         sendMessage(new RegistrationMessage("/lobby"));
         sendMessage(new RegistrationMessage("/create-new-game"));

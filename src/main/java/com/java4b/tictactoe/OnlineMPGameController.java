@@ -5,7 +5,7 @@ public class OnlineMPGameController {
     private static final String SERVER_IP = "localhost"; // or the IP address where your Router is running
     private static final int SERVER_PORT = 12345;
 
-    PlayerClient playerclient = new PlayerClient();
+//    PlayerClient playerclient = new PlayerClient();
 
 }
 
