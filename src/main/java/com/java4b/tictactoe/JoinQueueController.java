@@ -53,7 +53,7 @@ public class JoinQueueController {
         joinQueueStage.initStyle(StageStyle.UNDECORATED);
         joinQueueStage.show();
 
-        mainStage.getScene().getRoot().setVisible(false);
+//        mainStage.getScene().getRoot().setVisible(false);
         joinQueueStage.setX(mainStage.getX() + mainStage.getWidth() / 2.0 - joinQueueStage.getWidth() / 2.0);
         joinQueueStage.setY(mainStage.getY() + mainStage.getHeight() / 2.0 - joinQueueStage.getHeight() / 2.0 + 10);
     }
@@ -76,30 +76,18 @@ public class JoinQueueController {
         }
 
         playerClient.respondToFindGameClicked(serverAddress, Integer.parseInt(portNumberText), gamerTag);
-
-//        networkErrorLabel.setVisible(false);
-//        nameErrorLabel.setVisible(false);
-//        findGameButton.setDisable(true);
-//        findGameButton.setVisible(false);
-//        searchingLabel.setVisible(true);
-//        cancelButton.setVisible(true);
-//        cancelButton.setDisable(false);
-//        serverAddressField.setDisable(true);
-//        portNumberField.setDisable(true);
-//        gamerTagField.setDisable(true);
-
-//        Player firstPlayer = (player1Toggle.isSelected() ? gameState.getPlayer1() : gameState.getPlayer2());
-//        Stage stage = (Stage) startButton.getScene().getWindow();
-//        stage.close();
-//
-//        caller.startGame(firstPlayer);
     }
 
     @FXML
-    protected void onMainMenuButtonClicked() {
+    protected void onCancelButtonClicked() {
+
+    }
+
+    @FXML
+    protected void onMainMenuButtonClicked() throws IOException {
         Stage stage = (Stage) findGameButton.getScene().getWindow();
         stage.close();
-        mainStage.getScene().getRoot().setVisible(true);
+        TicTacToeApplication.switchScene("MainMenu", mainStage);
     }
 
     public void processNameUnavailableMessage(String gamerTag) {
@@ -109,6 +97,7 @@ public class JoinQueueController {
                 nameErrorLabel.setText(gamerTag + " is unavailable, please try another one");
                 nameErrorLabel.setVisible(true);
                 gamerTagField.setText("");
+                gamerTagField.requestFocus();
             }
         });
     }

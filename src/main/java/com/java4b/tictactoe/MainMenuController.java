@@ -42,6 +42,8 @@ public class MainMenuController{
             case "OM":
                 // Call OnlineMPGameController;
                 //TicTacToeApplication.loadGame("online-multiplayer-game-view", stage);
+                FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("background-view.fxml"));
+                stage.setScene(new Scene(loader.load()));
                 new PlayerClient(stage);
                 break;
         }
