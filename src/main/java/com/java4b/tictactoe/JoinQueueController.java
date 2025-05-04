@@ -23,11 +23,10 @@ public class JoinQueueController {
             gamerTagField;
 
     @FXML
-    protected Label networkErrorLabel, nameErrorLabel, searchingLabel,
-            gameFoundLabel;
+    protected Label networkErrorLabel, nameErrorLabel, loggedInLabel, searchingLabel, gameFoundLabel;
 
     @FXML
-    protected Button findGameButton, cancelButton, mainMenuButton;
+    protected Button loginButton, findGameButton, cancelButton, mainMenuButton;
 
     protected PlayerClient playerClient;
 
@@ -35,6 +34,7 @@ public class JoinQueueController {
     public void initialize() {
         networkErrorLabel.setVisible(false);
         nameErrorLabel.setVisible(false);
+        loggedInLabel.setVisible(false);
         searchingLabel.setVisible(false);
         gameFoundLabel.setVisible(false);
         cancelButton.setVisible(false);
@@ -59,7 +59,7 @@ public class JoinQueueController {
     }
 
     @FXML
-    protected void onFindGameButtonClicked() throws IOException, InterruptedException {
+    protected void onLoginButtonClicked() {
         String serverAddress = serverAddressField.getText();
         String portNumberText = portNumberField.getText();
         String gamerTag = gamerTagField.getText();
@@ -75,7 +75,12 @@ public class JoinQueueController {
             return;
         }
 
-        playerClient.respondToFindGameClicked(serverAddress, Integer.parseInt(portNumberText), gamerTag);
+        playerClient.respondToLoginClicked(serverAddress, Integer.parseInt(portNumberText), gamerTag);
+    }
+
+    @FXML
+    protected void onFindGameButtonClicked() throws IOException, InterruptedException {
+        playerClient.respondToFindGameClicked();
     }
 
     @FXML
@@ -102,17 +107,29 @@ public class JoinQueueController {
         });
     }
 
-    public void processSearchingForGameMessage() {
+    public void processLoginSuccessfulMessage() {
         networkErrorLabel.setVisible(false);
         nameErrorLabel.setVisible(false);
-        findGameButton.setDisable(true);
-        findGameButton.setVisible(false);
-        searchingLabel.setVisible(true);
-        cancelButton.setVisible(true);
-        cancelButton.setDisable(false);
+        loggedInLabel.setVisible(true);
+
+        loginButton.setDisable(true);
+        loginButton.setVisible(false);
+        findGameButton.setVisible(true);
+        findGameButton.setDisable(false);
+
         serverAddressField.setDisable(true);
         portNumberField.setDisable(true);
         gamerTagField.setDisable(true);
+    }
+
+    public void processSearchingForGameMessage() {
+        loggedInLabel.setVisible(false);
+        searchingLabel.setVisible(true);
+
+        findGameButton.setDisable(true);
+        findGameButton.setVisible(false);
+        cancelButton.setVisible(true);
+        cancelButton.setDisable(false);
     }
 
     public void processGameFoundMessage() {

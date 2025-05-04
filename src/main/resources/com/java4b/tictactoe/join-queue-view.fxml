@@ -14,7 +14,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="249.0" stylesheets="@join-queue-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.JoinQueueController">
    <children>
-      <Label alignment="CENTER" prefHeight="17.0" prefWidth="650.0" text="Online Match">
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="650.0" text="Online Play">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -94,9 +94,13 @@
       </AnchorPane>
       <AnchorPane prefHeight="31.0" prefWidth="249.0">
          <children>
-            <HBox prefHeight="49.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <HBox prefHeight="33.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
-                  <Label fx:id="nameErrorLabel" alignment="TOP_LEFT" prefHeight="79.0" prefWidth="229.0" styleClass="label-error-message" text="Invalid Name Error Message" wrapText="true" />
+                  <StackPane prefHeight="33.0" prefWidth="236.0">
+                     <children>
+                        <Label fx:id="nameErrorLabel" alignment="TOP_LEFT" prefHeight="33.0" prefWidth="243.0" styleClass="label-error-message" text="Invalid Name Error Message" wrapText="true" />
+                     </children>
+                  </StackPane>
                </children>
             </HBox>
          </children>
@@ -107,12 +111,17 @@
                <children>
                   <StackPane prefHeight="38.0" prefWidth="239.0">
                      <children>
-                        <Label fx:id="searchingLabel" alignment="CENTER" prefHeight="53.0" prefWidth="229.0" styleClass="label-searching" text="SEARCHING FOR GAME . . .">
+                        <Label fx:id="gameFoundLabel" alignment="CENTER" prefHeight="53.0" prefWidth="229.0" styleClass="label-game-found" text="GAME FOUND!" textAlignment="CENTER" visible="false">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="gameFoundLabel" alignment="CENTER" prefHeight="53.0" prefWidth="229.0" styleClass="label-game-found" text="GAME FOUND!" visible="false">
+                        <Label fx:id="searchingLabel" alignment="CENTER" prefHeight="60.0" prefWidth="229.0" styleClass="label-searching" text="SEARCHING FOR GAME . . ." textAlignment="CENTER" visible="false">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="loggedInLabel" alignment="CENTER" prefHeight="60.0" prefWidth="229.0" styleClass="label-searching" text="SUCCESSFULLY CONNECTED TO SERVER AND LOGGED IN" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
@@ -125,16 +134,17 @@
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin></AnchorPane>
-      <AnchorPane prefHeight="72.0" prefWidth="249.0">
+      <AnchorPane prefHeight="120.0" prefWidth="249.0">
          <children>
-            <HBox prefHeight="72.0" prefWidth="249.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+            <HBox layoutX="20.0" layoutY="24.0" prefHeight="72.0" prefWidth="249.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="24.0">
                <children>
                   <Button fx:id="mainMenuButton" mnemonicParsing="false" onMouseClicked="#onMainMenuButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-main-menu" text="Main Menu" />
-                  <Pane prefHeight="200.0" prefWidth="80.0" />
+                  <Pane prefHeight="200.0" prefWidth="50.0" />
                   <StackPane prefHeight="150.0" prefWidth="130.0">
                      <children>
                         <Button fx:id="cancelButton" mnemonicParsing="false" onMouseClicked="#onFindGameButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-cancel" text="Cancel" />
-                        <Button fx:id="findGameButton" mnemonicParsing="false" onMouseClicked="#onFindGameButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-find-match" text="Find Game" />
+                        <Button fx:id="findGameButton" disable="true" mnemonicParsing="false" onMouseClicked="#onFindGameButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-find-match" text="Find Game" />
+                        <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#onLoginButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-login" text="Login to Server" wrapText="true" />
                      </children>
                   </StackPane>
                </children>

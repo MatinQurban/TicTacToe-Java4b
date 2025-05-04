@@ -31,6 +31,11 @@ public class Router {
         System.out.println("New clientConnection registered for channel:  " + channel + "\n" + clientsByChannel.get(channel));
     }
 
+    public void unRegisterClient(String channel, ClientConnection connection) {
+        clientsByChannel.get(channel).remove(connection);
+        System.out.println("clientConnection unregistered from channel:  " + channel + "\n" + clientsByChannel.get(channel));
+    }
+
     public void start() {
         try(ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Server started on " + PORT);

@@ -2,19 +2,19 @@ package com.java4b.tictactoe;
 
 public class SearchingForGameMessage extends Message {
     private static final long serialVersionUID = 1L;
-    private final String playerName;
+    private final String lobbySubChannel;
 
-    public SearchingForGameMessage(String playerName) {
-        super("/lobby", "SEARCHING_FOR_GAME");
-        this.playerName = playerName;
+    public SearchingForGameMessage(String lobbySubChannel) {
+        super(lobbySubChannel, "SEARCHING_FOR_GAME");
+        this.lobbySubChannel = lobbySubChannel;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getLobbySubChannel() {
+        return lobbySubChannel;
     }
 
     @Override
     public String toString() {
-        return super.toString() + "\nPlayer Name: " + playerName;
+        return super.toString() + "\nLobby sub-channel: " + lobbySubChannel;
     }
 }

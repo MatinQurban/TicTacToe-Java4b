@@ -18,6 +18,7 @@ public class GameMatcherClient extends Client {
         super(serverIP, serverPort);
 
         sendMessage(new RegistrationMessage("/lobby"));
+        sendMessage(new RegistrationMessage("/login"));
         sendMessage(new RegistrationMessage("/create-new-game"));
 
         new Thread(this::matchPlayers).start();
@@ -30,6 +31,9 @@ public class GameMatcherClient extends Client {
                 Message message = (Message) in.readObject();
 
                 switch (message.getType()) {
+                    case "ATTEMPT_LOGIN":
+                        processAttemptLoginMessage((AttemptLoginMessage) message);
+                        break;
                     case "JOIN_QUEUE":
                         processJoinQueueMessage((JoinQueueMessage) message);
                         break;
@@ -42,25 +46,32 @@ public class GameMatcherClient extends Client {
         }
     }
 
-    private void processJoinQueueMessage(JoinQueueMessage message) {
-        String newPlayerName = message.getPlayerName();
+    private void processAttemptLoginMessage(AttemptLoginMessage message) {
+        String gamerTag = message.getGamerTag();
 
-        if (allPlayerNames.contains(newPlayerName)) {
-            sendMessage(new NameUnavailableMessage(newPlayerName));
+        if (allPlayerNames.contains(gamerTag)) {
+            sendMessage(new NameUnavailableMessage(gamerTag));
         } else {
-            sendMessage(new SearchingForGameMessage(newPlayerName));
-            allPlayerNames.add(newPlayerName);
-            playerQueue.add(newPlayerName);
-            System.out.println(newPlayerName + " has joined the queue");
+            sendMessage(new LoginSuccessfulMessage(gamerTag));
+            allPlayerNames.add(gamerTag);
+            sendMessage(new RegistrationMessage("/lobby/" + gamerTag));
+            System.out.println(gamerTag + " has logged in");
         }
+    }
+
+    private void processJoinQueueMessage(JoinQueueMessage message) {
+        String lobbySubChannel = message.getLobbySubChannel();
+        playerQueue.add(lobbySubChannel);
+        sendMessage(new SearchingForGameMessage(lobbySubChannel));
+        System.out.println(lobbySubChannel + " has joined the queue");
     }
 
     private void matchPlayers() {
         while (true) {
             if (playerQueue.size() >= 2) {
-                String player1Name = playerQueue.poll();        // pop the front of the queue and return it
-                String player2Name = playerQueue.poll();
-                sendMessage(new CreateNewGameMessage(player1Name, player2Name));
+                String lobbySubChannel1 = playerQueue.poll();        // pop the front of the queue and return it
+                String lobbySubChannel2 = playerQueue.poll();
+//                sendMessage(new CreateNewGameMessage(player1Name, player2Name));
             }
         }
     }

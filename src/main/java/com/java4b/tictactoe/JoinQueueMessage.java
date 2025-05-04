@@ -2,19 +2,25 @@ package com.java4b.tictactoe;
 
 public class JoinQueueMessage extends Message {
     private static final long serialVersionUID = 1L;
-    private final String playerName;
+    private final String lobbySubChannel, gamerTag;
 
-    public JoinQueueMessage(String playerName) {
-        super("/lobby", "JOIN_QUEUE");
-        this.playerName = playerName;
+    public JoinQueueMessage(String lobbySubChannel, String gamerTag) {
+        super(lobbySubChannel, "JOIN_QUEUE");
+        this.lobbySubChannel = lobbySubChannel;
+        this.gamerTag = gamerTag;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getLobbySubChannel() {
+        return lobbySubChannel;
+    }
+
+    public String getGamerTag() {
+        return gamerTag;
     }
 
     @Override
     public String toString() {
-        return super.toString() + "\nPlayer Name: " + playerName;
+        return super.toString() + "\nLobby sub-channel: " + lobbySubChannel
+                + "\nGamer tag: " + gamerTag;
     }
 }

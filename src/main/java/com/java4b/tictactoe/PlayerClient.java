@@ -5,15 +5,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class PlayerClient extends Client {
 
     String gameChannel;
+    String lobbySubChannel;
 
     // Temporary unique identifier - might want a more robust solution later
     String gamerTag;
-    boolean isNameValid;
+    boolean isConnected;
 
     JoinQueueController joinQueueController;
 
@@ -33,21 +33,24 @@ public class PlayerClient extends Client {
 
                 switch (message.getType()) {
                     case "NAME_UNAVAILABLE":
-
-                        // If the gamerTag was already validated then this player is not the intended recipient
-                        if (((NameUnavailableMessage) message).getPlayerName().equals(gamerTag) && !isNameValid)
+                        if (((NameUnavailableMessage) message).getPlayerName().equals(gamerTag))
                             processNameUnavailableMessage();
                         break;
 
+                    case "LOGIN_SUCCESSFUL":
+                        if (((LoginSuccessfulMessage) message).getGamerTag().equals(gamerTag))
+                            processLoginSuccessfulMessage();
+                        break;
+
                     case "SEARCHING_FOR_GAME":
-                        if (((SearchingForGameMessage) message).getPlayerName().equals(gamerTag))
-                            processSearchingForGameMessage();
+                        processSearchingForGameMessage();
                         break;
 
                     case "GAME_FOUND":
                         if (((GameFoundMessage) message).getPlayerName().equals(gamerTag))
                             processGameFoundMessage((GameFoundMessage) message);
                         break;
+
                     default:
                         break;
                 }
@@ -57,12 +60,18 @@ public class PlayerClient extends Client {
         }
     }
 
+    private void processLoginSuccessfulMessage() {
+        lobbySubChannel = "/lobby/" + gamerTag;
+        sendMessage(new RegistrationMessage(lobbySubChannel));
+        sendMessage(new UnregisterMessage("/login"));
+        joinQueueController.processLoginSuccessfulMessage();
+    }
+
     private void processNameUnavailableMessage() {
         joinQueueController.processNameUnavailableMessage(gamerTag);
     }
 
     private void processSearchingForGameMessage() {
-        isNameValid = true;
         joinQueueController.processSearchingForGameMessage();
         System.out.println("Searching for game ...");
     }
@@ -76,10 +85,18 @@ public class PlayerClient extends Client {
         joinQueueController.processGameFoundMessage();
     }
 
-    public void respondToFindGameClicked(String serverIP, int serverPort, String gamerTag) {
-        connectToRouter(serverIP, serverPort);
+    public void respondToLoginClicked(String serverIP, int serverPort, String gamerTag) {
+        if (!isConnected) {
+            connectToRouter(serverIP, serverPort);
+            isConnected = true;
+            sendMessage(new RegistrationMessage("/login"));
+        }
+
         this.gamerTag = gamerTag;
-        sendMessage(new RegistrationMessage("/lobby"));
-        sendMessage(new JoinQueueMessage(this.gamerTag));
+        sendMessage(new AttemptLoginMessage(this.gamerTag));
+    }
+
+    public void respondToFindGameClicked() {
+        sendMessage(new JoinQueueMessage(lobbySubChannel, gamerTag));
     }
 }

@@ -5,7 +5,7 @@ public class NameUnavailableMessage extends Message {
     private final String playerName;
 
     public NameUnavailableMessage(String playerName) {
-        super("/lobby", "NAME_UNAVAILABLE");
+        super("/login", "NAME_UNAVAILABLE");
         this.playerName = playerName;
     }
 

@@ -13,6 +13,18 @@
 /*    -fx-text-fill: #FFFFFF;*/
 /*}*/
 
+.button-login {
+    -fx-background-color: #2980b9;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-login:hover {
+    -fx-background-color: #295cb9; /* Hover color */
+    -fx-cursor: hand; /* Change cursor to hand */
+}
+
 .button-find-match {
     -fx-background-color: #50C878;
     -fx-text-fill: #FFFFFF;
@@ -37,6 +49,10 @@
     -fx-cursor: hand; /* Change cursor to hand */
 }
 
+.label-logged-in {
+    -fx-text-fill: #50C878;
+}
+
 .label-searching {
     -fx-text-fill: #e3b800;
 }
@@ -57,6 +73,6 @@
 }
 
 .button-main-menu:hover {
-    -fx-background-color: #2980b9; /* Hover color */
+    -fx-background-color: #C0C0C0; /* Hover color */
     -fx-cursor: hand; /* Change cursor to hand */
 }

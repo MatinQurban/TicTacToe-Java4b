@@ -38,6 +38,8 @@ public class ClientConnection extends Thread implements Serializable {
 
                 if (message.getType().equals("REGISTRATION")) {
                     router.registerClient(((RegistrationMessage) message).getChannelToRegister(), this);
+                } else if (message.getType().equals("UNREGISTER")) {
+                    router.unRegisterClient(((UnregisterMessage) message).getChannelToUnregisterFrom(), this);
                 } else {
                     router.broadcast(message);
                 }
