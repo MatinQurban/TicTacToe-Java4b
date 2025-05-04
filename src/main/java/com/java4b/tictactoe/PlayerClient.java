@@ -78,6 +78,7 @@ public class PlayerClient extends Client {
 
     private void processGameFoundMessage(GameFoundMessage message) {
         gameChannel = message.getGameChannel();
+        sendMessage(new RegistrationMessage(gameChannel));
         System.out.println("\nGame found!");
         System.out.println("\tGame channel: " + message.getGameChannel());
         System.out.println("\tOpponent name: " + message.getOpponentName());
