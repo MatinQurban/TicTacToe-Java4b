@@ -1,8 +1,9 @@
 package com.java4b.tictactoe;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class GameState {
+public class GameState implements Serializable {
 
     private Player player1;
     private Player player2;
@@ -18,6 +19,17 @@ public class GameState {
         board = new Board();
 
         activePlayer = player1;
+    }
+
+    public GameState(String name1, Avatar avatar1, String name2, Avatar avatar2, String firstPlayer) {
+        player1 = new Player(name1, avatar1);
+        player2 = new Player(name2, avatar2);
+        board = new Board();
+
+        if (firstPlayer.equals(name1))
+            activePlayer = player1;
+        else
+            activePlayer = player2;
     }
 
     public Player getActivePlayer() { return activePlayer; }

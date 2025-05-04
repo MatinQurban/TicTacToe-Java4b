@@ -8,12 +8,12 @@ import java.io.IOException;
 
 public class PlayerClient extends Client {
 
-    String gameChannel;
-    String lobbySubChannel;
+    private String gameChannel;
+    private String lobbySubChannel;
+    private boolean isConnected;
 
     // Temporary unique identifier - might want a more robust solution later
     String gamerTag;
-    boolean isConnected;
 
     JoinQueueController joinQueueController;
 
@@ -47,8 +47,8 @@ public class PlayerClient extends Client {
                         break;
 
                     case "GAME_FOUND":
-                        if (((GameFoundMessage) message).getPlayerName().equals(gamerTag))
-                            processGameFoundMessage((GameFoundMessage) message);
+//                        if (((GameFoundMessage) message).getOpponentName().equals(gamerTag))
+                        processGameFoundMessage((GameFoundMessage) message);
                         break;
 
                     default:
@@ -79,8 +79,11 @@ public class PlayerClient extends Client {
     private void processGameFoundMessage(GameFoundMessage message) {
         gameChannel = message.getGameChannel();
         System.out.println("\nGame found!");
-        System.out.println("\tGame Channel: " + gameChannel);
-        System.out.println("\tAvatar: " + message.getAvatar());
+        System.out.println("\tGame channel: " + message.getGameChannel());
+        System.out.println("\tOpponent name: " + message.getOpponentName());
+        System.out.println("\tMy avatar: " + message.getMyAvatar());
+        System.out.println("\tOpponent avatar: " + message.getOpponentAvatar());
+        System.out.println("\tFirst player: " + message.getFirstPlayer());
 
         joinQueueController.processGameFoundMessage();
     }

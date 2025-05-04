@@ -2,7 +2,9 @@ package com.java4b.tictactoe;
 
 import javafx.scene.image.Image;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     private String name;
     private Avatar avatar;

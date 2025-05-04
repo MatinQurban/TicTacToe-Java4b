@@ -17,8 +17,7 @@ public class GameControllerClient extends Client {
     public GameControllerClient(String serverIP, int serverPort) {
         super(serverIP, serverPort);
 
-        sendMessage(new RegistrationMessage("/lobby"));
-        sendMessage(new RegistrationMessage("/create-new-game"));
+        sendMessage(new RegistrationMessage("/new-game"));
     }
 
     @Override
@@ -28,8 +27,8 @@ public class GameControllerClient extends Client {
                 Message message = (Message) in.readObject();
 
                 switch (message.getType()) {
-                    case "CREATE_NEW_GAME":
-                        processCreateNewGameMessage((CreateNewGameMessage) message);
+                    case "NEW_GAME":
+                        processNewGameMessage((NewGameMessage) message);
                         break;
                     default:
                         break;
@@ -40,20 +39,9 @@ public class GameControllerClient extends Client {
         }
     }
 
-    private void processCreateNewGameMessage(CreateNewGameMessage message) {
-        String gameChannel = "/game/" + nextAvailableGameChannel;
-        ++nextAvailableGameChannel;
-
-        String player1Name = message.getPlayer1Name();
-        Avatar player1Avatar = Avatar.ANCHOR;
-        sendMessage(new GameFoundMessage(player1Name, player1Avatar, gameChannel));
-
-        String player2Name = message.getPlayer2Name();
-        Avatar player2Avatar = Avatar.LIFE_SAVER;
-        sendMessage(new GameFoundMessage(player2Name, player2Avatar, gameChannel));
-
-        GameState gameState = new GameState(player1Name, player1Avatar, player2Name, player2Avatar);
-        gameState.randomizeWhoGoesFirst();
-
+    private void processNewGameMessage(NewGameMessage message) {
+        String gameChannel = message.getGameChannel();
+        gameStateForChannel.put(gameChannel, message.getGameState());
+        sendMessage(new RegistrationMessage(gameChannel));
     }
 }

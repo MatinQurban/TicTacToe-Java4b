@@ -2,34 +2,49 @@ package com.java4b.tictactoe;
 
 public class GameFoundMessage extends Message {
     private static final long serialVersionUID = 1L;
-    private final String playerName;
     private final String gameChannel;
-    private final Avatar avatar;
+    private final String opponentName;
+    private final Avatar myAvatar;
+    private final Avatar opponentAvatar;
+    private final String firstPlayer;
 
-    public GameFoundMessage(String playerName, Avatar avatar, String gameChannel) {
-        super("/lobby", "GAME_FOUND");
-        this.playerName = playerName;
+    public GameFoundMessage(String targetChannel, String gameChannel, String opponentName,
+                            Avatar myAvatar, Avatar opponentAvatar, String firstPlayer) {
+        super(targetChannel, "GAME_FOUND");
         this.gameChannel = gameChannel;
-        this.avatar = avatar;
-    }
-
-    public String getPlayerName() {
-        return playerName;
+        this.opponentName = opponentName;
+        this.myAvatar = myAvatar;
+        this.opponentAvatar = opponentAvatar;
+        this.firstPlayer = firstPlayer;
     }
 
     public String getGameChannel() {
         return gameChannel;
     }
 
-    public Avatar getAvatar() {
-        return avatar;
+    public String getOpponentName() {
+        return opponentName;
+    }
+
+    public Avatar getMyAvatar() {
+        return myAvatar;
+    }
+
+    public Avatar getOpponentAvatar() {
+        return opponentAvatar;
+    }
+
+    public String getFirstPlayer() {
+        return firstPlayer;
     }
 
     @Override
     public String toString() {
         return super.toString()
-                + "\nPlayer Name: " + playerName
-                + "\nGame Channel: " + gameChannel
-                + "\nAvatar: " + avatar.toString();
+                + "\nGame channel: " + gameChannel
+                + "\nOpponent name: " + opponentName
+                + "\nMy avatar: " + myAvatar.toString()
+                + "\nOpponent avatar: " + opponentAvatar.toString()
+                + "\nFirst player: " + firstPlayer;
     }
 }

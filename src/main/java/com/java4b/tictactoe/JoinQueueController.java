@@ -135,5 +135,9 @@ public class JoinQueueController {
     public void processGameFoundMessage() {
         searchingLabel.setVisible(false);
         gameFoundLabel.setVisible(true);
+        mainMenuButton.setDisable(true);
+        mainMenuButton.setVisible(false);
+        cancelButton.setDisable(true);
+        cancelButton.setVisible(false);
     }
 }

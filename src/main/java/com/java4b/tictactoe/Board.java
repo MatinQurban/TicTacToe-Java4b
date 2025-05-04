@@ -1,8 +1,9 @@
 package com.java4b.tictactoe;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Board {
+public class Board implements Serializable {
     private Avatar[] cells;
 
     public Board() {

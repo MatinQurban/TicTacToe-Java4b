@@ -3,12 +3,14 @@ package com.java4b.tictactoe;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Queue;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class GameMatcherClient extends Client {
 
     private ArrayList<String> allPlayerNames = new ArrayList<>();
     private Queue<String> playerQueue = new ConcurrentLinkedQueue<>();
+    private int nextAvailableGameChannel = 1;
 
     public static void main(String[] args) {
         new GameMatcherClient("localhost", 11111);
@@ -19,7 +21,7 @@ public class GameMatcherClient extends Client {
 
         sendMessage(new RegistrationMessage("/lobby"));
         sendMessage(new RegistrationMessage("/login"));
-        sendMessage(new RegistrationMessage("/create-new-game"));
+        sendMessage(new RegistrationMessage("/new-game"));
 
         new Thread(this::matchPlayers).start();
     }
@@ -60,19 +62,42 @@ public class GameMatcherClient extends Client {
     }
 
     private void processJoinQueueMessage(JoinQueueMessage message) {
+        String gamerTag = message.getGamerTag();
         String lobbySubChannel = message.getLobbySubChannel();
-        playerQueue.add(lobbySubChannel);
+        playerQueue.add(gamerTag);
         sendMessage(new SearchingForGameMessage(lobbySubChannel));
-        System.out.println(lobbySubChannel + " has joined the queue");
+        System.out.println(gamerTag + " has joined the queue");
     }
 
     private void matchPlayers() {
         while (true) {
             if (playerQueue.size() >= 2) {
-                String lobbySubChannel1 = playerQueue.poll();        // pop the front of the queue and return it
-                String lobbySubChannel2 = playerQueue.poll();
-//                sendMessage(new CreateNewGameMessage(player1Name, player2Name));
+                String gamerTag1 = playerQueue.poll();        // pop the front of the queue and return it
+                String gamerTag2 = playerQueue.poll();
+                String lobbySubChannel1 = "/lobby/" + gamerTag1;
+                String lobbySubChannel2 = "/lobby/" + gamerTag2;
+                Avatar avatar1 = Avatar.ANCHOR;
+                Avatar avatar2 = Avatar.LIFE_SAVER;
+                String firstPlayer = randomizeWhoGoesFirst(gamerTag1, gamerTag2);
+
+                String gameChannel = "/game/" + nextAvailableGameChannel;
+                ++nextAvailableGameChannel;
+
+                GameState gameState = new GameState(gamerTag1, avatar1, gamerTag2, avatar2, firstPlayer);
+                sendMessage(new NewGameMessage(gameChannel, gameState));
+
+                sendMessage(new GameFoundMessage(lobbySubChannel1, gameChannel, gamerTag2, avatar1, avatar2, firstPlayer));
+                sendMessage(new GameFoundMessage(lobbySubChannel2, gameChannel, gamerTag1, avatar2, avatar1, firstPlayer));
             }
         }
+    }
+
+    private String randomizeWhoGoesFirst(String gamerTag1, String gamerTag2) {
+        Random random = new Random();
+
+        if (random.nextInt(2) == 0)
+            return gamerTag1;
+        else
+            return gamerTag2;
     }
 }
