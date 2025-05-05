@@ -1,4 +1,4 @@
-package com.java4b.tictactoe;
+package com.java4b.tictactoe.messages;
 
 public class RegistrationMessage extends Message {
     private static final long serialVerisionUID = 1L;

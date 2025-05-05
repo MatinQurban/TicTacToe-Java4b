@@ -1,5 +1,7 @@
 package com.java4b.tictactoe;
 
+import com.java4b.tictactoe.messages.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Queue;
@@ -12,9 +14,7 @@ public class GameMatcherClient extends Client {
     private Queue<String> playerQueue = new ConcurrentLinkedQueue<>();
     private int nextAvailableGameChannel = 1;
 
-    public static void main(String[] args) {
-        new GameMatcherClient("localhost", 11111);
-    }
+//    public static void main(String[] args) {new GameMatcherClient("localhost", 11111);}
 
     public GameMatcherClient(String serverIP, int serverPort) {
         super(serverIP, serverPort);

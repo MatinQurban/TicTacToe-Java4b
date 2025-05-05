@@ -1,5 +1,7 @@
 package com.java4b.tictactoe;
 
+import com.java4b.tictactoe.messages.*;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,9 +12,7 @@ public class GameControllerClient extends Client {
 
     private Map<String, GameState> gameStateForChannel = new ConcurrentHashMap<>();
 
-    public static void main(String[] args) {
-        new GameControllerClient("localhost", 11111);
-    }
+//    public static void main(String [] args) throws IOException {new GameControllerClient("localhost", 11111);}
 
     public GameControllerClient(String serverIP, int serverPort) {
         super(serverIP, serverPort);

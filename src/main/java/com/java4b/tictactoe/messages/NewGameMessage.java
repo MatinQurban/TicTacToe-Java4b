@@ -1,4 +1,6 @@
-package com.java4b.tictactoe;
+package com.java4b.tictactoe.messages;
+
+import com.java4b.tictactoe.GameState;
 
 public class NewGameMessage extends Message {
     private static final long serialVersionUID = 1L;
