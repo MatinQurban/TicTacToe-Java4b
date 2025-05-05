@@ -1,36 +1,105 @@
 package com.java4b.tictactoe;
-import java.net.Socket;
-// This class is called from the MainMenuController when the user clicks on Online Multiplayer Option
-public class OnlineMPGameController {
-    private static final String SERVER_IP = "localhost"; // or the IP address where your Router is running
-    private static final int SERVER_PORT = 12345;
 
-//    PlayerClient playerclient = new PlayerClient();
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 
+import java.io.IOException;
+
+public class OnlineMPGameController extends GameController {
+
+    private Avatar myAvatar;
+    private PlayerClient playerClient;
+
+    @FXML
+    public void initialize() {
+        super.initialize();
+
+        gameModeLabel.setText("Online Multiplayer Game");
+//        disableMove();
+    }
+
+    public void initData(PlayerClient caller, String myGamerTag, String opponentGamerTag, Avatar myAvatar,
+                         Avatar opponentAvatar,String firstPlayer) {
+
+        this.playerClient = caller;
+        this.myAvatar = myAvatar;
+
+        name1Label.setText(myGamerTag + ":");
+        name2Label.setText(opponentGamerTag + ":");
+        avatar1ImageView.setImage(myAvatar.getImage());
+        avatar2ImageView.setImage(opponentAvatar.getImage());
+        setActivePlayerLabel(firstPlayer);
+    }
+
+    protected void setActivePlayerLabel(String activeGamerTag) {
+        activePlayerLabel.setText(activeGamerTag + "'s turn");
+    }
+
+    protected void disableMove() {
+        gridPane.setDisable(true);
+    }
+
+    protected void enableMove() {
+        Platform.runLater(() -> gridPane.setDisable(false));
+    }
+
+    public void processYourTurnMessage() {
+        enableMove();
+    }
+
+    public void processInvalidMoveMessage(int move) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                StackPane cell = cells.get(move);
+                animateError(cells.get(move));
+            }
+        });
+    }
+
+    public void processMakeMoveMessage(int move, Avatar avatar) {
+        Platform.runLater(() -> {
+            try {
+                playCell(move, avatar);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Override
+    @FXML
+    protected void onCellClicked(MouseEvent event) throws IOException {
+        disableMove();
+        StackPane selectedCell = (StackPane)event.getSource();
+        playerClient.respondToCellClicked(cells.indexOf(selectedCell));
+    }
+
+    @Override
+    protected void setCursorAsAvatar() {
+        if (gridPane.isHover()) {
+            String fileName = myAvatar.getFileName();
+            Image image = new Image(getClass().getResource(fileName).toString(), 50, 50, true, false);
+            Scene scene = activePlayerLabel.getScene();
+
+            // Change the cursor to the active player's avatar and move the cursor's "hotspot" to the center of the image
+            scene.setCursor(new ImageCursor(image, image.getWidth() / 2.0, image.getHeight() / 2.0));
+        }
+    }
+
+    protected void playCell(int cellIndex, Avatar avatar) throws IOException {
+
+        // Update the view
+        StackPane cell = cells.get(cellIndex);
+        BackgroundSize imageSize = new BackgroundSize(0.70, 0.70, true, true, false, false);
+        cell.setBackground(new Background(new BackgroundImage(avatar.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, imageSize)));
+
+        cell.getStyleClass().clear(); // Remove hover effect
+    }
 }
-
-//Runnable playerClient = () -> {
-//            try (Socket socket = new Socket(SERVER_IP, SERVER_PORT)
-//            {
-//                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-//                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-//                register('game1');
-//
-//                Thread listener = new Thread(() -> {
-//                    try {
-//                        Object message;
-//                        while ((message = in.readObject()) != null) { // Handle messages
-//                            System.out.println("[Server]: " + message); // change this part
-//                             switch (check type of message)
-//                              {
-//                                  do with message
-//                              }
-//                        }
-//                    } catch (IOException | ClassNotFoundException e) {
-//                        System.out.println("Disconnected from server.");
-//                    }
-//                });
-//                listener.start();
-//            }
-//        }
-//        playerClient.start();

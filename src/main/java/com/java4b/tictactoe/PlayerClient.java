@@ -1,5 +1,6 @@
 package com.java4b.tictactoe;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,13 +14,18 @@ public class PlayerClient extends Client {
     private boolean isConnected;
 
     // Temporary unique identifier - might want a more robust solution later
-    String gamerTag;
+    private String gamerTag;
 
-    JoinQueueController joinQueueController;
+    private Stage mainStage;
+    private Stage joinQueueStage;
+    private JoinQueueController joinQueueController;
+    private OnlineMPGameController onlineMPGameController;
 
     public PlayerClient(Stage mainStage) throws IOException {
+        this.mainStage = mainStage;
+
         FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("join-queue-view.fxml"));
-        Stage joinQueueStage = new Stage();
+        joinQueueStage = new Stage();
         joinQueueStage.setScene(new Scene(loader.load()));
         joinQueueController = loader.getController();
         joinQueueController.initData(this, mainStage);
@@ -36,25 +42,30 @@ public class PlayerClient extends Client {
                         if (((NameUnavailableMessage) message).getPlayerName().equals(gamerTag))
                             processNameUnavailableMessage();
                         break;
-
                     case "LOGIN_SUCCESSFUL":
                         if (((LoginSuccessfulMessage) message).getGamerTag().equals(gamerTag))
                             processLoginSuccessfulMessage();
                         break;
-
                     case "SEARCHING_FOR_GAME":
                         processSearchingForGameMessage();
                         break;
-
                     case "GAME_FOUND":
-//                        if (((GameFoundMessage) message).getOpponentName().equals(gamerTag))
                         processGameFoundMessage((GameFoundMessage) message);
                         break;
-
+                    case "YOUR_TURN":
+                        if (((YourTurnMessage) message).getGamerTag().equals(gamerTag))
+                            processYourTurnMessage();
+                        break;
+                    case "INVALID_MOVE":
+                        if (((InvalidMoveMessage) message).getGamerTag().equals(gamerTag))
+                            processInvalidMoveMessage((InvalidMoveMessage) message);
+                        break;
+                    case "MAKE_MOVE":
+                        processMakeMoveMessage((MakeMoveMessage) message);
                     default:
                         break;
                 }
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -76,9 +87,15 @@ public class PlayerClient extends Client {
         System.out.println("Searching for game ...");
     }
 
-    private void processGameFoundMessage(GameFoundMessage message) {
+    private void processGameFoundMessage(GameFoundMessage message) throws InterruptedException, IOException {
         gameChannel = message.getGameChannel();
+        String opponentGamerTag = message.getOpponentName();
+        Avatar myAvatar  = message.getMyAvatar();
+        Avatar opponentAvatar  = message.getOpponentAvatar();
+        String firstPlayer = message.getFirstPlayer();
+
         sendMessage(new RegistrationMessage(gameChannel));
+
         System.out.println("\nGame found!");
         System.out.println("\tGame channel: " + message.getGameChannel());
         System.out.println("\tOpponent name: " + message.getOpponentName());
@@ -87,6 +104,33 @@ public class PlayerClient extends Client {
         System.out.println("\tFirst player: " + message.getFirstPlayer());
 
         joinQueueController.processGameFoundMessage();
+        Thread.sleep(1000);
+        FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("game-view.fxml"));
+        onlineMPGameController = new OnlineMPGameController();
+        loader.setController(onlineMPGameController);
+
+        Platform.runLater(() -> {
+            try {
+                mainStage.setScene(new Scene(loader.load()));
+                OnlineMPGameController gameController = loader.getController();
+                gameController.initData(this, gamerTag, opponentGamerTag, myAvatar, opponentAvatar, firstPlayer);
+                joinQueueStage.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void processYourTurnMessage() {
+        onlineMPGameController.processYourTurnMessage();
+    }
+
+    public void processInvalidMoveMessage(InvalidMoveMessage message) {
+        onlineMPGameController.processInvalidMoveMessage(message.getMove());
+    }
+
+    public void processMakeMoveMessage(MakeMoveMessage message) {
+        onlineMPGameController.processMakeMoveMessage(message.getMove(), message.getAvatar());
     }
 
     public void respondToLoginClicked(String serverIP, int serverPort, String gamerTag) {
@@ -102,5 +146,9 @@ public class PlayerClient extends Client {
 
     public void respondToFindGameClicked() {
         sendMessage(new JoinQueueMessage(lobbySubChannel, gamerTag));
+    }
+
+    public void respondToCellClicked(int move) {
+        sendMessage(new CheckMoveMessage(gameChannel, move));
     }
 }

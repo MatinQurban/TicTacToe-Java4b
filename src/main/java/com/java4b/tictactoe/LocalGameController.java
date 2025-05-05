@@ -23,40 +23,37 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GameController {
+public class LocalGameController extends GameController {
 
-    @FXML
-    protected Label gameModeLabel, name1Label, name2Label, activePlayerLabel;
-
-    @FXML
-    protected ImageView avatar1ImageView, avatar2ImageView;
-
-    @FXML
-    protected StackPane cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8;
-
-    @FXML
-    protected GridPane gridPane;
-
+//    @FXML
+//    protected Label gameModeLabel, name1Label, name2Label, activePlayerLabel;
+//
+//    @FXML
+//    protected ImageView avatar1ImageView, avatar2ImageView;
+//
+//    @FXML
+//    protected StackPane cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8;
+//
+//    ArrayList<StackPane> cells;
     GameState gameState;
-    ArrayList<StackPane> cells;
 
     @FXML
     public void initialize() {
         cells = new ArrayList<>(Arrays.asList(cell0, cell1, cell2, cell3,
                 cell4, cell5, cell6, cell7, cell8));
 
-//        name1Label.setText(gameState.getPlayer1().getName() + ":");
-//        name2Label.setText(gameState.getPlayer2().getName() + ":");
-//        avatar1ImageView.setImage(gameState.getPlayer1().getAvatar().getImage());
-//        avatar2ImageView.setImage(gameState.getPlayer2().getAvatar().getImage());
-//
-//        Platform.runLater(() -> {
-//            try {
-//                showSettings();
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
+        name1Label.setText(gameState.getPlayer1().getName() + ":");
+        name2Label.setText(gameState.getPlayer2().getName() + ":");
+        avatar1ImageView.setImage(gameState.getPlayer1().getAvatar().getImage());
+        avatar2ImageView.setImage(gameState.getPlayer2().getAvatar().getImage());
+
+        Platform.runLater(() -> {
+            try {
+                showSettings();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     protected Stage getStage() {
