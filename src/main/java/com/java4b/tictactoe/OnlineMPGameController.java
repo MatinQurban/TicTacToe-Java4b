@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -72,6 +73,16 @@ public class OnlineMPGameController extends GameController {
         });
     }
 
+    public void processGameOverMessage(String winner) throws IOException {
+        Platform.runLater(() -> {
+            try {
+                declareWinner(winner);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     @Override
     @FXML
     protected void onCellClicked(MouseEvent event) throws IOException {
@@ -101,5 +112,18 @@ public class OnlineMPGameController extends GameController {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, imageSize)));
 
         cell.getStyleClass().clear(); // Remove hover effect
+    }
+
+    protected void declareWinner(String winner) throws IOException {
+        String resultMessage;
+        Stage stage = (Stage) activePlayerLabel.getScene().getWindow();
+        if (winner != null) {
+            resultMessage = winner + " wins!";
+        } else {
+            resultMessage = "It's a tie!";
+        }
+
+        activePlayerLabel.setText(resultMessage);
+        showGameOver(resultMessage);
     }
 }

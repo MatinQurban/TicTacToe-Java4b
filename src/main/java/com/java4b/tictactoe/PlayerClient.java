@@ -62,6 +62,10 @@ public class PlayerClient extends Client {
                         break;
                     case "MAKE_MOVE":
                         processMakeMoveMessage((MakeMoveMessage) message);
+                        break;
+                    case "GAME_OVER":
+                        processGameOverMessage((GameOverMessage) message);
+                        break;
                     default:
                         break;
                 }
@@ -131,6 +135,10 @@ public class PlayerClient extends Client {
 
     public void processMakeMoveMessage(MakeMoveMessage message) {
         onlineMPGameController.processMakeMoveMessage(message.getMove(), message.getAvatar());
+    }
+
+    public void processGameOverMessage(GameOverMessage message) throws IOException {
+        onlineMPGameController.processGameOverMessage(message.getWinner());
     }
 
     public void respondToLoginClicked(String serverIP, int serverPort, String gamerTag) {
