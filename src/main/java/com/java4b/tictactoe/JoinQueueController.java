@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -51,6 +52,7 @@ public class JoinQueueController {
 
         joinQueueStage.initModality(Modality.APPLICATION_MODAL);
         joinQueueStage.initStyle(StageStyle.UNDECORATED);
+        joinQueueStage.initOwner(mainStage);
         joinQueueStage.show();
 
 //        mainStage.getScene().getRoot().setVisible(false);

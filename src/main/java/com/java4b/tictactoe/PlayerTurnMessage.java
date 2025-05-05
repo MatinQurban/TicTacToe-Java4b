@@ -1,11 +1,11 @@
 package com.java4b.tictactoe;
 
-public class YourTurnMessage extends Message {
+public class PlayerTurnMessage extends Message {
     private static final long serialVersionUID = 1L;
     private final String gamerTag;
 
-    public YourTurnMessage(String channel, String gamerTag) {
-        super(channel, "YOUR_TURN");
+    public PlayerTurnMessage(String channel, String gamerTag) {
+        super(channel, "PLAYER_TURN");
         this.channel = channel;
         this.gamerTag = gamerTag;
     }

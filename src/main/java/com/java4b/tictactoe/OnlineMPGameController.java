@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class OnlineMPGameController extends GameController {
 
+    private String myGamerTag;
     private Avatar myAvatar;
     private PlayerClient playerClient;
 
@@ -28,17 +29,18 @@ public class OnlineMPGameController extends GameController {
                          Avatar opponentAvatar,String firstPlayer) {
 
         this.playerClient = caller;
+        this.myGamerTag = myGamerTag;
         this.myAvatar = myAvatar;
 
         name1Label.setText(myGamerTag + ":");
         name2Label.setText(opponentGamerTag + ":");
         avatar1ImageView.setImage(myAvatar.getImage());
         avatar2ImageView.setImage(opponentAvatar.getImage());
-        setActivePlayerLabel(firstPlayer);
+        setActivePlayerLabel(firstPlayer + "'s turn");
     }
 
-    protected void setActivePlayerLabel(String activeGamerTag) {
-        activePlayerLabel.setText(activeGamerTag + "'s turn");
+    protected void setActivePlayerLabel(String labelText) {
+        activePlayerLabel.setText(labelText);
     }
 
     protected void disableMove() {
@@ -49,17 +51,23 @@ public class OnlineMPGameController extends GameController {
         Platform.runLater(() -> gridPane.setDisable(false));
     }
 
-    public void processYourTurnMessage() {
-        enableMove();
+    public void processPlayerTurnMessage(PlayerTurnMessage message) {
+        Platform.runLater(() -> {
+            String activePlayer = message.getGamerTag();
+            String labelText = activePlayer + "'s turn";
+
+            if (activePlayer.equals(myGamerTag)) {
+                labelText = "Your turn";
+                enableMove();
+            }
+
+            setActivePlayerLabel(labelText);
+        });
     }
 
     public void processInvalidMoveMessage(int move) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                StackPane cell = cells.get(move);
-                animateError(cells.get(move));
-            }
+        Platform.runLater(() -> {
+            animateError(cells.get(move));
         });
     }
 

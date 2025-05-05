@@ -52,9 +52,8 @@ public class PlayerClient extends Client {
                     case "GAME_FOUND":
                         processGameFoundMessage((GameFoundMessage) message);
                         break;
-                    case "YOUR_TURN":
-                        if (((YourTurnMessage) message).getGamerTag().equals(gamerTag))
-                            processYourTurnMessage();
+                    case "PLAYER_TURN":
+                        processPlayerTurnMessage((PlayerTurnMessage) message);
                         break;
                     case "INVALID_MOVE":
                         if (((InvalidMoveMessage) message).getGamerTag().equals(gamerTag))
@@ -125,8 +124,8 @@ public class PlayerClient extends Client {
         });
     }
 
-    public void processYourTurnMessage() {
-        onlineMPGameController.processYourTurnMessage();
+    public void processPlayerTurnMessage(PlayerTurnMessage message) {
+        onlineMPGameController.processPlayerTurnMessage(message);
     }
 
     public void processInvalidMoveMessage(InvalidMoveMessage message) {

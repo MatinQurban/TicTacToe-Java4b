@@ -51,7 +51,7 @@ public class GameControllerClient extends Client {
         // This is a dumb way to ensure the channel is registered before trying to send a message to it
         // Could maybe try using .wait() and .notify() with a synchronized block?
         Thread.sleep(100);
-        sendMessage(new YourTurnMessage(gameChannel, gameState.getActivePlayer().getName()));
+        sendMessage(new PlayerTurnMessage(gameChannel, gameState.getActivePlayer().getName()));
     }
 
     private void processCheckMoveMessage(CheckMoveMessage message) {
@@ -72,7 +72,7 @@ public class GameControllerClient extends Client {
             } else if (gameState.isATie()) {
                 sendMessage((new GameOverMessage(gameChannel, null)));
             } else {
-                sendMessage(new YourTurnMessage(gameChannel, gamerTag));
+                sendMessage(new PlayerTurnMessage(gameChannel, gamerTag));
             }
         } else {
             sendMessage(new InvalidMoveMessage(gameChannel, gameState.getActivePlayer().getName(), move));
