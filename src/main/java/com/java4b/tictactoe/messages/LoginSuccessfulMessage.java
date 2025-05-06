@@ -1,11 +1,11 @@
-package com.java4b.tictactoe;
+package com.java4b.tictactoe.messages;
 
-public class AttemptLoginMessage extends Message {
+public class LoginSuccessfulMessage extends Message {
     private static final long serialVersionUID = 1L;
     private final String gamerTag;
 
-    public AttemptLoginMessage(String gamerTag) {
-        super("/login", "ATTEMPT_LOGIN");
+    public LoginSuccessfulMessage(String gamerTag) {
+        super("/login", "LOGIN_SUCCESSFUL");
         this.gamerTag = gamerTag;
     }
 

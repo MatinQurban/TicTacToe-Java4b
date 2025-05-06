@@ -1,4 +1,4 @@
-package com.java4b.tictactoe;
+package com.java4b.tictactoe.messages;
 
 public class SearchingForGameMessage extends Message {
     private static final long serialVersionUID = 1L;

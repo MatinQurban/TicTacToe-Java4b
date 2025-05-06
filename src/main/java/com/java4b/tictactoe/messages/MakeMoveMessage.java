@@ -1,4 +1,6 @@
-package com.java4b.tictactoe;
+package com.java4b.tictactoe.messages;
+
+import com.java4b.tictactoe.Avatar;
 
 public class MakeMoveMessage extends Message {
     private static final long serialVerisionUID = 1L;
