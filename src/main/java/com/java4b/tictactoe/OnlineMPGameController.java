@@ -1,5 +1,6 @@
 package com.java4b.tictactoe;
 
+import com.java4b.tictactoe.messages.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
