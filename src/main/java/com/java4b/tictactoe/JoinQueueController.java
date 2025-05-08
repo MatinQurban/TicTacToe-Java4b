@@ -87,7 +87,7 @@ public class JoinQueueController {
 
     @FXML
     protected void onCancelButtonClicked() {
-
+        playerClient.respondToCancelButtonClicked();
     }
 
     @FXML
@@ -132,6 +132,16 @@ public class JoinQueueController {
         findGameButton.setVisible(false);
         cancelButton.setVisible(true);
         cancelButton.setDisable(false);
+    }
+
+    public void processQueueCancelledMessage() {
+        findGameButton.setDisable(false);
+        findGameButton.setVisible(true);
+
+        searchingLabel.setVisible(false);
+
+        cancelButton.setDisable(true);
+        cancelButton.setVisible(false);
     }
 
     public void processGameFoundMessage() {
