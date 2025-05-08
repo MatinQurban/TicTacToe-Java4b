@@ -39,6 +39,8 @@ public class GameMatcherClient extends Client {
                     case "JOIN_QUEUE":
                         processJoinQueueMessage((JoinQueueMessage) message);
                         break;
+                    case "CANCEL_QUEUE":
+                        processCancelQueueMessage((CancelQueueMessage) message);
                     default:
                         break;
                 }
@@ -47,6 +49,7 @@ public class GameMatcherClient extends Client {
             }
         }
     }
+
 
     private void processAttemptLoginMessage(AttemptLoginMessage message) {
         String gamerTag = message.getGamerTag();
@@ -67,6 +70,18 @@ public class GameMatcherClient extends Client {
         playerQueue.add(gamerTag);
         sendMessage(new SearchingForGameMessage(lobbySubChannel));
         System.out.println(gamerTag + " has joined the queue");
+    }
+
+    private void processCancelQueueMessage(CancelQueueMessage message) {
+        // In this function we need to remove player from playerQueue, stop listening
+        // on it's channel, and respond to the player to indicate queue cancellation
+        // Future implementation: remove player's game from game list
+        String gamerTag = message.getGamerTag();
+        String lobbySubChannel = message.getLobbySubChannel();
+        playerQueue.remove(gamerTag);
+        sendMessage(new QueueCancelledMessage(lobbySubChannel));
+        System.out.println(gamerTag + " has cancelled queue");
+
     }
 
     private void matchPlayers() {

@@ -50,6 +50,9 @@ public class PlayerClient extends Client {
                     case "SEARCHING_FOR_GAME":
                         processSearchingForGameMessage();
                         break;
+                    case "QUEUE_CANCELLED":
+                        processQueueCancelledMessage();
+                        break;
                     case "GAME_FOUND":
                         processGameFoundMessage((GameFoundMessage) message);
                         break;
@@ -90,6 +93,8 @@ public class PlayerClient extends Client {
         joinQueueController.processSearchingForGameMessage();
         System.out.println("Searching for game ...");
     }
+
+    private void processQueueCancelledMessage() { joinQueueController.processQueueCancelledMessage(); }
 
     private void processGameFoundMessage(GameFoundMessage message) throws InterruptedException, IOException {
         gameChannel = message.getGameChannel();
@@ -155,6 +160,8 @@ public class PlayerClient extends Client {
     public void respondToFindGameClicked() {
         sendMessage(new JoinQueueMessage(lobbySubChannel, gamerTag));
     }
+
+    public void respondToCancelButtonClicked() { sendMessage(new CancelQueueMessage(lobbySubChannel, gamerTag)); }
 
     public void respondToCellClicked(int move) {
         sendMessage(new CheckMoveMessage(gameChannel, move));

@@ -142,7 +142,7 @@
                   <Pane prefHeight="200.0" prefWidth="50.0" />
                   <StackPane prefHeight="150.0" prefWidth="130.0">
                      <children>
-                        <Button fx:id="cancelButton" mnemonicParsing="false" onMouseClicked="#onFindGameButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-cancel" text="Cancel" />
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onMouseClicked="#onCancelButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-cancel" text="Cancel" />
                         <Button fx:id="findGameButton" disable="true" mnemonicParsing="false" onMouseClicked="#onFindGameButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-find-match" text="Find Game" />
                         <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#onLoginButtonClicked" prefHeight="72.0" prefWidth="130.0" styleClass="button-login" text="Login to Server" wrapText="true" />
                      </children>
