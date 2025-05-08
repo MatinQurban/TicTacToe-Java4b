@@ -12,6 +12,8 @@ import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 
+import java.util.Random;
+
 public class CoinFlipController {
     @FXML
     private Cylinder coinShape;
@@ -43,14 +45,20 @@ public class CoinFlipController {
 
     @FXML
     protected void onFlipButtonClick() {
+        Random random = new Random();
+        int numHalfRotations = random.nextInt(2) + 8;
+        flipCoin(numHalfRotations);
+    }
+
+    protected void flipCoin(int numHalfRotations) {
         Point3D rotationPoint = new Point3D(1, 0.0, 0.0);
         int totalTime = 3600;
-        int numHalfRotations = 9;
         int timePerRotation = totalTime / numHalfRotations;
         int fromAngle = 30;
         int toAngle = fromAngle + 180;
         int lowPos = 0;
-        int highPos = -300;
+//        int highPos = -300;
+        int highPos = -270;
 
         RotateTransition cylinderRotate = rotateTransition(coinShape, timePerRotation, rotationPoint,
                 fromAngle, toAngle, numHalfRotations);
