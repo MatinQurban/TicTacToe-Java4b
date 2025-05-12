@@ -21,7 +21,7 @@
     <RowConstraints maxHeight="126.19998779296878" minHeight="10.0" prefHeight="22.999975585937534" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <VBox fx:id="vbox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="202.0" text="GAME OVER!">
                <VBox.margin>

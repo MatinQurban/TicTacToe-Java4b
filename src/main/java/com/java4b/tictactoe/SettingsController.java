@@ -15,9 +15,9 @@ public class SettingsController {
     protected Button startButton;
 
     protected GameState gameState;
-    protected GameController caller;
+    protected LocalGameController caller;
 
-    public void initData(GameController caller, GameState gameState) {
+    public void initData(LocalGameController caller, GameState gameState) {
         this.gameState = gameState;
         this.caller = caller;
         player1Toggle.setText(gameState.getPlayer1().getName());

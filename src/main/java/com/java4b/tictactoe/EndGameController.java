@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,12 +17,18 @@ public class EndGameController {
     private Button PA;
     @FXML
     private Button RTM;
+    @FXML
+    private VBox vbox;
 
     private GameController caller;
 
     public void initData(GameController caller, String gameWinText) {
         this.caller = caller;
         winnerText.setText(gameWinText);
+
+        if (caller instanceof OnlineMPGameController) {
+            vbox.getChildren().remove(PA);
+        }
     }
 
     @FXML

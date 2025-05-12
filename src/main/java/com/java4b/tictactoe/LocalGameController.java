@@ -28,8 +28,7 @@ public class LocalGameController extends GameController {
 
     @FXML
     public void initialize() {
-        cells = new ArrayList<>(Arrays.asList(cell0, cell1, cell2, cell3,
-                cell4, cell5, cell6, cell7, cell8));
+        super.initialize();
 
         name1Label.setText(gameState.getPlayer1().getName() + ":");
         name2Label.setText(gameState.getPlayer2().getName() + ":");
@@ -43,10 +42,6 @@ public class LocalGameController extends GameController {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    protected Stage getStage() {
-        return (Stage) activePlayerLabel.getScene().getWindow();
     }
 
     protected void showSettings() throws IOException {
@@ -63,17 +58,6 @@ public class LocalGameController extends GameController {
         gameOverStage.setScene(new Scene(loader.load()));
         ((EndGameController) loader.getController()).initData(this, gameWinText);
         setSideMenuStage(gameOverStage);
-    }
-
-    protected void setSideMenuStage(Stage sideMenuStage) {
-        sideMenuStage.initModality(Modality.APPLICATION_MODAL);
-        sideMenuStage.initStyle(StageStyle.UNDECORATED);
-        sideMenuStage.show();
-
-        Stage primaryStage = getStage();
-        primaryStage.getScene().getRoot().setOpacity(0.3);
-        sideMenuStage.setX(primaryStage.getX() + 40);
-        sideMenuStage.setY(primaryStage.getY() + primaryStage.getHeight() / 2.0 - sideMenuStage.getHeight() / 2.0);
     }
 
     //NOTE: Sort later
@@ -121,23 +105,6 @@ public class LocalGameController extends GameController {
         setCursorAsAvatar();
     }
 
-    @FXML
-    protected void onMouseOverBoard(MouseEvent event) {
-        setCursorAsAvatar();
-    }
-
-    @FXML
-    protected void onMouseExitBoard(MouseEvent event) {
-        Scene scene = activePlayerLabel.getScene();
-        scene.setCursor(Cursor.DEFAULT);
-    }
-
-    @FXML
-    protected void switchToMenu(ActionEvent event) throws IOException {
-        Stage stage = (Stage) activePlayerLabel.getScene().getWindow();
-        TicTacToeApplication.switchScene("MainMenu", stage);
-    }
-
     protected void setCursorAsAvatar() {
         if (((GridPane) cell0.getParent()).isHover()) {
             String fileName = gameState.getActivePlayer().getAvatar().getFileName();
@@ -166,52 +133,5 @@ public class LocalGameController extends GameController {
 
         activePlayerLabel.setText(resultMessage);
         showGameOver(resultMessage);
-    }
-
-    protected void animateError(StackPane cell) {
-        Image errorImage = new Image(getClass().getResource("placement_error.png").toString(),
-                cell.getWidth(), cell.getHeight(), true, false);
-
-        ImageView errorImageView = new ImageView(errorImage);
-        errorImageView.setOpacity(0.0);
-
-        cell.getChildren().add(errorImageView);
-
-        // Define an animation that will gradually fade out the error image until its no longer visible
-        FadeTransition errorFade = new FadeTransition(Duration.millis(800), errorImageView);
-        errorFade.setFromValue(1.0);
-        errorFade.setToValue(0.0);
-
-        // Define an animation that will shake the board
-        GridPane gridPane = (GridPane) cell.getParent();
-        TranslateTransition shakeBoard = new TranslateTransition(Duration.millis(50), gridPane);
-        shakeBoard.setByX(15);
-        shakeBoard.setAutoReverse(true);
-        shakeBoard.setCycleCount(10);
-
-        // Disable any inputs to the board (the grid pane and all its child nodes) and hides the cursor. These changes
-        // will be reverted after the animation finishes.
-        gridPane.setDisable(true);
-        activePlayerLabel.getScene().setCursor(Cursor.NONE);
-
-        // Define a lambda expression that will get called after the animation finishes.
-        errorFade.setOnFinished(event -> {
-
-            // Removes the error image from the StackPane that represents the cell
-            cell.getChildren().removeLast();
-
-            // Re-enables inputs to the board (and its children cells)
-            gridPane.setDisable(false);
-
-            // Changes the cursor from hidden to the active player's avatar or the default cursor depending on location.
-            if (gridPane.isHover())
-                setCursorAsAvatar();
-            else
-                activePlayerLabel.getScene().setCursor(Cursor.DEFAULT);
-        });
-
-        // Start the animations (they run concurrently since they will be on separate threads)
-        errorFade.play();
-        shakeBoard.play();
     }
 }
