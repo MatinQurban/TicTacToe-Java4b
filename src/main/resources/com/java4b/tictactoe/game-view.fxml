@@ -61,7 +61,7 @@
             </HBox>
          </children>
       </VBox>
-      <GridPane fx:id="gridPane" disable="true" layoutX="285.0" layoutY="134.0" onMouseEntered="#onMouseOverBoard" onMouseExited="#onMouseExitBoard" prefHeight="180.0" prefWidth="180.0" styleClass="grid-pane">
+      <GridPane fx:id="gridPane" layoutX="285.0" layoutY="134.0" onMouseEntered="#onMouseOverBoard" onMouseExited="#onMouseExitBoard" prefHeight="180.0" prefWidth="180.0" styleClass="grid-pane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

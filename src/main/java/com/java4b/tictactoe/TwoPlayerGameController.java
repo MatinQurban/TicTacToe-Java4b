@@ -1,6 +1,6 @@
 package com.java4b.tictactoe;
 
-public class TwoPlayerGameController extends GameController {
+public class TwoPlayerGameController extends LocalGameController {
 
     @Override
     public void initialize() {

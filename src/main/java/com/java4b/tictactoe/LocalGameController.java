@@ -24,17 +24,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LocalGameController extends GameController {
-
-//    @FXML
-//    protected Label gameModeLabel, name1Label, name2Label, activePlayerLabel;
-//
-//    @FXML
-//    protected ImageView avatar1ImageView, avatar2ImageView;
-//
-//    @FXML
-//    protected StackPane cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8;
-//
-//    ArrayList<StackPane> cells;
     GameState gameState;
 
     @FXML
