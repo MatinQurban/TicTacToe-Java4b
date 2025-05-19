@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 
-public class SinglePlayerGameController extends GameController {
+public class SinglePlayerGameController extends LocalGameController {
 
     @Override
     public void initialize() {

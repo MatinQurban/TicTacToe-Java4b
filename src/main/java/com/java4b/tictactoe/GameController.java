@@ -44,31 +44,10 @@ public class GameController {
     public void initialize() {
         cells = new ArrayList<>(Arrays.asList(cell0, cell1, cell2, cell3,
                 cell4, cell5, cell6, cell7, cell8));
-
-//        name1Label.setText(gameState.getPlayer1().getName() + ":");
-//        name2Label.setText(gameState.getPlayer2().getName() + ":");
-//        avatar1ImageView.setImage(gameState.getPlayer1().getAvatar().getImage());
-//        avatar2ImageView.setImage(gameState.getPlayer2().getAvatar().getImage());
-//
-//        Platform.runLater(() -> {
-//            try {
-//                showSettings();
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
     }
 
     protected Stage getStage() {
         return (Stage) activePlayerLabel.getScene().getWindow();
-    }
-
-    protected void showSettings() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("settings-view.fxml"));
-        Stage settingsStage = new Stage();
-        settingsStage.setScene(new Scene(loader.load()));
-        ((SettingsController) loader.getController()).initData(this, gameState);
-        setSideMenuStage(settingsStage);
     }
 
     protected void showGameOver(String gameWinText) throws IOException {
@@ -88,13 +67,6 @@ public class GameController {
         primaryStage.getScene().getRoot().setOpacity(0.3);
         sideMenuStage.setX(primaryStage.getX() + 40);
         sideMenuStage.setY(primaryStage.getY() + primaryStage.getHeight() / 2.0 - sideMenuStage.getHeight() / 2.0);
-    }
-
-    //NOTE: Sort later
-    public void startGame(Player firstPlayer) throws IOException {
-        activePlayerLabel.getScene().getRoot().setOpacity(1.0);
-        gameState.setActivePlayer(firstPlayer);
-        setActivePlayerLabel();
     }
 
     @FXML

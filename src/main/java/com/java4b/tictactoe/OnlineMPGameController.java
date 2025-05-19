@@ -23,7 +23,7 @@ public class OnlineMPGameController extends GameController {
         super.initialize();
 
         gameModeLabel.setText("Online Multiplayer Game");
-//        disableMove();
+        disableMove();
     }
 
     public void initData(PlayerClient caller, String myGamerTag, String opponentGamerTag, Avatar myAvatar,
