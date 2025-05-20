@@ -50,7 +50,7 @@ public class GameControllerClient extends Client {
 
         // This is a dumb way to ensure the channel is registered before trying to send a message to it
         // Could maybe try using .wait() and .notify() with a synchronized block?
-        Thread.sleep(100);
+        Thread.sleep(500);
         sendMessage(new PlayerTurnMessage(gameChannel, gameState.getActivePlayer().getName()));
     }
 

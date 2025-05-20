@@ -18,7 +18,7 @@ public class PlayerClient extends Client {
     private String gamerTag;
 
     private Stage mainStage;
-    private Stage joinQueueStage;
+    private Stage joinQueueStage, coinFlipStage;
     private JoinQueueController joinQueueController;
     private OnlineMPGameController onlineMPGameController;
 
@@ -57,7 +57,7 @@ public class PlayerClient extends Client {
                         processGameFoundMessage((GameFoundMessage) message);
                         break;
                     case "PLAYER_TURN":
-                        processPlayerTurnMessage((PlayerTurnMessage) message);
+//                        processPlayerTurnMessage((PlayerTurnMessage) message);
                         break;
                     case "INVALID_MOVE":
                         if (((InvalidMoveMessage) message).getGamerTag().equals(gamerTag))
@@ -114,20 +114,41 @@ public class PlayerClient extends Client {
 
         joinQueueController.processGameFoundMessage();
         Thread.sleep(1000);
-        FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("game-view.fxml"));
-        onlineMPGameController = new OnlineMPGameController();
-        loader.setController(onlineMPGameController);
+        joinQueueController.closeSubStage();
+//        FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("game-setup-view.fxml"));
+//        coinFlipStage = new Stage();
+//        coinFlipStage.setScene(new Scene(loader.load()));
+//        CoinFlipController coinFlipController = loader.getController();
+//        coinFlipController.initData(this, gamerTag, opponentGamerTag, myAvatar, opponentAvatar, mainStage);
 
         Platform.runLater(() -> {
             try {
-                mainStage.setScene(new Scene(loader.load()));
-                OnlineMPGameController gameController = loader.getController();
-                gameController.initData(this, gamerTag, opponentGamerTag, myAvatar, opponentAvatar, firstPlayer);
-                joinQueueStage.close();
+                FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("game-setup-view.fxml"));
+                coinFlipStage = new Stage();
+                coinFlipStage.setScene(new Scene(loader.load()));
+                CoinFlipController coinFlipController = loader.getController();
+                coinFlipController.initData(this, gamerTag, opponentGamerTag, myAvatar, opponentAvatar, firstPlayer, mainStage);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
+
+//        joinQueueController.processGameFoundMessage();
+//        Thread.sleep(1000);
+//        FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("game-view.fxml"));
+        onlineMPGameController = new OnlineMPGameController();
+//        loader.setController(onlineMPGameController);
+//
+//        Platform.runLater(() -> {
+//            try {
+//                mainStage.setScene(new Scene(loader.load()));
+//                OnlineMPGameController gameController = loader.getController();
+//                gameController.initData(this, gamerTag, opponentGamerTag, myAvatar, opponentAvatar, firstPlayer);
+//                joinQueueStage.close();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
     }
 
     public void processPlayerTurnMessage(PlayerTurnMessage message) {

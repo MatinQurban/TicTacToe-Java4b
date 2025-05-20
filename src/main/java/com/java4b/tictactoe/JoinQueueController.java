@@ -1,5 +1,8 @@
 package com.java4b.tictactoe;
 
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -49,7 +53,6 @@ public class JoinQueueController {
         this.mainStage = mainStage;
         Stage joinQueueStage = (Stage) findGameButton.getScene().getWindow();
 
-
         joinQueueStage.initModality(Modality.APPLICATION_MODAL);
         joinQueueStage.initStyle(StageStyle.UNDECORATED);
         joinQueueStage.initOwner(mainStage);
@@ -58,6 +61,11 @@ public class JoinQueueController {
 //        mainStage.getScene().getRoot().setVisible(false);
         joinQueueStage.setX(mainStage.getX() + mainStage.getWidth() / 2.0 - joinQueueStage.getWidth() / 2.0);
         joinQueueStage.setY(mainStage.getY() + mainStage.getHeight() / 2.0 - joinQueueStage.getHeight() / 2.0 + 10);
+    }
+
+    public void closeSubStage() {
+        Stage joinQueueStage = (Stage) findGameButton.getScene().getWindow();
+        Platform.runLater(joinQueueStage::close);
     }
 
     @FXML
@@ -98,14 +106,11 @@ public class JoinQueueController {
     }
 
     public void processNameUnavailableMessage(String gamerTag) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                nameErrorLabel.setText(gamerTag + " is unavailable, please try another one");
-                nameErrorLabel.setVisible(true);
-                gamerTagField.setText("");
-                gamerTagField.requestFocus();
-            }
+        Platform.runLater(() -> {
+            nameErrorLabel.setText(gamerTag + " is unavailable, please try another one");
+            nameErrorLabel.setVisible(true);
+            gamerTagField.setText("");
+            gamerTagField.requestFocus();
         });
     }
 

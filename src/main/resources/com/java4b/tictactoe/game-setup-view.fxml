@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -12,19 +11,13 @@
 <?import javafx.scene.shape.Cylinder?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="249.0" stylesheets="@join-queue-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.JoinQueueController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="249.0" stylesheets="@join-queue-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.CoinFlipController">
    <children>
-      <Label alignment="CENTER" prefHeight="17.0" prefWidth="650.0" text="Game Setup">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <Separator prefHeight="13.0" prefWidth="398.0" />
-      <HBox prefHeight="34.0" prefWidth="100.0">
+      <HBox prefHeight="30.0" prefWidth="249.0">
          <children>
-            <Label fx:id="name1Label" prefHeight="17.0" prefWidth="235.0" text="Player1Name:">
+            <Label fx:id="name1Label" prefHeight="23.0" prefWidth="126.0" text="Player1Name:">
                <HBox.margin>
-                  <Insets left="50.0" />
+                  <Insets left="70.0" />
                </HBox.margin>
             </Label>
             <ImageView fx:id="avatar1ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
@@ -32,30 +25,48 @@
                   <Image url="@question.png" />
                </image>
                <HBox.margin>
-                  <Insets right="50.0" />
+                  <Insets right="70.0" />
                </HBox.margin>
             </ImageView>
          </children>
          <VBox.margin>
-            <Insets top="10.0" />
+            <Insets top="30.0" />
          </VBox.margin>
       </HBox>
-      <HBox prefHeight="34.0" prefWidth="100.0">
+      <HBox prefHeight="30.0" prefWidth="249.0">
          <children>
-            <Label fx:id="name1Label1" prefHeight="17.0" prefWidth="235.0" text="Player2Name:">
+            <Label fx:id="name2Label" prefHeight="23.0" prefWidth="126.0" text="Player2Name:">
                <HBox.margin>
-                  <Insets left="50.0" />
+                  <Insets left="70.0" />
                </HBox.margin>
             </Label>
-            <ImageView fx:id="avatar1ImageView1" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="avatar2ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@question.png" />
                </image>
                <HBox.margin>
-                  <Insets right="50.0" />
+                  <Insets right="70.0" />
                </HBox.margin>
             </ImageView>
          </children>
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="firstPlayerLabel" alignment="CENTER" prefHeight="17.0" prefWidth="187.0" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets top="120.0" />
+         </VBox.margin>
       </HBox>
       <StackPane prefHeight="365.0" prefWidth="249.0">
          <children>
@@ -98,7 +109,7 @@
             </ImageView>
          </children>
          <padding>
-            <Insets top="275.0" />
+            <Insets top="150.0" />
          </padding>
       </StackPane>
    </children>
