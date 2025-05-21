@@ -12,6 +12,7 @@ public class GameState implements Serializable {
     private Player activePlayer;
 
     private int numMoves = 0;
+    private boolean isReadyPlayer1, isReadyPlayer2;
 
     public GameState(String name1, Avatar avatar1, String name2, Avatar avatar2) {
         player1 = new Player(name1, avatar1);
@@ -39,6 +40,22 @@ public class GameState implements Serializable {
     public Player getPlayer1() { return player1; }
 
     public Player getPlayer2() { return player2; }
+
+    public boolean isReadyPlayer1() {
+        return isReadyPlayer1;
+    }
+
+    public void setReadyPlayer1(boolean readyPlayer1) {
+        isReadyPlayer1 = readyPlayer1;
+    }
+
+    public boolean isReadyPlayer2() {
+        return isReadyPlayer2;
+    }
+
+    public void setReadyPlayer2(boolean readyPlayer2) {
+        isReadyPlayer2 = readyPlayer2;
+    }
 
     public boolean isCellEmpty(int index) {
         return board.getCell(index) == Avatar.NONE;

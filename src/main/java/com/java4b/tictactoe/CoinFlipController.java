@@ -39,6 +39,7 @@ public class CoinFlipController {
 
     String myGamerTag, opponentGamerTag, firstPlayer;
     Avatar myAvatar, opponentAvatar;
+    PlayerClient playerClient;
 
     @FXML
     public void initialize() {
@@ -77,7 +78,7 @@ public class CoinFlipController {
     public void initData(PlayerClient caller, String myGamerTag, String opponentGamerTag, Avatar myAvatar,
                          Avatar opponentAvatar, String firstPlayer, Stage mainStage) {
 
-//        this.playerClient = caller;
+        this.playerClient = caller;
         this.myGamerTag = myGamerTag;
         this.opponentGamerTag = opponentGamerTag;
         this.myAvatar = myAvatar;
@@ -90,7 +91,6 @@ public class CoinFlipController {
         coinFlipStage.initOwner(mainStage);
         coinFlipStage.show();
 
-//        mainStage.getScene().getRoot().setVisible(false);
         coinFlipStage.setX(mainStage.getX() + mainStage.getWidth() / 2.0 - coinFlipStage.getWidth() / 2.0);
         coinFlipStage.setY(mainStage.getY() + mainStage.getHeight() / 2.0 - coinFlipStage.getHeight() / 2.0 + 10);
     }
@@ -109,7 +109,6 @@ public class CoinFlipController {
         int fromAngle = 30;
         int toAngle = fromAngle + 180;
         int lowPos = 0;
-//        int highPos = -300;
         int highPos = -270;
 
         RotateTransition cylinderRotate = rotateTransition(coinShape, timePerRotation, rotationPoint,
@@ -134,13 +133,21 @@ public class CoinFlipController {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
             if (myGamerTag.equals(firstPlayer)) {
                 firstPlayerLabel.setTextFill(Color.GREEN);
-                firstPlayerLabel.setText("YOU GO FIRST!");
+                firstPlayerLabel.setText("YOU\nGO FIRST");
             } else {
                 firstPlayerLabel.setTextFill(Color.RED);
-                firstPlayerLabel.setText("OPPONENT GOES FIRST!");
+                firstPlayerLabel.setText("OPPONENT\nGOES FIRST");
             }
+
+            PauseTransition pause = new PauseTransition(Duration.millis(2000));
+            pause.setOnFinished(actionEvent -> {
+                playerClient.gameSetupFinished(myGamerTag, opponentGamerTag, myAvatar, opponentAvatar, firstPlayer);
+            });
+            pause.play();
+
         });
 
         totalCylinderTransition.play();
