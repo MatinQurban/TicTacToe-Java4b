@@ -12,18 +12,18 @@
 <?import javafx.scene.shape.Cylinder?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="150.0" stylesheets="@join-queue-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.CoinFlipController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="250.0" stylesheets="@join-queue-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java4b.tictactoe.CoinFlipController">
    <children>
       <Separator prefWidth="200.0">
          <VBox.margin>
-            <Insets top="5.0" />
+            <Insets left="60.0" right="60.0" top="30.0" />
          </VBox.margin>
       </Separator>
       <HBox prefHeight="11.0" prefWidth="150.0">
          <children>
             <Label fx:id="name1Label" prefHeight="23.0" prefWidth="126.0" text="Player1Name:">
                <HBox.margin>
-                  <Insets left="20.0" />
+                  <Insets left="70.0" />
                </HBox.margin>
             </Label>
             <ImageView fx:id="avatar1ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
@@ -31,7 +31,7 @@
                   <Image url="@question.png" />
                </image>
                <HBox.margin>
-                  <Insets right="20.0" />
+                  <Insets right="70.0" />
                </HBox.margin>
             </ImageView>
          </children>
@@ -43,7 +43,7 @@
          <children>
             <Label fx:id="name2Label" prefHeight="23.0" prefWidth="126.0" text="Player2Name:">
                <HBox.margin>
-                  <Insets left="20.0" />
+                  <Insets left="70.0" />
                </HBox.margin>
             </Label>
             <ImageView fx:id="avatar2ImageView" fitHeight="23.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
@@ -51,7 +51,7 @@
                   <Image url="@question.png" />
                </image>
                <HBox.margin>
-                  <Insets right="20.0" />
+                  <Insets right="70.0" />
                </HBox.margin>
             </ImageView>
          </children>
@@ -61,12 +61,12 @@
       </HBox>
       <Separator prefWidth="200.0">
          <VBox.margin>
-            <Insets top="5.0" />
+            <Insets left="60.0" right="60.0" top="5.0" />
          </VBox.margin>
       </Separator>
       <HBox prefHeight="45.0" prefWidth="150.0">
          <children>
-            <Label fx:id="firstPlayerLabel" alignment="CENTER" prefHeight="41.0" prefWidth="90.0" textAlignment="CENTER">
+            <Label fx:id="firstPlayerLabel" alignment="CENTER" prefHeight="41.0" prefWidth="241.0" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>
@@ -79,14 +79,14 @@
             <Insets top="100.0" />
          </VBox.margin>
       </HBox>
-      <StackPane prefHeight="180.0" prefWidth="150.0">
+      <StackPane prefHeight="211.0" prefWidth="250.0">
          <children>
-            <Cylinder fx:id="coinShape" height="6.0" radius="30.0">
+            <Cylinder fx:id="coinShape" height="8.0" radius="40.0">
                <rotationAxis>
                   <Point3D />
                </rotationAxis>
             </Cylinder>
-            <ImageView fx:id="anchorImage" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="anchorImage" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@anchor.png" />
                </image>

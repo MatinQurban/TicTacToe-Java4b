@@ -54,16 +54,4 @@ public class MainMenuController{
         loader.setController(controller);
         stage.setScene(new Scene(loader.load()));
     }
-
-    /*
-       Might switch to using this function instead if we need the game state to be initialized
-       outside the game controller later on.
-     */
-//    private void loadGame(GameState gameState, GameController controller) throws IOException {
-//        Stage stage = (Stage) singlePlayer.getScene().getWindow();
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("game-view.fxml"));
-//        loader.setController(controller);
-//        stage.setScene(new Scene(loader.load()));
-//        controller.initData(gameState);
-//    }
 }

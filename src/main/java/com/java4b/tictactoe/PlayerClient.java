@@ -14,7 +14,6 @@ public class PlayerClient extends Client {
     private String lobbySubChannel;
     private boolean isConnected;
 
-    // Temporary unique identifier - might want a more robust solution later
     private String gamerTag;
 
     private Stage mainStage;
