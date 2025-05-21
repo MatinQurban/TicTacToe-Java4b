@@ -21,13 +21,14 @@ public class JoinQueueController {
 
     @FXML
     protected TextField serverAddressField, portNumberField,
-            gamerTagField;
+            gamerTagField, gameNameField, gamePasswordField;
 
     @FXML
-    protected Label networkErrorLabel, nameErrorLabel, loggedInLabel, searchingLabel, gameFoundLabel;
+    protected Label networkErrorLabel, nameErrorLabel, loggedInLabel, searchingLabel,
+    gameFoundLabel, serverAddressLabel, portNumberLabel, gameNameLabel, gamePasswordLabel;
 
     @FXML
-    protected Button loginButton, findGameButton, cancelButton, mainMenuButton;
+    protected Button loginButton, findGameButton, cancelButton, mainMenuButton, createGameButton;
 
     protected PlayerClient playerClient;
 
@@ -40,6 +41,8 @@ public class JoinQueueController {
         gameFoundLabel.setVisible(false);
         cancelButton.setVisible(false);
         cancelButton.setDisable(true);
+        createGameButton.setVisible(false);
+        createGameButton.setDisable(true);
 
         Platform.runLater(() -> gamerTagField.requestFocus());
     }
@@ -97,6 +100,31 @@ public class JoinQueueController {
         TicTacToeApplication.switchScene("MainMenu", mainStage);
     }
 
+    @FXML
+    protected void onCreateGameButtonClicked() {
+        // When user clicks this button, we will change the screen and
+        // let the user input their game information
+        // When user clicks this button again, will process game
+        // information
+        System.out.println("onCreateGameButtonClicked");
+
+        if(gameNameField.isVisible()) {
+            // check if game information has been submitted --> process
+        }
+        else {
+            serverAddressLabel.setVisible(false);
+            portNumberLabel.setVisible(false);
+            gameNameLabel.setVisible(true);
+            gamePasswordLabel.setVisible(true);
+
+            gameNameField.setVisible(true);
+            gamePasswordField.setVisible(true);
+            serverAddressField.setVisible(false);
+            portNumberField.setVisible(false);
+        }
+        //TicTacToeApplication.switchScene("CreateGame", createGameStage);
+    }
+
     public void processNameUnavailableMessage(String gamerTag) {
         Platform.runLater(new Runnable() {
             @Override
@@ -113,14 +141,20 @@ public class JoinQueueController {
         networkErrorLabel.setVisible(false);
         nameErrorLabel.setVisible(false);
         loggedInLabel.setVisible(true);
+        serverAddressLabel.setVisible(false);
+        portNumberLabel.setVisible(false);
 
         loginButton.setDisable(true);
         loginButton.setVisible(false);
         findGameButton.setVisible(true);
         findGameButton.setDisable(false);
+        createGameButton.setVisible(true);
+        createGameButton.setDisable(false);
 
         serverAddressField.setDisable(true);
+        serverAddressField.setVisible(false);
         portNumberField.setDisable(true);
+        portNumberField.setVisible(false);
         gamerTagField.setDisable(true);
     }
 

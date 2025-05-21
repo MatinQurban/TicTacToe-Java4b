@@ -8,6 +8,10 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+// We are going to want to create a new map that holds concurrent threads for
+// each player who created a new game. For each new game made we will make a
+// game id similarly to how we are doing in matchPlayers function
+
 public class GameMatcherClient extends Client {
 
     private ArrayList<String> allPlayerNames = new ArrayList<>();
@@ -80,6 +84,7 @@ public class GameMatcherClient extends Client {
         String lobbySubChannel = message.getLobbySubChannel();
         playerQueue.remove(gamerTag);
         sendMessage(new QueueCancelledMessage(lobbySubChannel));
+        sendMessage(new UnregisterMessage(lobbySubChannel));
         System.out.println(gamerTag + " has cancelled queue");
 
     }

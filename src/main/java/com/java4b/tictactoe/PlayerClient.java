@@ -79,8 +79,8 @@ public class PlayerClient extends Client {
     }
 
     private void processLoginSuccessfulMessage() {
-        lobbySubChannel = "/lobby/" + gamerTag;
-        sendMessage(new RegistrationMessage(lobbySubChannel));
+//        lobbySubChannel = "/lobby/" + gamerTag;
+//        sendMessage(new RegistrationMessage(lobbySubChannel));
         sendMessage(new UnregisterMessage("/login"));
         joinQueueController.processLoginSuccessfulMessage();
     }

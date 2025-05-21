@@ -24,16 +24,18 @@
          <children>
             <HBox prefHeight="29.0" prefWidth="249.0">
                <children>
-                  <Label prefHeight="29.0" prefWidth="112.0" text="Server Address:">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="serverAddressField" prefHeight="26.0" prefWidth="125.0" text="localhost">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </TextField>
+                  <StackPane prefHeight="29.0" prefWidth="127.0">
+                     <children>
+                        <Label fx:id="gameNameLabel" prefHeight="29.0" prefWidth="112.0" text="Game Name:" visible="false" />
+                        <Label fx:id="serverAddressLabel" prefHeight="29.0" prefWidth="104.0" text="Server Address:" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="29.0" prefWidth="112.0">
+                     <children>
+                        <TextField fx:id="gameNameField" prefHeight="26.0" prefWidth="109.0" visible="false" />
+                        <TextField fx:id="serverAddressField" prefHeight="26.0" prefWidth="109.0" text="localhost" />
+                     </children>
+                  </StackPane>
                </children>
             </HBox>
          </children>
@@ -45,16 +47,18 @@
          <children>
             <HBox prefHeight="29.0" prefWidth="249.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label prefHeight="29.0" prefWidth="112.0" text="Port Number:">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="portNumberField" prefHeight="26.0" prefWidth="125.0" text="11111">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </TextField>
+                  <StackPane prefHeight="29.0" prefWidth="127.0">
+                     <children>
+                        <Label fx:id="portNumberLabel" prefHeight="29.0" prefWidth="105.0" text="Port Number:" />
+                        <Label fx:id="gamePasswordLabel" prefHeight="29.0" prefWidth="111.0" text="Password (optional):" visible="false" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="29.0" prefWidth="111.0">
+                     <children>
+                        <TextField fx:id="gamePasswordField" prefHeight="26.0" prefWidth="106.0" visible="false" />
+                        <TextField fx:id="portNumberField" prefHeight="26.0" prefWidth="106.0" text="11111" />
+                     </children>
+                  </StackPane>
                </children>
             </HBox>
          </children>
@@ -94,11 +98,16 @@
       </AnchorPane>
       <AnchorPane prefHeight="31.0" prefWidth="249.0">
          <children>
-            <HBox prefHeight="33.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <HBox prefHeight="72.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
                   <StackPane prefHeight="33.0" prefWidth="236.0">
                      <children>
-                        <Label fx:id="nameErrorLabel" alignment="TOP_LEFT" prefHeight="33.0" prefWidth="243.0" styleClass="label-error-message" text="Invalid Name Error Message" wrapText="true" />
+                        <Label fx:id="nameErrorLabel" alignment="TOP_LEFT" prefHeight="43.0" prefWidth="229.0" styleClass="label-error-message" text="Invalid Name Error Message" wrapText="true" />
+                        <Label fx:id="loggedInLabel" alignment="CENTER" prefHeight="60.0" prefWidth="229.0" styleClass="label-searching" text="SUCCESSFULLY CONNECTED TO SERVER AND LOGGED IN" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </Label>
                      </children>
                   </StackPane>
                </children>
@@ -107,21 +116,17 @@
       </AnchorPane>
       <AnchorPane prefHeight="24.0" prefWidth="361.0">
          <children>
-            <HBox prefHeight="38.0" prefWidth="249.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <HBox layoutY="-22.0" prefHeight="60.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
-                  <StackPane prefHeight="38.0" prefWidth="239.0">
+                  <StackPane prefHeight="70.0" prefWidth="229.0">
                      <children>
+                        <Button fx:id="createGameButton" mnemonicParsing="false" onMouseClicked="#onCreateGameButtonClicked" prefHeight="60.0" prefWidth="97.0" styleClass="button-createGame" text="Create Game" translateX="57.0" />
                         <Label fx:id="gameFoundLabel" alignment="CENTER" prefHeight="53.0" prefWidth="229.0" styleClass="label-game-found" text="OPPONENT FOUND!&#10;CREATING NEW GAME . . ." visible="false">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
                         </Label>
                         <Label fx:id="searchingLabel" alignment="CENTER" prefHeight="60.0" prefWidth="229.0" styleClass="label-searching" text="SEARCHING FOR OPPONENT . . ." textAlignment="CENTER" visible="false">
-                           <font>
-                              <Font name="System Bold Italic" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="loggedInLabel" alignment="CENTER" prefHeight="60.0" prefWidth="229.0" styleClass="label-searching" text="SUCCESSFULLY CONNECTED TO SERVER AND LOGGED IN" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
