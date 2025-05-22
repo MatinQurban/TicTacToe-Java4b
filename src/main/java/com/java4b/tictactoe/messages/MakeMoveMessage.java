@@ -3,7 +3,7 @@ package com.java4b.tictactoe.messages;
 import com.java4b.tictactoe.Avatar;
 
 public class MakeMoveMessage extends Message {
-    private static final long serialVerisionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private final int move;
     private final Avatar avatar;
 

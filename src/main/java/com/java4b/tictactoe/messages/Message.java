@@ -3,15 +3,9 @@ package com.java4b.tictactoe.messages;
 import java.io.Serializable;
 
 public class Message implements Serializable {
-
-    // Maybe use an enum for the message type instead of strings
-    public enum Type {
-        REGISTRATION, JOIN_QUEUE
-    }
-
     protected String channel;
     protected String type;
-    private static final long serialVerisionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public Message(String channel, String type) {
         this.channel = channel;

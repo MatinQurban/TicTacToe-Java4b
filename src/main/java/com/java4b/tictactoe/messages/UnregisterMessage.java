@@ -1,7 +1,7 @@
 package com.java4b.tictactoe.messages;
 
 public class UnregisterMessage extends Message {
-    private static final long serialVerisionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private final String channelToUnregisterFrom;
 
     public UnregisterMessage(String channelToUnregisterFrom) {

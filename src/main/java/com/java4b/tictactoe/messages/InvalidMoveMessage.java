@@ -1,7 +1,7 @@
 package com.java4b.tictactoe.messages;
 
 public class InvalidMoveMessage extends Message {
-    private static final long serialVerisionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private final String gamerTag;
     private final int move;
 

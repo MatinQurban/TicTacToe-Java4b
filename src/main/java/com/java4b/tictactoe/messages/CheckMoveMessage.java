@@ -1,7 +1,7 @@
 package com.java4b.tictactoe.messages;
 
 public class CheckMoveMessage extends Message {
-    private static final long serialVerisionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private final int move;
 
     public CheckMoveMessage(String channel, int move) {
