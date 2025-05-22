@@ -24,6 +24,10 @@ public class OnlineMPGameController extends GameController {
 
         gameModeLabel.setText("Online Multiplayer Game");
         disableMove();
+
+        Platform.runLater(() -> {
+            playerClient.respondToReadyForGameMessages();
+        });
     }
 
     public void initData(PlayerClient caller, String myGamerTag, String opponentGamerTag, Avatar myAvatar,
@@ -38,7 +42,6 @@ public class OnlineMPGameController extends GameController {
         avatar1ImageView.setImage(myAvatar.getImage());
         avatar2ImageView.setImage(opponentAvatar.getImage());
         setActivePlayerLabel(firstPlayer + "'s turn");
-        playerClient.respondToReadyForGameMessages();
     }
 
     protected void setActivePlayerLabel(String labelText) {
