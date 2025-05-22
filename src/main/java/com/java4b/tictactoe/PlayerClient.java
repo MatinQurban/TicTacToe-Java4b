@@ -165,6 +165,10 @@ public class PlayerClient extends Client {
         sendMessage(new CheckMoveMessage(gameChannel, move));
     }
 
+    public void respondToReadyForGameMessages() {
+        sendMessage(new PlayerReadyMessage(gameChannel, gamerTag));
+    }
+
     public void gameSetupFinished(String myGamerTag, String opponentGamerTag, Avatar myAvatar, Avatar opponentAvatar, String firstPlayer) {
         FXMLLoader loader = new FXMLLoader(TicTacToeApplication.class.getResource("game-view.fxml"));
         onlineMPGameController = new OnlineMPGameController();
@@ -175,7 +179,6 @@ public class PlayerClient extends Client {
             OnlineMPGameController gameController = loader.getController();
             gameController.initData(this, gamerTag, opponentGamerTag, myAvatar, opponentAvatar, firstPlayer);
             coinFlipStage.close();
-            sendMessage(new PlayerReadyMessage(gameChannel, gamerTag));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -38,6 +38,7 @@ public class OnlineMPGameController extends GameController {
         avatar1ImageView.setImage(myAvatar.getImage());
         avatar2ImageView.setImage(opponentAvatar.getImage());
         setActivePlayerLabel(firstPlayer + "'s turn");
+        playerClient.respondToReadyForGameMessages();
     }
 
     protected void setActivePlayerLabel(String labelText) {
