@@ -7,6 +7,8 @@ public class Server {
         router.start();
         System.out.println("Server Started..");
         GameControllerClient gcc = new GameControllerClient("localhost", 11111);
+        System.out.println("Game Controller Connected");
         GameMatcherClient gmc = new GameMatcherClient("localhost", 11111);
+        System.out.println("Game Matcher Connected");
     }
 }

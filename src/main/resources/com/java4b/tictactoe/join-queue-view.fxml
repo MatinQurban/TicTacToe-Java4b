@@ -70,7 +70,13 @@
          <children>
             <HBox prefHeight="86.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
-                  <Label fx:id="networkErrorLabel" alignment="TOP_LEFT" prefHeight="86.0" prefWidth="244.0" styleClass="label-error-message" text="Network Error Message" wrapText="true" />
+                  <StackPane prefHeight="86.0" prefWidth="235.0">
+                     <children>
+                        <Label fx:id="invalidLobbyLabel" alignment="TOP_LEFT" prefHeight="90.0" prefWidth="229.0" styleClass="label-error-message" text="Lobby Unavailable!" visible="false" wrapText="true" />
+                        <Label fx:id="gameNameErrorLabel" alignment="TOP_LEFT" prefHeight="90.0" prefWidth="229.0" styleClass="label-error-message" text="Please enter a game name!" visible="false" wrapText="true" />
+                        <Label fx:id="networkErrorLabel" alignment="TOP_LEFT" prefHeight="86.0" prefWidth="244.0" styleClass="label-error-message" text="Network Error Message" wrapText="true" />
+                     </children>
+                  </StackPane>
                </children>
             </HBox>
          </children>
@@ -116,11 +122,12 @@
       </AnchorPane>
       <AnchorPane prefHeight="24.0" prefWidth="361.0">
          <children>
-            <HBox layoutY="-22.0" prefHeight="60.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <HBox layoutY="-28.0" prefHeight="60.0" prefWidth="229.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
                   <StackPane prefHeight="70.0" prefWidth="229.0">
                      <children>
-                        <Button fx:id="createGameButton" mnemonicParsing="false" onMouseClicked="#onCreateGameButtonClicked" prefHeight="60.0" prefWidth="97.0" styleClass="button-createGame" text="Create Game" translateX="57.0" />
+                        <Button fx:id="deleteGameButton" disable="true" mnemonicParsing="false" onMouseClicked="#onDeleteGameButtonClicked" prefHeight="72.0" prefWidth="96.0" styleClass="button-cancel" text="Delete Game" visible="false" />
+                        <Button fx:id="joinGameButton" mnemonicParsing="false" onMouseClicked="#onFindGameButtonClicked" prefHeight="60.0" prefWidth="96.0" styleClass="button-find-match" text="Join Game" translateX="-57.0" />
                         <Label fx:id="gameFoundLabel" alignment="CENTER" prefHeight="53.0" prefWidth="229.0" styleClass="label-game-found" text="OPPONENT FOUND!&#10;CREATING NEW GAME . . ." visible="false">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
@@ -131,6 +138,7 @@
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
                         </Label>
+                        <Button fx:id="createGameButton" mnemonicParsing="false" onMouseClicked="#onCreateGameButtonClicked" prefHeight="60.0" prefWidth="97.0" styleClass="button-createGame" text="Create Game" translateX="57.0" />
                      </children>
                   </StackPane>
                </children>

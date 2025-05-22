@@ -53,6 +53,15 @@ public class PlayerClient extends Client {
                     case "QUEUE_CANCELLED":
                         processQueueCancelledMessage();
                         break;
+                    case "LOBBY_CREATED":
+                        processLobbyCreatedMessage();
+                        break;
+                    case "LOBBY_DELETED":
+                        processLobbyDeletedMessage((LobbyDeletedMessage) message);
+                        break;
+                    case "INVALID_LOBBY":
+                        processInvalidLobbyMessage(((InvalidLobbyMessage) message));
+                        break;
                     case "GAME_FOUND":
                         processGameFoundMessage((GameFoundMessage) message);
                         break;
@@ -79,14 +88,26 @@ public class PlayerClient extends Client {
     }
 
     private void processLoginSuccessfulMessage() {
-//        lobbySubChannel = "/lobby/" + gamerTag;
-//        sendMessage(new RegistrationMessage(lobbySubChannel));
+        lobbySubChannel = "/lobby/" + gamerTag;
+        sendMessage(new RegistrationMessage(lobbySubChannel));
         sendMessage(new UnregisterMessage("/login"));
         joinQueueController.processLoginSuccessfulMessage();
     }
 
     private void processNameUnavailableMessage() {
         joinQueueController.processNameUnavailableMessage(gamerTag);
+    }
+
+    private void processLobbyCreatedMessage() { joinQueueController.processLobbyCreatedMessage(); }
+
+    private void processLobbyDeletedMessage(LobbyDeletedMessage message) {
+        sendMessage(new UnregisterMessage(message.getGameLobbyChannel()));
+        joinQueueController.processLobbyDeletedMessage();
+    }
+
+    private void processInvalidLobbyMessage(InvalidLobbyMessage message) {
+        sendMessage(new UnregisterMessage(lobbySubChannel + "/" + message.getGameName()));
+        joinQueueController.processInvalidLobbyMessage();
     }
 
     private void processSearchingForGameMessage() {
@@ -157,9 +178,18 @@ public class PlayerClient extends Client {
         sendMessage(new AttemptLoginMessage(this.gamerTag));
     }
 
-    public void respondToFindGameClicked() {
-        sendMessage(new JoinQueueMessage(lobbySubChannel, gamerTag));
+    public void respondToCreateGameClicked(String gameName, String gamePassword) {
+        sendMessage(new CreateLobbyMessage(lobbySubChannel, gameName, gamePassword));
+        sendMessage(new RegistrationMessage(lobbySubChannel + "/" + gameName));
     }
+
+    public void respondToDeleteGameClicked(String gameName) { sendMessage(new DeleteLobbyMessage(lobbySubChannel, gameName)); }
+
+    public void respondToJoinGameClicked(String gameName, String gamePassword) {
+        //sendMessage(new JoinLobbyMessage(lobbySubChannel, gameName, gamePassword));
+    }
+
+    public void respondToFindGameClicked() { sendMessage(new JoinQueueMessage(lobbySubChannel, gamerTag)); }
 
     public void respondToCancelButtonClicked() { sendMessage(new CancelQueueMessage(lobbySubChannel, gamerTag)); }
 

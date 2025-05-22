@@ -45,14 +45,26 @@
 }
 
 .button-createGame {
-    -fx-background-color: #008000;
+    -fx-background-color: #50C878;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 10px;
     -fx-border-radius: 5px;
 }
 
 .button-createGame:hover {
-    -fx-background-color: #0F4D0F;
+    -fx-background-color: #2D8F4E;
+    -fx-cursor: hand;
+}
+
+.button-joinGame {
+    -fx-background-color: #50C878;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-joinGame:hover {
+    -fx-background-color: #2D8F4E;
     -fx-cursor: hand;
 }
 

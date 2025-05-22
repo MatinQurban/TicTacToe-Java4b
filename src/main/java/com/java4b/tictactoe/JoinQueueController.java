@@ -25,10 +25,12 @@ public class JoinQueueController {
 
     @FXML
     protected Label networkErrorLabel, nameErrorLabel, loggedInLabel, searchingLabel,
-    gameFoundLabel, serverAddressLabel, portNumberLabel, gameNameLabel, gamePasswordLabel;
+    gameFoundLabel, serverAddressLabel, portNumberLabel, gameNameLabel, gamePasswordLabel,
+    gameNameErrorLabel, invalidLobbyLabel;
 
     @FXML
-    protected Button loginButton, findGameButton, cancelButton, mainMenuButton, createGameButton;
+    protected Button loginButton, findGameButton, cancelButton, mainMenuButton,
+            createGameButton, deleteGameButton, joinGameButton;
 
     protected PlayerClient playerClient;
 
@@ -43,6 +45,8 @@ public class JoinQueueController {
         cancelButton.setDisable(true);
         createGameButton.setVisible(false);
         createGameButton.setDisable(true);
+        joinGameButton.setVisible(false);
+        joinGameButton.setDisable(true);
 
         Platform.runLater(() -> gamerTagField.requestFocus());
     }
@@ -85,6 +89,12 @@ public class JoinQueueController {
 
     @FXML
     protected void onFindGameButtonClicked() throws IOException, InterruptedException {
+        gameNameField.setVisible(false);
+        gamePasswordField.setVisible(false);
+
+        gameNameLabel.setVisible(false);
+        gamePasswordLabel.setVisible(false);
+
         playerClient.respondToFindGameClicked();
     }
 
@@ -104,26 +114,47 @@ public class JoinQueueController {
     protected void onCreateGameButtonClicked() {
         // When user clicks this button, we will change the screen and
         // let the user input their game information
-        // When user clicks this button again, will process game
-        // information
+        // When user clicks this button again, will process game information
         System.out.println("onCreateGameButtonClicked");
-
+//        System.out.println("Game Name Field Visible?: " + gameNameField.isVisible());
         if(gameNameField.isVisible()) {
-            // check if game information has been submitted --> process
+            String gameName = gameNameField.getText();
+            String gamePassword = gamePasswordField.getText();
+            System.out.println("Empty?: " + gameName.isEmpty() + "\nGN: " + gameName + ", GP: " + gamePassword);
+            if(gameName.isEmpty()) {
+                gameNameErrorLabel.setVisible(true);
+                return;
+            }
+            findGameButton.setDisable(true);
+            findGameButton.setVisible(false);
+            joinGameButton.setDisable(true);
+            joinGameButton.setVisible(false);
+            gameNameErrorLabel.setVisible(false);
+
+            playerClient.respondToCreateGameClicked(gameName, gamePassword);
         }
         else {
             serverAddressLabel.setVisible(false);
             portNumberLabel.setVisible(false);
             gameNameLabel.setVisible(true);
             gamePasswordLabel.setVisible(true);
+            loggedInLabel.setVisible(false);
 
             gameNameField.setVisible(true);
+            gameNameField.setDisable(false);
             gamePasswordField.setVisible(true);
+            gamePasswordField.setDisable(false);
             serverAddressField.setVisible(false);
             portNumberField.setVisible(false);
+
+            joinGameButton.setDisable(true);
+            joinGameButton.setVisible(false);
         }
         //TicTacToeApplication.switchScene("CreateGame", createGameStage);
     }
+
+    @FXML
+    protected void onDeleteGameButtonClicked() { playerClient.respondToDeleteGameClicked(gameNameField.getText()); }
 
     public void processNameUnavailableMessage(String gamerTag) {
         Platform.runLater(new Runnable() {
@@ -135,6 +166,47 @@ public class JoinQueueController {
                 gamerTagField.requestFocus();
             }
         });
+    }
+
+    public void processLobbyCreatedMessage() {
+        gameNameField.setVisible(false);
+        gamePasswordField.setVisible(false);
+
+        gameNameLabel.setVisible(false);
+        gamePasswordLabel.setVisible(false);
+
+        createGameButton.setDisable(true);
+        createGameButton.setVisible(false);
+        deleteGameButton.setVisible(true);
+        deleteGameButton.setDisable(false);
+    }
+
+    public void processLobbyDeletedMessage() {
+        gameNameField.setDisable(true);
+        gameNameField.setVisible(false);
+        gamePasswordField.setDisable(true);
+        gamePasswordField.setVisible(false);
+        serverAddressField.setVisible(true);
+        portNumberField.setVisible(true);
+
+        gameNameLabel.setVisible(false);
+        gamePasswordLabel.setVisible(false);
+        serverAddressLabel.setVisible(true);
+        portNumberLabel.setVisible(true);
+
+        deleteGameButton.setDisable(true);
+        deleteGameButton.setVisible(false);
+        createGameButton.setDisable(false);
+        createGameButton.setVisible(true);
+        joinGameButton.setDisable(false);
+        joinGameButton.setVisible(true);
+        findGameButton.setDisable(false);
+        findGameButton.setVisible(true);
+    }
+
+    public void processInvalidLobbyMessage() {
+        invalidLobbyLabel.setVisible(false);
+        invalidLobbyLabel.setVisible(true);
     }
 
     public void processLoginSuccessfulMessage() {
@@ -150,6 +222,8 @@ public class JoinQueueController {
         findGameButton.setDisable(false);
         createGameButton.setVisible(true);
         createGameButton.setDisable(false);
+        joinGameButton.setVisible(true);
+        joinGameButton.setDisable(false);
 
         serverAddressField.setDisable(true);
         serverAddressField.setVisible(false);
@@ -164,6 +238,10 @@ public class JoinQueueController {
 
         findGameButton.setDisable(true);
         findGameButton.setVisible(false);
+        createGameButton.setDisable(true);
+        createGameButton.setVisible(false);
+        joinGameButton.setDisable(true);
+        joinGameButton.setVisible(false);
         cancelButton.setVisible(true);
         cancelButton.setDisable(false);
     }
@@ -171,8 +249,16 @@ public class JoinQueueController {
     public void processQueueCancelledMessage() {
         findGameButton.setDisable(false);
         findGameButton.setVisible(true);
+        createGameButton.setDisable(false);
+        createGameButton.setVisible(true);
+        joinGameButton.setDisable(false);
+        joinGameButton.setVisible(true);
 
         searchingLabel.setVisible(false);
+        serverAddressLabel.setVisible(true);
+        serverAddressField.setVisible(true);
+        portNumberLabel.setVisible(true);
+        portNumberField.setVisible(true);
 
         cancelButton.setDisable(true);
         cancelButton.setVisible(false);

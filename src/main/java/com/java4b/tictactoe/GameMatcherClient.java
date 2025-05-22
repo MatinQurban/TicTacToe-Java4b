@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Random;
+import javafx.util.Pair;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 // We are going to want to create a new map that holds concurrent threads for
@@ -16,6 +18,7 @@ public class GameMatcherClient extends Client {
 
     private ArrayList<String> allPlayerNames = new ArrayList<>();
     private Queue<String> playerQueue = new ConcurrentLinkedQueue<>();
+    private ConcurrentHashMap<String, Pair<String, String>> activeLobbies = new ConcurrentHashMap<String, Pair<String, String>>();
     private int nextAvailableGameChannel = 1;
 
 //    public static void main(String[] args) {new GameMatcherClient("localhost", 11111);}
@@ -45,6 +48,13 @@ public class GameMatcherClient extends Client {
                         break;
                     case "CANCEL_QUEUE":
                         processCancelQueueMessage((CancelQueueMessage) message);
+                        break;
+                    case "CREATE_LOBBY":
+                        processCreateLobbyMessage((CreateLobbyMessage) message);
+                        break;
+                    case "DELETE_LOBBY":
+                        processDeleteLobbyMessage((DeleteLobbyMessage) message);
+                        break;
                     default:
                         break;
                 }
@@ -53,7 +63,6 @@ public class GameMatcherClient extends Client {
             }
         }
     }
-
 
     private void processAttemptLoginMessage(AttemptLoginMessage message) {
         String gamerTag = message.getGamerTag();
@@ -66,6 +75,32 @@ public class GameMatcherClient extends Client {
             sendMessage(new RegistrationMessage("/lobby/" + gamerTag));
             System.out.println(gamerTag + " has logged in");
         }
+    }
+
+    private void processCreateLobbyMessage(CreateLobbyMessage message) {
+        String playerSubChannel = message.getLobbySubChannel();
+        String gameName = message.getGameName();
+        String gamePassword = message.getGamePassword();
+        String gameLobbyChannel = playerSubChannel + "/" + gameName;
+//        System.out.println("Processing Lobby Creation:" +
+//                "\nPlayer: " + playerSubChannel +
+//                "\nGame Name: " + gameName +
+//                "\nGame Pswd: _" + gamePassword + "_");
+        if(activeLobbies.containsKey(gameName)){
+            sendMessage(new InvalidLobbyMessage(playerSubChannel, gameName));
+            return;
+        }
+        activeLobbies.put(gameName, new Pair<>(gamePassword, gameLobbyChannel));
+        sendMessage(new LobbyCreatedMessage(playerSubChannel));
+        sendMessage(new RegistrationMessage(gameLobbyChannel));
+    }
+
+    private void processDeleteLobbyMessage(DeleteLobbyMessage message) {
+        String gameName = message.getGameName();
+        String gameChannel = activeLobbies.get(gameName).getValue();
+        activeLobbies.remove(gameName);
+        sendMessage(new LobbyDeletedMessage(message.getLobbySubChannel(), gameChannel));
+        sendMessage(new UnregisterMessage(gameChannel));
     }
 
     private void processJoinQueueMessage(JoinQueueMessage message) {
@@ -84,7 +119,6 @@ public class GameMatcherClient extends Client {
         String lobbySubChannel = message.getLobbySubChannel();
         playerQueue.remove(gamerTag);
         sendMessage(new QueueCancelledMessage(lobbySubChannel));
-        sendMessage(new UnregisterMessage(lobbySubChannel));
         System.out.println(gamerTag + " has cancelled queue");
 
     }
