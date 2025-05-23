@@ -34,8 +34,12 @@ public class Router extends Thread {
     }
 
     public void unRegisterClient(String channel, ClientConnection connection) {
-        clientsByChannel.get(channel).remove(connection);
-        System.out.println("clientConnection unregistered from channel:  " + channel + "\n" + clientsByChannel.get(channel));
+        try {
+            clientsByChannel.get(channel).remove(connection);
+            System.out.println("clientConnection unregistered from channel:  " + channel + "\n" + clientsByChannel.get(channel));
+        } catch (Exception e) {
+            System.err.println("Error unregistering client from channel " + channel + ": " + e.getMessage());
+        }
     }
 
     @Override
