@@ -323,11 +323,21 @@ public class JoinQueueController {
 
     public void processGameFoundMessage() {
         searchingLabel.setVisible(false);
+        waitingForHostLabel.setVisible(false);
         gameFoundLabel.setVisible(true);
+
         mainMenuButton.setDisable(true);
         mainMenuButton.setVisible(false);
         cancelButton.setDisable(true);
         cancelButton.setVisible(false);
+        createGameButton.setDisable(true);
+        createGameButton.setVisible(false);
+        joinGameButton.setDisable(true);
+        joinGameButton.setVisible(false);
+        startGameButton.setDisable(true);
+        startGameButton.setVisible(false);
+        deleteGameButton.setDisable(true);
+        deleteGameButton.setVisible(false);
     }
 
     private void initPrivateLobbyForm()

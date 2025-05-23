@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Random;
 import javafx.util.Pair;
+
+import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -19,7 +21,7 @@ public class GameMatcherClient extends Client {
 
     private ArrayList<String> allPlayerNames = new ArrayList<>();
     private Queue<String> playerQueue = new ConcurrentLinkedQueue<>();
-    private ConcurrentHashMap<String, Pair<String, String[]>> activeLobbies = new ConcurrentHashMap<String, Pair<String, String[]>>();
+    private ConcurrentHashMap<String, Pair<String, PrivateLobby>> activeLobbies = new ConcurrentHashMap<String, Pair<String, PrivateLobby>>();
     private int nextAvailableGameChannel = 1;
 
 //    public static void main(String[] args) {new GameMatcherClient("localhost", 11111);}
@@ -49,6 +51,9 @@ public class GameMatcherClient extends Client {
                         break;
                     case "CANCEL_QUEUE":
                         processCancelQueueMessage((CancelQueueMessage) message);
+                        break;
+                    case "START_PRIVATE_GAME":
+                        processStartPrivateGameMessage((StartPrivateGameMessage) message);
                         break;
                     case "CREATE_LOBBY":
                         processCreateLobbyMessage((CreateLobbyMessage) message);
@@ -94,9 +99,12 @@ public class GameMatcherClient extends Client {
             sendMessage(new InvalidLobbyMessage(playerSubChannel, gameName));
             return;
         }
-        // Map < Key: PrivateLobbyName, Value: Pair( Key: Password , Value: [ PrivateLobbyAccessChannel, FullStatus ] )>
-        activeLobbies.put(gameName, new Pair<>(gamePassword, new String[]{gameLobbyChannel, "OPEN"}));
-        sendMessage(new LobbyCreatedMessage(playerSubChannel));
+        // Map < Key: PrivateLobbyName, Value: Pair( Key: Password , Value: PrivateLobby Object )>
+        Stack<String> players = new Stack<>();
+        players.push(playerSubChannel.split("/")[2]);
+        PrivateLobby newLobby = new PrivateLobby(false, gameLobbyChannel, players);
+        activeLobbies.put(gameName, new Pair<>(gamePassword, newLobby));
+        sendMessage(new LobbyCreatedMessage(playerSubChannel, gameLobbyChannel));
         sendMessage(new RegistrationMessage(gameLobbyChannel));
     }
 
@@ -104,7 +112,7 @@ public class GameMatcherClient extends Client {
         String playerSubChannel = message.getLobbySubChannel();
         String targetGameName = message.getGameName();
         String passwordAttempt = message.getGamePassword();
-        Pair<String, String[]> lobbyInfo = activeLobbies.get(targetGameName);
+        Pair<String, PrivateLobby> lobbyInfo = activeLobbies.get(targetGameName);
 
         // Check if lobby exists
         if(!activeLobbies.containsKey(targetGameName)){
@@ -121,24 +129,25 @@ public class GameMatcherClient extends Client {
         }
 
         // Check if the lobby is FULL
-        if(lobbyInfo.getValue()[1].equals("FULL")){
+        if(lobbyInfo.getValue().isFull()){
             sendMessage(new InvalidLobbyMessage(playerSubChannel, targetGameName));
             return;
         }
         
-        // If user entered an existing lobby that is open and the corresponding password, return PrivateLobbyAccessChannel
-        String lobbyChannel = lobbyInfo.getValue()[0];
+        // If user entered an existing lobby that is open and the corresponding password, add player and return PrivateLobbyAccessChannel
+        lobbyInfo.getValue().getPlayers().push(playerSubChannel.split("/")[2]);
+        String lobbyChannel = lobbyInfo.getValue().getPrivateAccessChannel();
         sendMessage(new Message(lobbyChannel, "LOBBY_FOUND"));
         sendMessage(new LobbyFoundMessage(playerSubChannel, lobbyChannel));
         
         // Mark lobby as FULL
-        lobbyInfo = new Pair<>(lobbyInfo.getKey(), new String[]{lobbyChannel, "FULL"});
-        activeLobbies.put(targetGameName, lobbyInfo);
+        lobbyInfo.getValue().setFull(true);
+        activeLobbies.put(targetGameName, lobbyInfo); // Might not need this line
     }
 
     private void processDeleteLobbyMessage(DeleteLobbyMessage message) {
         String gameName = message.getGameName();
-        String gameChannel = activeLobbies.get(gameName).getValue()[0];
+        String gameChannel = activeLobbies.get(gameName).getValue().getPrivateAccessChannel();
         activeLobbies.remove(gameName);
         sendMessage(new LobbyDeletedMessage(message.getLobbySubChannel(), gameChannel));
         sendMessage(new UnregisterMessage(gameChannel));
@@ -164,6 +173,27 @@ public class GameMatcherClient extends Client {
 
     }
 
+    private void processStartPrivateGameMessage(StartPrivateGameMessage message) {
+        String privateLobbyChannel = message.getPrivateLobbyChannel();
+        String lobbyName= privateLobbyChannel.split("/")[3];
+        String gamerTag1 = activeLobbies.get(lobbyName).getValue().getPlayers().pop();
+        String gamerTag2 = activeLobbies.get(lobbyName).getValue().getPlayers().pop();
+        Avatar avatar1 = Avatar.ANCHOR;
+        Avatar avatar2 = Avatar.LIFE_SAVER;
+        String firstPlayer = randomizeWhoGoesFirst(gamerTag1, gamerTag2);
+
+        String gameLobbyChannel = "/game/" + nextAvailableGameChannel;
+        ++nextAvailableGameChannel;
+
+        GameState gameState = new GameState(gamerTag1, avatar1, gamerTag2, avatar2, firstPlayer);
+        sendMessage(new NewGameMessage(gameLobbyChannel, gameState));
+
+        sendMessage(new GameFoundMessage(privateLobbyChannel, gameLobbyChannel, gamerTag2, avatar1, avatar2, firstPlayer, true));
+        sendMessage(new GameFoundMessage(privateLobbyChannel, gameLobbyChannel, gamerTag1, avatar2, avatar1, firstPlayer, true));
+
+        activeLobbies.remove(lobbyName);
+    }
+
     private void matchPlayers() {
         while (true) {
             if (playerQueue.size() >= 2) {
@@ -181,8 +211,8 @@ public class GameMatcherClient extends Client {
                 GameState gameState = new GameState(gamerTag1, avatar1, gamerTag2, avatar2, firstPlayer);
                 sendMessage(new NewGameMessage(gameChannel, gameState));
 
-                sendMessage(new GameFoundMessage(lobbySubChannel1, gameChannel, gamerTag2, avatar1, avatar2, firstPlayer));
-                sendMessage(new GameFoundMessage(lobbySubChannel2, gameChannel, gamerTag1, avatar2, avatar1, firstPlayer));
+                sendMessage(new GameFoundMessage(lobbySubChannel1, gameChannel, gamerTag2, avatar1, avatar2, firstPlayer, false));
+                sendMessage(new GameFoundMessage(lobbySubChannel2, gameChannel, gamerTag1, avatar2, avatar1, firstPlayer, false));
             }
         }
     }

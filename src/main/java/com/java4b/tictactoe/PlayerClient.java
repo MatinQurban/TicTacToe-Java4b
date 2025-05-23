@@ -56,7 +56,7 @@ public class PlayerClient extends Client {
                         processQueueCancelledMessage();
                         break;
                     case "LOBBY_CREATED":
-                        processLobbyCreatedMessage();
+                        processLobbyCreatedMessage((LobbyCreatedMessage) message);
                         break;
                     case "LOBBY_FOUND":
                         processLobbyFoundMessage((LobbyFoundMessage) message);
@@ -103,7 +103,11 @@ public class PlayerClient extends Client {
         joinQueueController.processNameUnavailableMessage(gamerTag);
     }
 
-    private void processLobbyCreatedMessage() { joinQueueController.processLobbyCreatedMessage(); }
+    private void processLobbyCreatedMessage(LobbyCreatedMessage message) {
+        this.privateLobbyChannel = message.getPrivateLobbyChannel();
+        sendMessage(new RegistrationMessage(privateLobbyChannel));
+        joinQueueController.processLobbyCreatedMessage();
+    }
 
     private void processLobbyFoundMessage(LobbyFoundMessage message) {
         this.privateLobbyChannel = message.getLobbyChannel();
@@ -117,10 +121,7 @@ public class PlayerClient extends Client {
         joinQueueController.processLobbyDeletedMessage();
     }
 
-    private void processInvalidLobbyMessage(InvalidLobbyMessage message) {
-        sendMessage(new UnregisterMessage(lobbySubChannel + "/" + message.getGameName()));
-        joinQueueController.processInvalidLobbyMessage();
-    }
+    private void processInvalidLobbyMessage(InvalidLobbyMessage message) { joinQueueController.processInvalidLobbyMessage(); }
 
     private void processSearchingForGameMessage() {
         joinQueueController.processSearchingForGameMessage();
@@ -137,6 +138,7 @@ public class PlayerClient extends Client {
         String firstPlayer = message.getFirstPlayer();
 
         sendMessage(new RegistrationMessage(gameChannel));
+        if(message.isPrivate()){ sendMessage(new UnregisterMessage(message.getTargetChannel())); }
 
         System.out.println("\nGame found!");
         System.out.println("\tGame channel: " + message.getGameChannel());
@@ -190,12 +192,9 @@ public class PlayerClient extends Client {
         sendMessage(new AttemptLoginMessage(this.gamerTag));
     }
 
-    public void respondToCreateGameClicked(String gameName, String gamePassword) {
-        sendMessage(new CreateLobbyMessage(lobbySubChannel, gameName, gamePassword));
-        sendMessage(new RegistrationMessage(lobbySubChannel + "/" + gameName));
-    }
+    public void respondToCreateGameClicked(String gameName, String gamePassword) { sendMessage(new CreateLobbyMessage(lobbySubChannel, gameName, gamePassword)); }
 
-    public void respondToStartGameClicked() { sendMessage(new StartGameMessage(gameChannel)); }
+    public void respondToStartGameClicked() { sendMessage(new StartPrivateGameMessage(gameChannel)); }
 
     public void respondToDeleteGameClicked(String gameName) { sendMessage(new DeleteLobbyMessage(lobbySubChannel, gameName)); }
 
