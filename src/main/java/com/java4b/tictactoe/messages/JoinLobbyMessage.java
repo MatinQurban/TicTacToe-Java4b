@@ -1,11 +1,11 @@
 package com.java4b.tictactoe.messages;
 
-public class CreateLobbyMessage extends Message {
+public class JoinLobbyMessage extends Message {
     private static final long serialVersionUID = 1L;
     private final String lobbySubChannel, gameName, gamePassword;
 
-    public CreateLobbyMessage(String lobbySubChannel, String gameName, String gamePassword) {
-        super(lobbySubChannel, "CREATE_LOBBY");
+    public JoinLobbyMessage(String lobbySubChannel, String gameName, String gamePassword) {
+        super(lobbySubChannel, "JOIN_LOBBY");
         this.lobbySubChannel = lobbySubChannel;
         this.gameName = gameName;
         this.gamePassword = gamePassword;
@@ -25,7 +25,7 @@ public class CreateLobbyMessage extends Message {
 
     @Override
     public String toString() {
-        return super.toString() + "CreateLobbyMessage{" +
+        return super.toString() + "JoinLobbyMessage{" +
                 "lobbySubChannel='" + lobbySubChannel + '\'' +
                 ", gameName='" + gameName + '\'' +
                 ", gamePassword='" + gamePassword + '\'' +

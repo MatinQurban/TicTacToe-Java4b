@@ -7,11 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class PlayerClient extends Client {
 
     private String gameChannel;
     private String lobbySubChannel;
+    private String privateLobbyChannel;
     private boolean isConnected;
 
     // Temporary unique identifier - might want a more robust solution later
@@ -56,6 +58,9 @@ public class PlayerClient extends Client {
                     case "LOBBY_CREATED":
                         processLobbyCreatedMessage();
                         break;
+                    case "LOBBY_FOUND":
+                        processLobbyFoundMessage((LobbyFoundMessage) message);
+                        break;
                     case "LOBBY_DELETED":
                         processLobbyDeletedMessage((LobbyDeletedMessage) message);
                         break;
@@ -99,6 +104,13 @@ public class PlayerClient extends Client {
     }
 
     private void processLobbyCreatedMessage() { joinQueueController.processLobbyCreatedMessage(); }
+
+    private void processLobbyFoundMessage(LobbyFoundMessage message) {
+        this.privateLobbyChannel = message.getLobbyChannel();
+        String hostName = privateLobbyChannel.split("/")[2];
+        if(!Objects.equals(this.gamerTag, hostName)) sendMessage(new RegistrationMessage(privateLobbyChannel));
+        joinQueueController.processLobbyFoundMessage(hostName, this.gamerTag);
+    }
 
     private void processLobbyDeletedMessage(LobbyDeletedMessage message) {
         sendMessage(new UnregisterMessage(message.getGameLobbyChannel()));
@@ -183,10 +195,12 @@ public class PlayerClient extends Client {
         sendMessage(new RegistrationMessage(lobbySubChannel + "/" + gameName));
     }
 
+    public void respondToStartGameClicked() { sendMessage(new StartGameMessage(gameChannel)); }
+
     public void respondToDeleteGameClicked(String gameName) { sendMessage(new DeleteLobbyMessage(lobbySubChannel, gameName)); }
 
     public void respondToJoinGameClicked(String gameName, String gamePassword) {
-        //sendMessage(new JoinLobbyMessage(lobbySubChannel, gameName, gamePassword));
+        sendMessage(new JoinLobbyMessage(lobbySubChannel, gameName, gamePassword));
     }
 
     public void respondToFindGameClicked() { sendMessage(new JoinQueueMessage(lobbySubChannel, gamerTag)); }

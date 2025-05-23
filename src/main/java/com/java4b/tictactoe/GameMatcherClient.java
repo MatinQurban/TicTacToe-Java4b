@@ -3,6 +3,7 @@ package com.java4b.tictactoe;
 import com.java4b.tictactoe.messages.*;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Random;
@@ -18,7 +19,7 @@ public class GameMatcherClient extends Client {
 
     private ArrayList<String> allPlayerNames = new ArrayList<>();
     private Queue<String> playerQueue = new ConcurrentLinkedQueue<>();
-    private ConcurrentHashMap<String, Pair<String, String>> activeLobbies = new ConcurrentHashMap<String, Pair<String, String>>();
+    private ConcurrentHashMap<String, Pair<String, String[]>> activeLobbies = new ConcurrentHashMap<String, Pair<String, String[]>>();
     private int nextAvailableGameChannel = 1;
 
 //    public static void main(String[] args) {new GameMatcherClient("localhost", 11111);}
@@ -51,6 +52,9 @@ public class GameMatcherClient extends Client {
                         break;
                     case "CREATE_LOBBY":
                         processCreateLobbyMessage((CreateLobbyMessage) message);
+                        break;
+                    case "JOIN_LOBBY":
+                        processJoinLobbyMessage((JoinLobbyMessage) message);
                         break;
                     case "DELETE_LOBBY":
                         processDeleteLobbyMessage((DeleteLobbyMessage) message);
@@ -90,14 +94,51 @@ public class GameMatcherClient extends Client {
             sendMessage(new InvalidLobbyMessage(playerSubChannel, gameName));
             return;
         }
-        activeLobbies.put(gameName, new Pair<>(gamePassword, gameLobbyChannel));
+        // Map < Key: PrivateLobbyName, Value: Pair( Key: Password , Value: [ PrivateLobbyAccessChannel, FullStatus ] )>
+        activeLobbies.put(gameName, new Pair<>(gamePassword, new String[]{gameLobbyChannel, "OPEN"}));
         sendMessage(new LobbyCreatedMessage(playerSubChannel));
         sendMessage(new RegistrationMessage(gameLobbyChannel));
     }
 
+    private void processJoinLobbyMessage(JoinLobbyMessage message) {
+        String playerSubChannel = message.getLobbySubChannel();
+        String targetGameName = message.getGameName();
+        String passwordAttempt = message.getGamePassword();
+        Pair<String, String[]> lobbyInfo = activeLobbies.get(targetGameName);
+
+        // Check if lobby exists
+        if(!activeLobbies.containsKey(targetGameName)){
+            sendMessage(new InvalidLobbyMessage(playerSubChannel, targetGameName));
+            return;
+        }
+
+        // Check if user entered correct password for the lobby
+        if(!lobbyInfo.getKey().isEmpty() && !lobbyInfo.getKey().equals(passwordAttempt)) {
+            // If the password is incorrect, send a message to the player to indicate so
+            sendMessage(new InvalidLobbyMessage(playerSubChannel, targetGameName));
+            //sendMessage(new InvalidLobbyPasswordMessage(playerSubChannel, targetGameName)); if feeling fancy can make specific message
+            return;
+        }
+
+        // Check if the lobby is FULL
+        if(lobbyInfo.getValue()[1].equals("FULL")){
+            sendMessage(new InvalidLobbyMessage(playerSubChannel, targetGameName));
+            return;
+        }
+        
+        // If user entered an existing lobby that is open and the corresponding password, return PrivateLobbyAccessChannel
+        String lobbyChannel = lobbyInfo.getValue()[0];
+        sendMessage(new Message(lobbyChannel, "LOBBY_FOUND"));
+        sendMessage(new LobbyFoundMessage(playerSubChannel, lobbyChannel));
+        
+        // Mark lobby as FULL
+        lobbyInfo = new Pair<>(lobbyInfo.getKey(), new String[]{lobbyChannel, "FULL"});
+        activeLobbies.put(targetGameName, lobbyInfo);
+    }
+
     private void processDeleteLobbyMessage(DeleteLobbyMessage message) {
         String gameName = message.getGameName();
-        String gameChannel = activeLobbies.get(gameName).getValue();
+        String gameChannel = activeLobbies.get(gameName).getValue()[0];
         activeLobbies.remove(gameName);
         sendMessage(new LobbyDeletedMessage(message.getLobbySubChannel(), gameChannel));
         sendMessage(new UnregisterMessage(gameChannel));
