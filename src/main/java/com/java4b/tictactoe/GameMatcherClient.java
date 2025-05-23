@@ -5,6 +5,7 @@ import com.java4b.tictactoe.messages.*;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import javafx.util.Pair;
@@ -12,6 +13,7 @@ import javafx.util.Pair;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 // We are going to want to create a new map that holds concurrent threads for
 // each player who created a new game. For each new game made we will make a
@@ -19,7 +21,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class GameMatcherClient extends Client {
 
-    private ArrayList<String> allPlayerNames = new ArrayList<>();
+    private List<String> allPlayerNames = new CopyOnWriteArrayList<>();
     private Queue<String> playerQueue = new ConcurrentLinkedQueue<>();
     private ConcurrentHashMap<String, Pair<String, PrivateLobby>> activeLobbies = new ConcurrentHashMap<String, Pair<String, PrivateLobby>>();
     private int nextAvailableGameChannel = 1;

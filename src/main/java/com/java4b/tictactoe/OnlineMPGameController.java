@@ -24,6 +24,10 @@ public class OnlineMPGameController extends GameController {
 
         gameModeLabel.setText("Online Multiplayer Game");
         disableMove();
+
+        Platform.runLater(() -> {
+            playerClient.respondToReadyForGameMessages();
+        });
     }
 
     public void initData(PlayerClient caller, String myGamerTag, String opponentGamerTag, Avatar myAvatar,

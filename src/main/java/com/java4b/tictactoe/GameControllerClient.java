@@ -8,8 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GameControllerClient extends Client {
 
-    int nextAvailableGameChannel = 1;
-
     private Map<String, GameState> gameStateForChannel = new ConcurrentHashMap<>();
 
 //    public static void main(String [] args) throws IOException {new GameControllerClient("localhost", 11111);}
@@ -32,6 +30,10 @@ public class GameControllerClient extends Client {
                         break;
                     case "CHECK_MOVE":
                         processCheckMoveMessage((CheckMoveMessage) message);
+                        break;
+                    case "PLAYER_READY":
+                        processPlayerReadyMessage((PlayerReadyMessage) message);
+                        break;
                     default:
                         break;
                 }
@@ -47,11 +49,6 @@ public class GameControllerClient extends Client {
         gameStateForChannel.put(gameChannel, gameState);
 
         sendMessage(new RegistrationMessage(gameChannel));
-
-        // This is a dumb way to ensure the channel is registered before trying to send a message to it
-        // Could maybe try using .wait() and .notify() with a synchronized block?
-        Thread.sleep(100);
-        sendMessage(new PlayerTurnMessage(gameChannel, gameState.getActivePlayer().getName()));
     }
 
     private void processCheckMoveMessage(CheckMoveMessage message) {
@@ -76,6 +73,21 @@ public class GameControllerClient extends Client {
             }
         } else {
             sendMessage(new InvalidMoveMessage(gameChannel, gameState.getActivePlayer().getName(), move));
+        }
+    }
+
+    private void processPlayerReadyMessage(PlayerReadyMessage message) {
+        String gameChannel = message.getChannel();
+        GameState gameState = gameStateForChannel.get(gameChannel);
+
+        if (gameState.getPlayer1().getName().equals(message.getGamerTag())) {
+            gameState.setReadyPlayer1(true);
+        } else if (gameState.getPlayer2().getName().equals(message.getGamerTag())) {
+            gameState.setReadyPlayer2(true);
+        }
+
+        if (gameState.isReadyPlayer1() && gameState.isReadyPlayer2()) {
+            sendMessage(new PlayerTurnMessage(gameChannel, gameState.getActivePlayer().getName()));
         }
     }
 }

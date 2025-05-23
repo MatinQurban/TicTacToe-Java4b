@@ -2,7 +2,9 @@ package com.java4b.tictactoe;
 
 import javafx.scene.image.Image;
 
-public enum Avatar {
+import java.io.Serializable;
+
+public enum Avatar implements Serializable {
     ANCHOR, LIFE_SAVER, NONE;
 
     public String getFileName() {

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Router extends Thread {
     private static final int PORT = 11111;
@@ -27,7 +28,7 @@ public class Router extends Thread {
     }
 
     public void registerClient(String channel, ClientConnection connection) {
-        clientsByChannel.putIfAbsent(channel, new ArrayList<>());
+        clientsByChannel.putIfAbsent(channel, new CopyOnWriteArrayList<>());
         clientsByChannel.get(channel).add(connection);
 
         System.out.println("New clientConnection registered for channel:  " + channel + "\n" + clientsByChannel.get(channel));
