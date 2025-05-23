@@ -137,9 +137,9 @@ public class GameMatcherClient extends Client {
         // If user entered an existing lobby that is open and the corresponding password, add player and return PrivateLobbyAccessChannel
         lobbyInfo.getValue().getPlayers().push(playerSubChannel.split("/")[2]);
         String lobbyChannel = lobbyInfo.getValue().getPrivateAccessChannel();
-        sendMessage(new Message(lobbyChannel, "LOBBY_FOUND"));
         sendMessage(new LobbyFoundMessage(playerSubChannel, lobbyChannel));
-        
+        sendMessage(new LobbyFoundMessage(lobbyChannel, lobbyChannel));
+
         // Mark lobby as FULL
         lobbyInfo.getValue().setFull(true);
         activeLobbies.put(targetGameName, lobbyInfo); // Might not need this line
@@ -175,7 +175,7 @@ public class GameMatcherClient extends Client {
 
     private void processStartPrivateGameMessage(StartPrivateGameMessage message) {
         String privateLobbyChannel = message.getPrivateLobbyChannel();
-        String lobbyName= privateLobbyChannel.split("/")[3];
+        String lobbyName = privateLobbyChannel.split("/")[3];
         String gamerTag1 = activeLobbies.get(lobbyName).getValue().getPlayers().pop();
         String gamerTag2 = activeLobbies.get(lobbyName).getValue().getPlayers().pop();
         Avatar avatar1 = Avatar.ANCHOR;
@@ -188,8 +188,10 @@ public class GameMatcherClient extends Client {
         GameState gameState = new GameState(gamerTag1, avatar1, gamerTag2, avatar2, firstPlayer);
         sendMessage(new NewGameMessage(gameLobbyChannel, gameState));
 
-        sendMessage(new GameFoundMessage(privateLobbyChannel, gameLobbyChannel, gamerTag2, avatar1, avatar2, firstPlayer, true));
-        sendMessage(new GameFoundMessage(privateLobbyChannel, gameLobbyChannel, gamerTag1, avatar2, avatar1, firstPlayer, true));
+        String player1SubChannel = "/lobby/" + gamerTag1;
+        String player2SubChannel = "/lobby/" + gamerTag2;
+        sendMessage(new GameFoundMessage(player1SubChannel, gameLobbyChannel, gamerTag2, avatar1, avatar2, firstPlayer, true));
+        sendMessage(new GameFoundMessage(player2SubChannel, gameLobbyChannel, gamerTag1, avatar2, avatar1, firstPlayer, true));
 
         activeLobbies.remove(lobbyName);
     }

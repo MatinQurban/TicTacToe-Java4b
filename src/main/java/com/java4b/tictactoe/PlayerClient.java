@@ -194,7 +194,7 @@ public class PlayerClient extends Client {
 
     public void respondToCreateGameClicked(String gameName, String gamePassword) { sendMessage(new CreateLobbyMessage(lobbySubChannel, gameName, gamePassword)); }
 
-    public void respondToStartGameClicked() { sendMessage(new StartPrivateGameMessage(gameChannel)); }
+    public void respondToStartGameClicked() { sendMessage(new StartPrivateGameMessage(privateLobbyChannel)); }
 
     public void respondToDeleteGameClicked(String gameName) { sendMessage(new DeleteLobbyMessage(lobbySubChannel, gameName)); }
 

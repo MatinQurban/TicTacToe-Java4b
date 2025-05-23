@@ -69,9 +69,6 @@ public class JoinQueueController {
 
     @FXML
     protected void onLoginButtonClicked() {
-//        String lc = "/lobby/hostname/boof";
-//        String hn = lc.split("/")[2];
-//        System.out.println("hn: " + hn);
         String serverAddress = serverAddressField.getText();
         String portNumberText = portNumberField.getText();
         String gamerTag = gamerTagField.getText();
@@ -125,6 +122,8 @@ public class JoinQueueController {
             String gamePassword = gamePasswordField.getText();
             System.out.println("Empty?: " + gameName.isEmpty() + "\nGN: " + gameName + ", GP: " + gamePassword);
             if(gameName.isEmpty()) {
+                processInvalidLobbyMessage();
+                invalidLobbyLabel.setVisible(false);
                 gameNameErrorLabel.setVisible(true);
                 return;
             }
@@ -175,7 +174,8 @@ public class JoinQueueController {
     }
 
     @FXML
-    protected void onStartGameButtonClicked() { playerClient.respondToStartGameClicked(); }
+    protected void onStartGameButtonClicked() { playerClient.respondToStartGameClicked();
+    System.out.println("onStartGameButtonClicked");}
 
     @FXML
     protected void onDeleteGameButtonClicked() { playerClient.respondToDeleteGameClicked(gameNameField.getText()); }
@@ -259,8 +259,25 @@ public class JoinQueueController {
     }
 
     public void processInvalidLobbyMessage() {
-        invalidLobbyLabel.setVisible(false);
+        gameNameField.setDisable(true);
+        gameNameField.setVisible(false);
+        gamePasswordField.setDisable(true);
+        gamePasswordField.setVisible(false);
+        serverAddressField.setVisible(true);
+        portNumberField.setVisible(true);
+
         invalidLobbyLabel.setVisible(true);
+        gameNameLabel.setVisible(false);
+        gamePasswordLabel.setVisible(false);
+        serverAddressLabel.setVisible(true);
+        portNumberLabel.setVisible(true);
+
+        createGameButton.setDisable(false);
+        createGameButton.setVisible(true);
+        joinGameButton.setDisable(false);
+        joinGameButton.setVisible(true);
+        findGameButton.setDisable(false);
+        findGameButton.setVisible(true);
     }
 
     public void processLoginSuccessfulMessage() {
@@ -348,6 +365,7 @@ public class JoinQueueController {
         gameNameErrorLabel.setVisible(false);
         gamePasswordLabel.setVisible(true);
         loggedInLabel.setVisible(false);
+        invalidLobbyLabel.setVisible(false);
 
         gameNameField.setVisible(true);
         gameNameField.setDisable(false);

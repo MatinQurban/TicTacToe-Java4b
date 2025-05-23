@@ -6,7 +6,7 @@ public class LobbyDeletedMessage extends Message{
     private final String gameLobbyChannel;
 
     public LobbyDeletedMessage(String lobbySubChannel, String gameLobbyChannel) {
-        super(lobbySubChannel, "LOBBY_DELETED");
+        super(gameLobbyChannel, "LOBBY_DELETED");
         this.lobbySubChannel = lobbySubChannel;
         this.gameLobbyChannel = gameLobbyChannel;
     }
